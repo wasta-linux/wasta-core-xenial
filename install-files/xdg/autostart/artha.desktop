@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Artha
+GenericName=Thesaurus
+Comment=WordNet based thesaurus and dictionary
+Exec=artha
+Icon=artha
+Type=Application
+Terminal=false
+X-GNOME-Autostart-Delay=15
+X-GNOME-Autostart-enabled=false

@@ -1,0 +1,16 @@
+Source: wasta-core-xenial
+Section: utils
+Priority: extra
+Maintainer: Rik Shaw <rikshaw76@gmail.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.5
+Homepage: https://github.com/wasta-linux/wasta-core-xenial
+
+Package: wasta-core-xenial
+Architecture: all
+Depends: gir1.2-gda-5.0, arc-theme-3-18, firefox-addon-arc-darker-theme, gnome-control-center, gnome-shell, gnome-shell-extension-suspend-button, gnome-shell-extensions-gpaste, gnome-tweak-tool, lightdm, nautilus-admin, vertex-icons, wasta-backup, wasta-gnome-ext-3-18, wasta-menus, wasta-offline, wasta-remastersys, wasta-resources-core, wmctrl, xmlstarlet, ${shlibs:Depends}, ${misc:Depends}
+Conflicts: gdm, gdm3, wasta-core-wily
+Description: Wasta-Linux 16.04 Core
+ Wasta-Linux core system setup package for Ubuntu 16.04 'xenial'
+ .
+ This package should be installed on any machine running Wasta-Linux 16.04

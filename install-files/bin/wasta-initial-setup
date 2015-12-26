@@ -1,0 +1,174 @@
+#!/bin/bash
+
+# ==============================================================================
+# wasta-initial-setup
+#
+#   This script is run on a clean install of Ubuntu to 'wasta-ize' it.
+#
+#   2014-06-12 rik: initial script
+#   2014-12-21 rik: re-working to place in /usr/bin so found in path.
+#   2015-10-25 rik: re-working for Ubuntu 15.10
+#       - accounting for 'auto' input parameter: will then run
+#         non-interactively.
+#
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Setup script to run with superuser permissions
+# ------------------------------------------------------------------------------
+if [ "$(whoami)" != "root" ]; then
+    echo
+    echo "This script needs to run with superuser permissions."
+    echo "----------------------------------------------------"
+    # below will return <blank> if user not in sudo group
+    OUT=$(groups $(whoami) | grep "sudo")
+
+    if [ "$OUT" ]; then
+        # user has sudo permissions: use them to re-run the script
+        echo
+        echo "If prompted, enter the sudo password."
+        #re-run script with sudo
+        sudo bash $0 $*
+        LASTERRORLEVEL=$?
+    else
+        #user doesn't have sudo: limited user, so prompt for sudo user
+        until [ "$OUT" ]; do
+            echo
+            echo "Current user doesn't have sudo permissions."
+            echo
+            read -p "Enter admin id (blank for root) to run this script:  " SUDO_ID
+
+            # set SUDO_ID to root if not entered
+            if [ "$SUDO_ID" ]; then
+                OUT=$(groups ${SUDO_ID} | grep "sudo")
+            else
+                SUDO_ID="root"
+                # manually assign $OUT to anything because we will use root!
+                OUT="root"
+            fi
+        done
+
+        # re-run script with $SUDO_ID 
+        echo
+        echo "Enter password for $SUDO_ID (need to enter twice)."
+        su $SUDO_ID -c "sudo bash $0 $*"
+        LASTERRORLEVEL=$?
+
+        # give 2nd chance if entered pwd wrong (su doesn't give 2nd chance)
+        if [ $LASTERRORLEVEL == 1 ]; then
+            su $SUDO_ID -c "sudo bash $0 $*"
+            LASTERRORLEVEL=$?
+        fi
+    fi
+
+    echo
+    read -p "FINISHED:  Press <ENTER> to exit..."
+    exit $LASTERRORLEVEL
+fi
+
+# ------------------------------------------------------------------------------
+# Initial Setup
+# ------------------------------------------------------------------------------
+
+# if 'auto' parameter passed, run non-interactively
+if [ "$1" == "auto" ];
+then
+    AUTO="auto"
+else
+    AUTO=""
+fi
+
+echo
+echo "========================================================================="
+echo "=== Wasta-Linux Initial Setup Script ===================================="
+echo "========================================================================="
+echo
+echo "This script will run multiple dependent scripts to get a Wasta-Linux"
+echo "installation set up, starting with an older version of Wasta-Linux."
+echo
+echo "It will install, remove, and adjust applications and perform other"
+echo "Wasta-Linux initialization items."
+echo
+echo "!!!Make sure Wasta-Offline is running if you want to use it!!!"
+echo
+
+if ! [ "$AUTO" ];
+then
+    echo "Close this window if you do not want to run this script."
+    echo
+    read -p "Press <Enter> to continue..."
+fi
+
+# Setup Diretory for later reference
+DIR=/usr/share/wasta-core
+
+# ------------------------------------------------------------------------------
+# Main Processing
+# ------------------------------------------------------------------------------
+
+echo
+echo "*** Refresh initramfs (Updates Plymouth Theme files)"
+echo
+update-initramfs -u
+
+echo
+echo "*** Calling app-installs.sh script"
+echo
+bash $DIR/scripts/app-installs.sh $AUTO
+LASTERRORLEVEL=$?
+if [ "$LASTERRORLEVEL" -ne "0" ];
+then
+    echo
+    echo " *** ERROR in return from app-installs.sh. Exiting."
+    echo
+    exit 1
+fi
+
+echo
+echo "*** Calling app-removals.sh script"
+echo
+bash $DIR/scripts/app-removals.sh $AUTO
+LASTERRORLEVEL=$?
+if [ "$LASTERRORLEVEL" -ne "0" ];
+then
+    echo
+    echo " *** ERROR in return from app-removals.sh. Exiting."
+    echo
+    exit 1
+fi
+
+echo
+echo "*** Calling app-adjustments.sh script"
+echo
+bash $DIR/scripts/app-adjustments.sh $AUTO
+LASTERRORLEVEL=$?
+if [ "$LASTERRORLEVEL" -ne "0" ];
+then
+    echo
+    echo " *** ERROR in return from app-adjustments.sh. Exiting."
+    echo
+    exit 1
+fi
+
+echo
+echo "*** Calling wasta-reset to re-initialize Wasta-Linux settings"
+echo
+wasta-reset $AUTO
+LASTERRORLEVEL=$?
+if [ "$LASTERRORLEVEL" -ne "0" ];
+then
+    echo
+    echo " *** ERROR in return from wasta-reset. Exiting."
+    echo
+    exit 1
+fi
+
+# ------------------------------------------------------------------------------
+# Finished
+# ------------------------------------------------------------------------------
+printf "\n\n\n\n\n\n"
+echo "========================================================================="
+echo "=== Script Finished ====================================================="
+echo "========================================================================="
+
+exit 0

@@ -1,0 +1,5 @@
+wasta-core-xenial (0.1.0) xenial; urgency=medium
+
+  * initial 16.04 commit
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 26 Dec 2015 20:12:21 +0300

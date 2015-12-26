@@ -1,0 +1,206 @@
+#!/bin/bash
+
+# ==============================================================================
+# Wasta-Reset
+#
+# This script can be run at any time to "reset" Wasta-Linux defaults.
+#
+#   Gnome-Shell has no such reset facility.
+#
+#   Cinnamon does have a "Restore all settings to defaults" option, but
+#   then things like favorites and user background are lost.  Also, nemo not
+#   reset.  So, this script supercedes the Cinnamon "restore all settings",
+#   which was removed from the panel context menu.
+#
+#   2012-10-20 rik: Initial script - for Linux Mint 13 Maya Cinnamon
+#   2013-01-02 rik: Adjusted to be generic for any distro using Cinnamon DE.
+#       (so, can use for Ubuntu OR Mint)
+#   2013-06-19 rik: Updated for Cinnamon 1.8.x compatibility
+#   2013-06-28 rik: added "sleep" commands to help not crash Cinnamon on resets
+#       (best guess is that applying too many fixes too quickly may crash it,
+#        as all settings can be done individually from terminal w/o crashes)
+#   2013-10-25 rik: Updated for Cinnamon 2.0.x compatibility.  Refactored to
+#       take advantage of gschema.override setup (noted above).  Also, tracked
+#       down crashes to some key in wm.preferences location.  So, worked around
+#       that.  *shouldn't be crashing anymore on reset*???
+#   2013-12-02 rik: Minor documentation cleanup.
+#   2013-12-16 rik: Updating for Cinnamon 2.0 compatibility - background replace
+#   2014-05-23 rik: Updating for 14.04 / Mint17.  Cleaning out gnome-panel
+#       settings, cinnamon 1.8(-) settings, etc.
+#   2015-07-29 rik: panel-launchers no longer a cinnamon key so removed (they
+#       are now stored in a .js file for the applet)
+#   2015-10-28 rik: adding Gnome-Shell reset processing
+#       - Refactoring dialogs to use zenity
+#   2015-11-05 rik: org.gnome.desktop and org.gnome.settings-daemon are not
+#       defined schemas, so changed to reset with "dconf reset" command.
+#       - adding dconf reset process for org.gnome.shell or else doesn't reset
+#         sub directories such as org.gnome.shell.extensions *
+#
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Initial Setup
+# ------------------------------------------------------------------------------
+
+# if 'auto' parameter passed, run non-interactively
+if [ "$1" == "auto" ];
+then
+    AUTO="auto"
+else
+    AUTO=""
+fi
+
+# TODO: if ROOT, then run rest of script as logged in user 
+
+if ! [ "$AUTO" ];
+then
+    # prompt user
+    zenity --question --no-wrap --height=200 --width=450 \
+        --title="wasta [Reset]" \
+        --window-icon=/usr/share/icons/hicolor/64x64/apps/wasta-linux.png \
+        --text="<b>This utility will RESET ALL
+your Desktop Interface Settings.</b>
+
+All of your settings will be restored
+to the Wasta-Linux defaults.
+
+<b><i>Do you want to RESET ALL your Desktop Settings?</i></b>"
+
+    if [ "$?" -ne 0 ];
+    then
+        # User didn't say yes: exit
+        exit 0
+    fi
+else
+    echo
+    echo " *** Script Entry: wasta-reset (auto mode)"
+    echo
+fi
+
+# ------------------------------------------------------------------------------
+# Processing based on active Window Manager
+# ------------------------------------------------------------------------------
+
+# Searching for "Name: <Anything>".  If WM isn't initialized, will not match
+
+# Check if GNOME window manager is active
+GNOME_ACTIVE=$(wmctrl -m | grep GNOME)
+
+# Check if MUFFIN window manager is active (Cinnamon)
+MUFFIN_ACTIVE=$(wmctrl -m | grep Muffin)
+
+if [ -n "$GNOME_ACTIVE" ];
+then
+    # Current desktop is GNOME: reset
+
+    # --------------------------------------------------------------------------
+    # Save keys needing to be restored later
+    # --------------------------------------------------------------------------
+    SAVE_FAVORITES=$(gsettings get org.gnome.shell favorite-apps)
+    SAVE_BACKGROUND=$(gsettings get org.gnome.desktop.background picture-uri)
+
+    # --------------------------------------------------------------------------
+    # Remove all custom dconf settings to defaults
+    # --------------------------------------------------------------------------
+    # schema not defined: gsettings reset-recursively org.gnome.desktop
+    dconf reset -f /org/gnome/desktop/
+
+    # schema not defined: gsettings reset-recursively org.gnome.settings-daemon
+    dconf reset -f /org/gnome/settings-daemon/
+
+    # not resetting org.gnome.shell.extensions.*:
+    #   gsettings reset-recursively org.gnome.shell
+    dconf reset -f /org/gnome/shell/
+
+    gsettings reset-recursively org.gnome.nautilus
+
+    # --------------------------------------------------------------------------
+    # Restore saved keys
+    # --------------------------------------------------------------------------
+    gsettings set org.gnome.shell favorite-apps "$SAVE_FAVORITES"
+    gsettings set org.gnome.desktop.background picture-uri "$SAVE_BACKGROUND"
+
+    # Send ERRORS and STDOUTPUT to /dev/null.  This is because there will be warning
+    #   messages that will scare the user, but it all should work correctly...
+    #   Using "nohup" for now to see if it allows cinnamon to continue after window closed
+
+    echo
+    echo " *** restarting GNOME ***"
+    echo
+    sleep 3s
+
+    nohup gnome-shell --replace >/dev/null 2>&1 &
+
+    # give a few seconds for GNOME to finish restarting
+    sleep 3s
+
+    echo
+    echo " *** GNOME restarted ***"
+    echo
+
+    MSG="User settings for <b>GNOME Desktop</b> reset.\n\n"
+
+elif [ -n "$MUFFIN_ACTIVE" ];
+then
+    # Current desktop is Cinnamon: reset
+
+    # --------------------------------------------------------------------------
+    # Save keys needing to be restored later
+    # --------------------------------------------------------------------------
+    SAVE_FAVORITES=$(gsettings get org.cinnamon favorite-apps)
+    SAVE_WORK=$(gsettings get org.cinnamon number-workspaces)
+    SAVE_WORK_NAMES=$(gsettings get org.cinnamon workspace-name-overrides)
+    SAVE_BACKGROUND=$(gsettings get org.cinnamon.desktop.background picture-uri)
+
+    # --------------------------------------------------------------------------
+    # Reset all Cinnamon and Nemo settings to defaults
+    # --------------------------------------------------------------------------
+    gsettings reset-recursively org.cinnamon
+    gsettings reset-recursively org.nemo
+
+    # --------------------------------------------------------------------------
+    # Restore saved keys
+    # --------------------------------------------------------------------------
+    gsettings set org.cinnamon favorite-apps "$SAVE_FAVORITES"
+    gsettings set org.cinnamon number-workspaces "$SAVE_WORK"
+    gsettings set org.cinnamon workspace-name-overrides "$SAVE_WORK_NAMES"
+    gsettings set org.cinnamon.desktop.background picture-uri "$SAVE_BACKGROUND"
+    
+    # Send ERRORS and STDOUTPUT to /dev/null.  This is because there will be warning
+    #   messages that will scare the user, but it all should work correctly...
+    #   Using "nohup" for now to see if it allows cinnamon to continue after window closed
+
+    nohup cinnamon --replace >/dev/null 2>&1 &
+
+    # give a few seconds for Cinnamon to finish restarting
+    sleep 3s
+    
+    MSG="User settings for <b>Cinnamon Desktop</b> reset.\n\n"
+
+else
+    # Desktop not supported by Wasta-Rest.
+    MSG="Current desktop not supported by Wasta-Reset.
+
+<b> NO RESET DONE! </b>"
+fi
+
+MSG+="<b>Finished Processing:</b> You may need
+to restart to see the changes."
+
+# ------------------------------------------------------------------------------
+# Finished
+# ------------------------------------------------------------------------------
+
+if ! [ "$AUTO" ];
+then
+    # prompt user
+    zenity --info --title "wasta [Reset]: Finished" --no-wrap --height=150 --width=450 \
+        --window-icon=/usr/share/icons/hicolor/64x64/apps/wasta-linux.png \
+        --text="$MSG"
+else
+    echo
+    echo " *** Script Exit: wasta-reset (auto mode)"
+    echo
+fi
+
+exit 0

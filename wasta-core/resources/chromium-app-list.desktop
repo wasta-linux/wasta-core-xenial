@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Chromium App Launcher
+Exec=/usr/bin/chromium-browser --show-app-list
+Icon=chrome-app-list
+Categories=Network;WebBrowser;
+StartupWMClass=chromium_app_list

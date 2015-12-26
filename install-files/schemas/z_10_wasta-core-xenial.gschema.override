@@ -1,0 +1,138 @@
+# ==============================================================================
+# z_10_wasta-core.gschema.override
+#
+#   If same key overridden in 2 files, "last wins" regarding filenames
+#       (so a "z_10_*" filename would win over a "10_*" filename)
+#       wasta-core uses "z_10_*" filenames, regional customizations
+#       use "z_20_*" filenames.
+#
+#   After modifying these .override files, reload with:
+#       glib-compile-schemas /usr/share/glib-2.0/schemas/
+#
+#   2015-10-24 rik: refactoring for Gnome-Shell Ubuntu 15.10
+#   2015-11-05 rik: disabling tracker file CONTENT indexing
+#       - keyboard shortcuts (show desktop, show home, lock screen, help)
+#   2016-11-06 rik: nautilus: ask when opening executable file (rather than
+#       default of just display file not even asking to run it)
+#
+# ==============================================================================
+
+[com.canonical.unity-greeter]
+background = '/usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
+background-color = '#30343A'
+background-logo = '/usr/share/wasta-core/resources/wasta-linux.png'
+draw-grid = true
+draw-user-backgrounds = true
+logo = '/usr/share/wasta-core/resources/wasta-linux.png'
+play-ready-sound = false
+# theme-name = 'Arc-Darker'
+
+[org.freedesktop.ibus.general]
+use-system-keyboard-layout = false
+use-global-engine = false
+
+[org.freedesktop.Tracker.FTS]
+max-words-to-index = 0
+
+[org.gnome.desktop.background]
+picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
+show-desktop-icons = true
+
+[org.gnome.desktop.interface]
+clock-format = '12h'
+clock-show-date = true
+cursor-theme = 'DMZ-White'
+font-name = 'Ubuntu 11'
+gtk-theme = 'Arc-Darker'
+icon-theme = 'vertex-icons'
+monospace-font-name = 'Ubuntu Mono 12'
+
+[org.gnome.desktop.lockdown]
+disable-user-switching = true
+
+[org.gnome.desktop.media-handling]
+automount = true
+automount-open = false
+
+[org.gnome.desktop.screensaver]
+lock-enabled = false
+picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
+ubuntu-lock-on-suspend = false
+
+[org.gnome.desktop.search-providers]
+disabled = ['org.gnome.clocks.desktop']
+
+[org.gnome.desktop.wm.keybindings]
+show-desktop = ['<Primary><Super>d', '<Primary><Alt>d', '<Super>d']
+
+[org.gnome.desktop.wm.preferences]
+auto-raise = true
+button-layout = ':minimize,maximize,close'
+theme = 'Arc-Darker'
+titlebar-font = 'Ubuntu Bold 11'
+
+[org.gnome.nautilus.preferences]
+executable-text-activation = 'ask'
+
+[org.gnome.settings-daemon.peripherals.touchpad]
+scroll-method = 'disabled'
+tap-to-click = true
+
+[org.gnome.settings-daemon.plugins.media-keys]
+help = 'F1'
+home = '<Super>e'
+screensaver = '<Super>l'
+
+[org.gnome.settings-daemon.plugins.power]
+critical-battery-action = 'shutdown'
+sleep-inactive-battery-timeout = 1800
+
+[org.gnome.shell]
+enabled-extensions = ['alternate-tab@gnome-shell-extensions.gcampax.github.com', 'Applications_Overview_Tooltip_NG@Karlitos', 'caffeine@patapon.info', 'dash-to-dock@micxgx.gmail.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'focus-my-window@varianto25.com', 'gnomenu@panacier.gmail.com', 'GPaste@gnome-shell-extensions.gnome.org', 'nohotcorner@azuri.free.fr', 'suspend-button@laserb', 'topIcons@adel.gadllah@gmail.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'windowoverlay-icons@sustmidown.centrum.cz']
+favorite-apps = ['firefox.desktop', 'thunderbird.desktop', 'org.gnome.Nautilus.desktop', 'libreoffice-writer.desktop', 'vlc.desktop']
+
+#[org.gnome.shell.extensions.battery_status]
+#display-mode = 'time'
+#when-full = 'icon'
+
+[org.gnome.shell.extensions.dash-to-dock]
+apply-custom-theme = true
+background-opacity = 1.0
+click-action = 'cycle-windows'
+dash-max-icon-size = 32
+dock-fixed = true
+extend-height = true
+scroll-switch-workspace = false
+show-apps-at-top = false
+
+[org.gnome.shell.extensions.gnomenu]
+apps-list-icon-size = 24
+apps-grid-icon-size = 48
+category-selection-method = 'Click'
+disable-activities-hotcorner = true
+disable-panel-menu-hotspot = true
+disable-panel-menu-keyboard = true
+hide-panel-apps = true
+hide-shortcuts = true
+menu-layout = 'Medium'
+panel-menu-icon-name = ['emblem-system-symbolic']
+panel-menu-label-text = ['Menu']
+panel-view-icon-name = ['wasta-emblem-photos-symbolic']
+panel-view-label-text = ['    ']
+shortcuts-display = 'Favorites'
+shortcuts-icon-size = 32
+startup-apps-display = 'Frequent'
+startup-view-mode = 'Grid'
+use-panel-menu-icon = true
+
+[org.gnome.shell.extensions.windowoverlay-icons]
+background-color = '#30343A'
+icon-opacity-blur = 200
+icon-opacity-focus = 255
+icon-size = 48
+
+[org.gnome.shell.extensions.user-theme]
+name = 'Arc-Dark'
+
+[org.gnome.shell.overrides]
+attach-modal-dialogs = false
