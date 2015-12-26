@@ -4,10 +4,10 @@
 # wasta-core: wasta-core-postinst.sh
 #
 #   This script is automatically run by the postinst configure step on
-#       installation of wasta-core-wily.  It can be manually re-run, but is
+#       installation of wasta-core-xenial.  It can be manually re-run, but is
 #       only intended to be run at package installation.
 #
-#   2015-10-09 rik: initial script for wasta-core-wily
+#   2015-10-09 rik: initial script for wasta-core-xenial
 #   2015-11-03 rik: correcting sed on 25adduser to change uid to 990
 #       - adding wasta-text plymouth theme and settings as text.plymouth
 #   2015-12-25 rik: initial xenial release - removed extension specific logic
@@ -85,12 +85,12 @@ then
 fi
 
 # ensure all ubuntu repositories enabled (will ensure not commented out)
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* wily \)@\1@' $APT_SOURCES
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* wily-updates \)@\1@' $APT_SOURCES
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* wily-security \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
 
 # canonical.com lists include "partner" for things like skype, etc.
-sed -i -e 's@.*\(deb.*canonical.com/ubuntu.* wily \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb.*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 
 # legacy cleanup: PSO should NOT be in sources.list anymore (ubiquity will
 #   remove when installing)
@@ -98,37 +98,37 @@ sed -i -e '\@packages.sil.org@d' $APT_SOURCES
 
 # add SIL repository to sources.list.d
 #   (otherwise ubiquity comments out when installing)
-if ! [ -e $APT_SOURCES_D/packages-sil-org-wily.list ];
+if ! [ -e $APT_SOURCES_D/packages-sil-org-xenial.list ];
 then
     echo
     echo "*** Adding SIL Repository"
     echo
 
-    echo "deb http://packages.sil.org/ubuntu wily main" | \
-        tee $APT_SOURCES_D/packages-sil-org-wily.list
-    echo "# deb-src http://packages.sil.org/ubuntu wily main" | \
-        tee -a $APT_SOURCES_D/packages-sil-org-wily.list
+    echo "deb http://packages.sil.org/ubuntu xenial main" | \
+        tee $APT_SOURCES_D/packages-sil-org-xenial.list
+    echo "# deb-src http://packages.sil.org/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/packages-sil-org-xenial.list
 else
     # found, but ensure PSO main ACTIVE (user could have accidentally disabled)
     echo
     echo "*** SIL Repository already exists, ensuring active"
     echo
     sed -i -e 's@.*\(deb http://packages.sil.org\)@\1@' \
-        $APT_SOURCES_D/packages-sil-org-wily.list
+        $APT_SOURCES_D/packages-sil-org-xenial.list
 fi
 
 # add SIL Experimental repository to sources.list.d
 #   (otherwise ubiquity comments out when installing)
-if ! [ -e $APT_SOURCES_D/packages-sil-org-wily-experimental.list ];
+if ! [ -e $APT_SOURCES_D/packages-sil-org-xenial-experimental.list ];
 then
     echo
     echo "*** Adding SIL Experimental Repository (inactive)"
     echo
 
-    echo "# deb http://packages.sil.org/ubuntu wily-experimental main" | \
-        tee $APT_SOURCES_D/packages-sil-org-wily-experimental.list
-    echo "# deb-src http://packages.sil.org/ubuntu wily-experimental main" | \
-        tee -a $APT_SOURCES_D/packages-sil-org-wily-experimental.list
+    echo "# deb http://packages.sil.org/ubuntu xenial-experimental main" | \
+        tee $APT_SOURCES_D/packages-sil-org-xenial-experimental.list
+    echo "# deb-src http://packages.sil.org/ubuntu xenial-experimental main" | \
+        tee -a $APT_SOURCES_D/packages-sil-org-xenial-experimental.list
 fi
 
 # install repository Keys (done locally since wasta-offline could be active)
@@ -141,66 +141,66 @@ apt-key add $DIR/keys/wasta-linux-ppa.gpg
 apt-key add $DIR/keys/gnome-ppa.gpg
 
 # add Wasta-Linux PPA
-if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-wily.list ];
+if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list ];
 then
     echo
     echo "*** Adding Wasta-Linux PPA"
     echo
 
-    echo "deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu wily main" | \
-        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-wily.list
-    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta/ubuntu wily main" | \
-        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-wily.list
+    echo "deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main" | \
+        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list
+    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list
 else
     # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
     echo
     echo "*** Wasta PPA already exists, ensuring active"
     echo
-    sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu wily main' \
-        -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu wily main@d' \
-        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-wily.list
+    sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main' \
+        -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main@d' \
+        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list
 fi
 
 # add Wasta-Apps PPA
-if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-wily.list ];
+if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list ];
 then
     echo
     echo "*** Adding Wasta-Linux Apps PPA"
     echo
 
-    echo "deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu wily main" | \
-        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-wily.list
-    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu wily main" | \
-        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-wily.list
+    echo "deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main" | \
+        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
+    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
 else
     # found, but ensure Wasta-Apps PPA ACTIVE (user could have accidentally disabled)
     echo
     echo "*** Wasta Apps PPA already exists, ensuring active"
     echo
-    sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu wily main' \
-        -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu wily main@d' \
-        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-wily.list
+    sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main' \
+        -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main@d' \
+        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
 fi
 
 # add GNOME PPA (needed for "pure experience", but watch to see if breaks unity)
-if ! [ -e $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-wily.list ];
+if ! [ -e $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list ];
 then
     echo
     echo "*** Adding GNOME PPA"
     echo
 
-    echo "deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu wily main" | \
-        tee $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-wily.list
-    echo "# deb-src http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu wily main" | \
-        tee -a $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-wily.list
+    echo "deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main" | \
+        tee $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list
+    echo "# deb-src http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list
 else
     # found, but ensure GNOME PPA ACTIVE (user could have accidentally disabled)
     echo
     echo "*** GNOME PPA already exists, ensuring active"
     echo
-    sed -i -e '$a deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu wily main' \
-        -i -e '\@deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu wily main@d' \
-        $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-wily.list
+    sed -i -e '$a deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main' \
+        -i -e '\@deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main@d' \
+        $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list
 fi
 
 # apt-get adjustments
