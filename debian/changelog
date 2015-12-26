@@ -1,3 +1,9 @@
+wasta-core-xenial (0.1.1) xenial; urgency=medium
+
+  * wasta-core/postinst: correcting repo setup to use xenial not wily
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 26 Dec 2015 20:38:18 +0300
+
 wasta-core-xenial (0.1.0) xenial; urgency=medium
 
   * initial 16.04 commit
