@@ -1,3 +1,9 @@
+wasta-core-xenial (0.1.2) xenial; urgency=medium
+
+  * updating wasta-linux.png to reference 16.04.  Testing launchpad autobuild.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 27 Dec 2015 15:15:27 +0300
+
 wasta-core-xenial (0.1.1) xenial; urgency=medium
 
   * wasta-core/postinst: correcting repo setup to use xenial not wily
