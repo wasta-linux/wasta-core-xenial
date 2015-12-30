@@ -437,7 +437,7 @@ fi
 # ------------------------------------------------------------------------------
 # wasta-remastersys
 # ------------------------------------------------------------------------------
-WASTA_REMASTERSYS_CONF=/etc/wasta/remastersys/wasta-remastersys.conf
+WASTA_REMASTERSYS_CONF=/etc/wasta-remastersys/wasta-remastersys.conf
 if [ -e "$WASTA_REMASTERSYS_CONF" ];
 then
     # change to wasta-linux splash screen
@@ -459,9 +459,6 @@ then
     sed -i -e "s@LIVECDLABEL=.*@LIVECDLABEL=\"$WASTA_ID $WASTA_VERSION $WASTA_ARCH\"@" \
            -e "s@CUSTOMISO=.*@CUSTOMISO=\"$WASTA_ID-$WASTA_VERSION-$WASTA_ARCH-$WASTA_DATE.iso\"@" \
         "$WASTA_REMASTERSYS_CONF"
-    
-    #LEGACY: remove old wasta-remastersys.conf so users not confused
-    rm -f /etc/wasta/wasta-remastersys.conf
 fi
 
 # ------------------------------------------------------------------------------
