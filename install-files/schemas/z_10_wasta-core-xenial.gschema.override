@@ -12,8 +12,9 @@
 #   2015-10-24 rik: refactoring for Gnome-Shell Ubuntu 15.10
 #   2015-11-05 rik: disabling tracker file CONTENT indexing
 #       - keyboard shortcuts (show desktop, show home, lock screen, help)
-#   2016-11-06 rik: nautilus: ask when opening executable file (rather than
+#   2015-11-06 rik: nautilus: ask when opening executable file (rather than
 #       default of just display file not even asking to run it)
+#   2015-12-30 rik: nautilus preference tweaks (icon size, use-tree-view)
 #
 # ==============================================================================
 
@@ -71,6 +72,13 @@ button-layout = ':minimize,maximize,close'
 theme = 'Arc-Darker'
 titlebar-font = 'Ubuntu Bold 11'
 
+[org.gnome.nautilus.icon-view]
+default-zoom-level = 'small'
+
+[org.gnome.nautilus.list-view]
+default-visible-columns = ['name', 'size', 'date_modified_with_time']
+use-tree-view = true
+
 [org.gnome.nautilus.preferences]
 executable-text-activation = 'ask'
 
@@ -91,48 +99,52 @@ sleep-inactive-battery-timeout = 1800
 enabled-extensions = ['alternate-tab@gnome-shell-extensions.gcampax.github.com', 'Applications_Overview_Tooltip_NG@Karlitos', 'caffeine@patapon.info', 'dash-to-dock@micxgx.gmail.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'focus-my-window@varianto25.com', 'gnomenu@panacier.gmail.com', 'GPaste@gnome-shell-extensions.gnome.org', 'nohotcorner@azuri.free.fr', 'suspend-button@laserb', 'topIcons@adel.gadllah@gmail.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'windowoverlay-icons@sustmidown.centrum.cz']
 favorite-apps = ['firefox.desktop', 'thunderbird.desktop', 'org.gnome.Nautilus.desktop', 'libreoffice-writer.desktop', 'vlc.desktop']
 
+# TESTING: commenting out gnome.shell.extensions settings, as I THINK these
+# don't really apply here, and are instead needed in the extensions themselves,
+# so check wasta-gnome-ext-3-18 for the override files
+
 #[org.gnome.shell.extensions.battery_status]
 #display-mode = 'time'
 #when-full = 'icon'
 
-[org.gnome.shell.extensions.dash-to-dock]
-apply-custom-theme = true
-background-opacity = 1.0
-click-action = 'cycle-windows'
-dash-max-icon-size = 32
-dock-fixed = true
-extend-height = true
-scroll-switch-workspace = false
-show-apps-at-top = false
+#[org.gnome.shell.extensions.dash-to-dock]
+#apply-custom-theme = true
+#background-opacity = 1.0
+#click-action = 'cycle-windows'
+#dash-max-icon-size = 32
+#dock-fixed = true
+#extend-height = true
+#scroll-switch-workspace = false
+#show-apps-at-top = false
 
-[org.gnome.shell.extensions.gnomenu]
-apps-list-icon-size = 24
-apps-grid-icon-size = 48
-category-selection-method = 'Click'
-disable-activities-hotcorner = true
-disable-panel-menu-hotspot = true
-disable-panel-menu-keyboard = true
-hide-panel-apps = true
-hide-shortcuts = true
-menu-layout = 'Medium'
-panel-menu-icon-name = ['emblem-system-symbolic']
-panel-menu-label-text = ['Menu']
-panel-view-icon-name = ['wasta-emblem-photos-symbolic']
-panel-view-label-text = ['    ']
-shortcuts-display = 'Favorites'
-shortcuts-icon-size = 32
-startup-apps-display = 'Frequent'
-startup-view-mode = 'Grid'
-use-panel-menu-icon = true
+#[org.gnome.shell.extensions.gnomenu]
+#apps-list-icon-size = 24
+#apps-grid-icon-size = 48
+#category-selection-method = 'Click'
+#disable-activities-hotcorner = true
+#disable-panel-menu-hotspot = true
+#disable-panel-menu-keyboard = true
+#hide-panel-apps = true
+#hide-shortcuts = true
+#menu-layout = 'Medium'
+#panel-menu-icon-name = ['emblem-system-symbolic']
+#panel-menu-label-text = ['Menu']
+#panel-view-icon-name = ['wasta-emblem-photos-symbolic']
+#panel-view-label-text = ['    ']
+#shortcuts-display = 'Favorites'
+#shortcuts-icon-size = 32
+#startup-apps-display = 'Frequent'
+#startup-view-mode = 'Grid'
+#use-panel-menu-icon = true
 
-[org.gnome.shell.extensions.windowoverlay-icons]
-background-color = '#30343A'
-icon-opacity-blur = 200
-icon-opacity-focus = 255
-icon-size = 48
+#[org.gnome.shell.extensions.windowoverlay-icons]
+#background-color = '#30343A'
+#icon-opacity-blur = 200
+#icon-opacity-focus = 255
+#icon-size = 48
 
-[org.gnome.shell.extensions.user-theme]
-name = 'Arc-Dark'
+#[org.gnome.shell.extensions.user-theme]
+#name = 'Arc-Dark'
 
 [org.gnome.shell.overrides]
 attach-modal-dialogs = false
