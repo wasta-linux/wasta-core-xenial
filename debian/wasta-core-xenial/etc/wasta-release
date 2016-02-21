@@ -1,0 +1,7 @@
+ID=Wasta-Linux
+VERSION=16.04
+CODENAME=xenial
+DESCRIPTION="Wasta-Linux 16.04"
+BASE_ID=ubuntu
+BASE_VERSION=16.04
+BASE_CODENAME=xenial

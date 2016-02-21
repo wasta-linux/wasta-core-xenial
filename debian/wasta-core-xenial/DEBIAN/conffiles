@@ -1,0 +1,5 @@
+/etc/skel/.config/artha.conf
+/etc/xdg/autostart/skype.desktop
+/etc/xdg/autostart/artha.desktop
+/etc/wasta-release
+/etc/lightdm/lightdm.conf.d/60-wasta-settings.conf

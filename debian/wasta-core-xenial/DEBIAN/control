@@ -1,0 +1,13 @@
+Package: wasta-core-xenial
+Version: 0.9.0
+Architecture: all
+Maintainer: Rik Shaw <rikshaw76@gmail.com>
+Installed-Size: 510
+Depends: lightdm, wasta-backup, wasta-menus, wasta-offline, wasta-remastersys, wasta-resources-core, wmctrl, xmlstarlet, dconf-gsettings-backend | gsettings-backend
+Section: utils
+Priority: extra
+Homepage: https://github.com/wasta-linux/wasta-core-xenial
+Description: Wasta-Linux 16.04 Core
+ Wasta-Linux core system setup package for Ubuntu 16.04 'xenial'
+ .
+ This package should be installed on any machine running Wasta-Linux 16.04
