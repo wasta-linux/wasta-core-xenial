@@ -166,9 +166,9 @@ then
     gsettings set org.cinnamon workspace-name-overrides "$SAVE_WORK_NAMES"
     gsettings set org.cinnamon.desktop.background picture-uri "$SAVE_BACKGROUND"
     
-    # Send ERRORS and STDOUTPUT to /dev/null.  This is because there will be warning
+    # Send ERRORS and STDOUTPUT to /dev/null, else there will be warning
     #   messages that will scare the user, but it all should work correctly...
-    #   Using "nohup" for now to see if it allows cinnamon to continue after window closed
+    #   Using "nohup" to see if it allows cinnamon to continue after closed
 
     nohup cinnamon --replace >/dev/null 2>&1 &
 

@@ -12,6 +12,7 @@
 #       - adding wasta-text plymouth theme and settings as text.plymouth
 #   2015-12-25 rik: initial xenial release - removed extension specific logic
 #       as those have been refactored out to wasta-gnome-ext-3-18
+#   2016-02-21 rik: refactored to remove any gnome-shell specific logic
 #
 # ==============================================================================
 
@@ -89,6 +90,9 @@ sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
 sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
 
+# ensure xenial-proposed repository enabled: needed for best cinnamon / nemo
+sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-proposed \)@\1@' $APT_SOURCES
+
 # canonical.com lists include "partner" for things like skype, etc.
 sed -i -e 's@.*\(deb.*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 
@@ -138,7 +142,6 @@ echo
 apt-key add $DIR/keys/sil.gpg
 apt-key add $DIR/keys/libreoffice-ppa.gpg
 apt-key add $DIR/keys/wasta-linux-ppa.gpg
-apt-key add $DIR/keys/gnome-ppa.gpg
 
 # add Wasta-Linux PPA
 if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list ];
@@ -182,27 +185,6 @@ else
         $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
 fi
 
-# add GNOME PPA (needed for "pure experience", but watch to see if breaks unity)
-if ! [ -e $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list ];
-then
-    echo
-    echo "*** Adding GNOME PPA"
-    echo
-
-    echo "deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main" | \
-        tee $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list
-    echo "# deb-src http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list
-else
-    # found, but ensure GNOME PPA ACTIVE (user could have accidentally disabled)
-    echo
-    echo "*** GNOME PPA already exists, ensuring active"
-    echo
-    sed -i -e '$a deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main' \
-        -i -e '\@deb http://ppa.launchpad.net/gnome3-team/gnome3/ubuntu xenial main@d' \
-        $APT_SOURCES_D/gnome3-team-ubuntu-gnome3-xenial.list
-fi
-
 # apt-get adjustments
 # have apt-get not get language translation files for faster updates.
 echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
@@ -241,21 +223,6 @@ then
 fi
 
 # ------------------------------------------------------------------------------
-# LightDM setup
-# ------------------------------------------------------------------------------
-if [ -e /usr/sbin/lightdm ];
-then
-    # tweak default lightdm logos to match wasta linux instead of Ubuntu:
-    echo
-    echo "*** Making LightDM adjustments"
-    echo
-
-    # set gnome logo to wasta-linux icon
-    cp $DIR/resources/wl-round-22.png \
-        /usr/share/unity-greeter/gnome_badge.png
-fi
-
-# ------------------------------------------------------------------------------
 # set wasta-logo as Plymouth Theme
 # ------------------------------------------------------------------------------
 # only do if wasta-logo not current default.plymouth
@@ -290,7 +257,7 @@ fi
 
 # FYI: text.plymouth doesn't seem to work if ModuleName isn't "ubuntu-text"
 WASTA_PLY_TEXT=$(cat /etc/alternatives/text.plymouth | \
-    grep itle=Wasta-Linux || true;)
+    grep title=Wasta-Linux || true;)
 # if variable is still "", then need to set text.plymouth
 if [ -z "$WASTA_PLY_TEXT" ];
 then
@@ -315,24 +282,6 @@ else
 fi
 
 # ------------------------------------------------------------------------------
-# ibus fixes
-# ------------------------------------------------------------------------------
-
-# set as system-wide default input method:
-# rik: removing for 15.10: I think not needed 
-# im-config -n ibus
-
-# set as current user default input method:
-# rik: not sure if needed: seems that ibus properly triggering (??)
-#sudo -u $(logname) im-config -n ibus
-
-# ??do I need to set for new users also?
-
-# ------------------------------------------------------------------------------
-# Autostart Applications Adjustments
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
 # call app-adjustments.sh
 # ------------------------------------------------------------------------------
 echo
@@ -344,7 +293,9 @@ bash $DIR/scripts/app-adjustments.sh
 # log permissions cleanup
 # ------------------------------------------------------------------------------
 
-# some logs need different ownership than "root:root": remastersys doesn't do this right
+# ??? needed?
+# some logs need different ownership than "root:root"
+# remastersys doesn't do this right, check if fixed in wasta-remastersys?
 chown -f syslog:adm /var/log/syslog*
 chown -f syslog:adm /var/log/auth.log*
 chown -f syslog:adm /var/log/kern.log*
@@ -378,13 +329,6 @@ echo
 # MAIN System schemas: we have placed our override file in this directory
 # Sending any "error" to null (if key not found don't want to worry user)
 glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1 || true;
-
-# ------------------------------------------------------------------------------
-# Firefox: set global default theme to 'arc-darker-theme'
-# ------------------------------------------------------------------------------
-sed -i -e '$a pref("general.skins.selectedSkin", "arc-darker-theme");' \
-    -i -e '\#general.skins.selectedSkin#d' \
-    /etc/firefox/syspref.js
 
 # ------------------------------------------------------------------------------
 # Reduce "Swappiness"

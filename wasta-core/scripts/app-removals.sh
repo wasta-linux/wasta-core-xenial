@@ -83,7 +83,6 @@ echo
 
 apt-get $YES purge \
     adobe-flash-properties-gtk \
-    appmenu-qt5 \
     deja-dup \
     empathy-common \
     fonts-*tlwg* \
