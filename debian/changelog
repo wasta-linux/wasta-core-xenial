@@ -1,3 +1,9 @@
+wasta-core-xenial (0.9.3) xenial; urgency=medium
+
+  * plymouth-themes: changed background colors to match ambiance
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 26 Feb 2016 12:39:35 +0300
+
 wasta-core-xenial (0.9.2) xenial; urgency=medium
 
   * schemas.override: changing default theme to just "Ambiance": things like
