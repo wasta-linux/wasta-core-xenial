@@ -2,7 +2,7 @@ install-files/applications                 usr/share
 install-files/bin                          usr
 install-files/icons                        usr/share
 install-files/lightdm.conf.d               etc/lightdm
-install-files/plymouth-themes/*            lib/plymouth/themes
+install-files/plymouth-themes/*            usr/share/plymouth/themes
 install-files/schemas                      usr/share/glib-2.0
 install-files/skel                         etc
 install-files/xdg                          etc
