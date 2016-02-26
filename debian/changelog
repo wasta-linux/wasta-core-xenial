@@ -1,3 +1,14 @@
+wasta-core-xenial (0.9.2) xenial; urgency=medium
+
+  * schemas.override: changing default theme to just "Ambiance": things like
+    gedit that don't work right with Ambiance under Cinnamon work fine under
+    Unity: need to research "why?" but will keep theme as Ambiance under Unity
+    for now.  Other desktops need to override the setting, such as is done
+    in wasta-cinnamon-xenial to set "Ambiance-Orange" as the default theme,
+    which works better with gnome apps like gedit.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 26 Feb 2016 10:45:04 +0300
+
 wasta-core-xenial (0.9.1) xenial; urgency=medium
 
   * initial 'non-gnome-shell' release
