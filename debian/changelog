@@ -1,3 +1,9 @@
+wasta-core-xenial (0.9.1) xenial; urgency=medium
+
+  * initial 'non-gnome-shell' release
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 26 Feb 2016 10:04:43 +0300
+
 wasta-core-xenial (0.9.0) xenial; urgency=medium
 
   * remove any gnome-shell specific logic.
