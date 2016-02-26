@@ -8,7 +8,7 @@ Homepage: https://github.com/wasta-linux/wasta-core-xenial
 
 Package: wasta-core-xenial
 Architecture: all
-Depends: arc-theme-3-18, ambiance-colors, lightdm, unity-tweak-tool, wasta-backup, wasta-menus, wasta-offline, wasta-remastersys, wasta-resources-core, wasta-vertex, wmctrl, xmlstarlet, ${shlibs:Depends}, ${misc:Depends}
+Depends: arc-theme-3-18, lightdm, unity-tweak-tool, wasta-backup, wasta-menus, wasta-offline, wasta-remastersys, wasta-resources-core, wasta-vertex, wmctrl, xmlstarlet, ${shlibs:Depends}, ${misc:Depends}
 Description: Wasta-Linux 16.04 Core
  Wasta-Linux core system setup package for Ubuntu 16.04 'xenial'
  .

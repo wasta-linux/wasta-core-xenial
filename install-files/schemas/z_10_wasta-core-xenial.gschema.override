@@ -21,7 +21,7 @@
 [com.canonical.unity-greeter]
 background = '/usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 # arc color '#30343A' ==> background-color = '#30343A'
-# ambiance color: '#3C3C3C' ==> background-color = '#3C3C3C'
+# ambiance dark gray color: '#3C3C3C' ==> background-color = '#3C3C3C'
 background-color = '#3C3C3C'
 background-logo = '/usr/share/wasta-core/resources/wasta-linux.png'
 draw-grid = true
@@ -39,7 +39,7 @@ clock-format = '12h'
 clock-show-date = true
 cursor-theme = 'DMZ-White'
 font-name = 'Ubuntu 11'
-gtk-theme = 'Ambiance-Orange'
+gtk-theme = 'Ambiance'
 icon-theme = 'ubuntu-mono-dark'
 monospace-font-name = 'Ubuntu Mono 12'
 
@@ -56,4 +56,4 @@ picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 ubuntu-lock-on-suspend = false
 
 [org.gnome.desktop.wm.preferences]
-theme = 'Ambiance-Orange'
+theme = 'Ambiance'
