@@ -90,10 +90,26 @@ sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
 sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
 
-# ensure xenial-proposed repository enabled: needed for best cinnamon / nemo
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-proposed \)@\1@' $APT_SOURCES
-
 # canonical.com lists include "partner" for things like skype, etc.
+PROPOSED_FOUND=$(grep 'xenial-proposed' $APT_SOURCES)
+if [ "$PROPOSED_FOUND" ];
+then
+    # ensure Ubuntu 'proposed' repositories enabled
+    echo
+    echo "*** Ubuntu proposed repository already exists, ensuring active"
+    echo
+    sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-proposed \)@\1@' $APT_SOURCES
+else
+    # retrieve current Ubuntu Server
+    UBU_SERVER=$(grep "deb .*ubuntu xenial main" $APT_SOURCES | awk '{print $2}')
+    # add Ubuntu 'proposed' repositories
+    echo
+    echo "*** Adding Ubuntu proposed repository"
+    echo
+    echo "deb $UBU_SERVER xenial-proposed main restricted multiverse universe" | \
+        tee -a $APT_SOURCES
+fi
+
 sed -i -e 's@.*\(deb.*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 
 # legacy cleanup: PSO should NOT be in sources.list anymore (ubiquity will
@@ -229,7 +245,7 @@ fi
 # below will return *something* if wasta-logo found in default.plymouth
 #   '|| true; needed so won't return error=1 if nothing found
 WASTA_PLY_THEME=$(cat /etc/alternatives/default.plymouth | \
-    grep ImageDir=/lib/plymouth/themes/wasta-logo || true;)
+    grep ImageDir=/usr/share/plymouth/themes/wasta-logo || true;)
 # if variable is still "", then need to set default.plymouth
 if [ -z "$WASTA_PLY_THEME" ];
 then
@@ -237,12 +253,12 @@ then
     echo "*** Setting Plymouth Theme to wasta-logo"
     echo
     # add wasta-logo to default.plymouth theme list
-    update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth \
-        /lib/plymouth/themes/wasta-logo/wasta-logo.plymouth 100
+    update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth \
+        /usr/share/plymouth/themes/wasta-logo/wasta-logo.plymouth 100
 
     # set wasta-logo as default.plymouth
     update-alternatives --set default.plymouth \
-        /lib/plymouth/themes/wasta-logo/wasta-logo.plymouth
+        /usr/share/plymouth/themes/wasta-logo/wasta-logo.plymouth
 
     # update
     update-initramfs -u
@@ -266,12 +282,12 @@ then
     echo
 
     # add wasta-text to text.plymouth theme list
-    update-alternatives --install /lib/plymouth/themes/text.plymouth text.plymouth \
-        /lib/plymouth/themes/wasta-text/wasta-text.plymouth 100
+    update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth \
+        /usr/share/plymouth/themes/wasta-text/wasta-text.plymouth 100
 
     # set wasta-text as text.plymouth
     update-alternatives --set text.plymouth \
-        /lib/plymouth/themes/wasta-text/wasta-text.plymouth
+        /usr/share/plymouth/themes/wasta-text/wasta-text.plymouth
 
     # update
     update-initramfs -u

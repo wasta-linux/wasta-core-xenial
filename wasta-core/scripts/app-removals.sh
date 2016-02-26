@@ -66,6 +66,7 @@ echo
 # adobe-flash-properties-gtk: no need for flash setup tool
 # appmenu-qt5: this prevents vlc from showing in system tray
 #   https://bugs.launchpad.net/ubuntu/+source/appmenu-qt5/+bug/1514147
+# checkbox-converged: ubuntu system checking app
 # deja-dup: we use wasta-backup
 # empathy: chat client
 # fonts-*: non-english fonts
@@ -83,6 +84,7 @@ echo
 
 apt-get $YES purge \
     adobe-flash-properties-gtk \
+    checkbox-converged \
     deja-dup \
     empathy-common \
     fonts-*tlwg* \
