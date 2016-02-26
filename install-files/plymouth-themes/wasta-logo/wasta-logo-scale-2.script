@@ -180,9 +180,13 @@ fun StringToInteger (str) {
 # #300a24 --> 0.19, 0.04, 0.14
 # New background colour
 # #2c001e --> 0.16, 0.00, 0.12
-#
-Window.SetBackgroundTopColor (0.16, 0.00, 0.12);     # Nice colour on top of the screen fading to
-Window.SetBackgroundBottomColor (0.16, 0.00, 0.12);  # an equally nice colour on the bottom
+
+# wasta background colors
+# Arc: #30333B --> RGB 48,51,59 --> RGB% 0.19, 0.20, 0.23
+# Ambiance: #474641 --> RGB 71,70,65 --> RGB% 0.28, 0.27, 0.25
+
+Window.SetBackgroundTopColor (0.28, 0.27, 0.25);     # Nice color on top of the screen fading to
+Window.SetBackgroundBottomColor (0.28, 0.27, 0.25);  # an equally nice color on the bottom
 
 bits_per_pixel = Window.GetBitsPerPixel ();
 if (bits_per_pixel == 4) {
