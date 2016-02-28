@@ -101,7 +101,7 @@ then
     sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-proposed \)@\1@' $APT_SOURCES
 else
     # retrieve current Ubuntu Server
-    UBU_SERVER=$(grep "deb .*ubuntu xenial main" $APT_SOURCES | awk '{print $2}')
+    UBU_SERVER=$(grep "deb .*ubuntu\.com/ubuntu xenial main" $APT_SOURCES | awk '{print $2}')
     # add Ubuntu 'proposed' repositories
     echo
     echo "*** Adding Ubuntu proposed repository"
