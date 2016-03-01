@@ -47,6 +47,8 @@
 #       - adding hddtemp
 #       - adding gnome-sushi, unoconv (needed for sushi to show lo docs)
 #   2015-11-10 rik: adding ubiquity (since needs tweaked in app-adjustments.sh)
+#   2016-03-01 rik: minor updates for 16.04: removing clamtk-nautilus,
+#       nautilus-converter, tracker*
 #
 # ==============================================================================
 
@@ -227,7 +229,7 @@ echo
 # btrfs-tools: filesystem utilities
 # cheese: webcam recorder, picture taker
 # cifs-utils: "common internet filesystem utils" for fileshare utilities, etc.
-# clamtk, clamtk-nautilus: GUI for clamav antivirus tool
+# clamtk: GUI for clamav antivirus tool
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
 # dos2unix: convert line endings of text files to / from windows to unix
 # exfat-fuse, exfat-utils: compatibility for exfat formatted disks
@@ -262,7 +264,6 @@ echo
 # mkusb-nox: teminal usb creator (15.10 issue with usb-creator-gtk)
 # modem-manager-gui: Check balance, top up, check signal strength, etc.
 # myspell-en-gb: spell checker for English (UK): needed for Libre Office
-# nautilus-image-converter: resize or rotate pictures
 # openshot: video editor
 #   openshot-doc: documentation for openshot
 #   frei0r-plugins: visual effects for openshot
@@ -274,7 +275,6 @@ echo
 # ssh: remote access
 # testdisk: photorec tool for recovery of deleted files
 # traceroute: terminal utility
-# tracker, gir1.2-tracker-1.0: gnome-shell search tool
 # ttf-mscorefonts-installer: installs standard Microsoft fonts
 # ubiquity ubiquity-slideshow-ubuntu:
 #   add here since needs tweaking (in app-adjustments.sh)
@@ -290,13 +290,9 @@ echo
 # xmlstarlet: terminal utility for reading / writing to xml files
 # xul-ext-lightning: Thunderbird Lightning (calendar) Extension
 
-# ??? ibus-kmfl NOT AVAILABLE ???
-
-# below installed by PinguyBuilder?
-# b43-fwcutter bcmwl-kernel-source efibootmgr grub-common grub-efi grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed grub-efi-ia32 grub-efi-ia32-bin grub-pc-bin grub2-common secureboot-db shim shim-signed
+# ??? adobe-flashplugin not available ???
 
 apt-get $YES install \
-    adobe-flashplugin \
     aisleriot \
     artha \
     asunder \
@@ -305,7 +301,6 @@ apt-get $YES install \
     cheese \
     cifs-utils \
     clamtk \
-        clamtk-nautilus \
     dconf-cli \
         dconf-tools \
     dos2unix \
@@ -345,7 +340,6 @@ apt-get $YES install \
     mkusb-nox \
     modem-manager-gui \
     myspell-en-gb \
-    nautilus-image-converter \
     openshot openshot-doc frei0r-plugins \
     pinta \
     shotwell \
@@ -356,7 +350,6 @@ apt-get $YES install \
     synaptic \
     testdisk \
     traceroute \
-    tracker gir1.2-tracker-1.0 \
     ttf-mscorefonts-installer \
     ubiquity ubiquity-slideshow-ubuntu \
     ubuntu-restricted-extras \
