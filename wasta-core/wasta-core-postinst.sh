@@ -329,6 +329,16 @@ echo
 glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1 || true;
 
 # ------------------------------------------------------------------------------
+# Disable GNOME Overlay Scrollbars
+# ------------------------------------------------------------------------------
+# prior to 15.10, done by removing overlay-scrollbar*, but now Ubuntu uses
+#   Gnome's overlay scrollbars, which can't be removed but can be disabled
+sed -i -e '$a GTK_OVERLAY_SCROLLING=0' \
+    -i -e '\#GTK_OVERLAY_SCROLLING#d' \
+    /etc/environment
+
+
+# ------------------------------------------------------------------------------
 # Reduce "Swappiness"
 # ------------------------------------------------------------------------------
 # https://sites.google.com/site/easylinuxtipsproject/first

@@ -17,6 +17,8 @@
 #   2015-11-08 rik: removing appmenu-qt5: this prevents vlc from showing
 #       in system tray.  See bug report:
 #       https://bugs.launchpad.net/ubuntu/+source/appmenu-qt5/+bug/1514147
+#   2016-03-01 rik: not removing appmenu-qt5 for 16.04.  Also not removing
+#       adobe-flash-properties-gtk as it isn't found in 16.04.
 #
 # ==============================================================================
 
@@ -63,9 +65,6 @@ echo
 echo "*** Removing Unwanted Applications"
 echo
 
-# adobe-flash-properties-gtk: no need for flash setup tool
-# appmenu-qt5: this prevents vlc from showing in system tray
-#   https://bugs.launchpad.net/ubuntu/+source/appmenu-qt5/+bug/1514147
 # checkbox-converged: ubuntu system checking app
 # deja-dup: we use wasta-backup
 # empathy: chat client
@@ -83,7 +82,6 @@ echo
 
 
 apt-get $YES purge \
-    adobe-flash-properties-gtk \
     checkbox-converged \
     deja-dup \
     empathy-common \
