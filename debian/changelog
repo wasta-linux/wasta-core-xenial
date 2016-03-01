@@ -1,3 +1,9 @@
+wasta-core-xenial (0.9.5) xenial; urgency=medium
+
+  * scripts/app-removals: not removing adobe-flash-properties-gtk (not found)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 01 Mar 2016 15:42:41 +0300
+
 wasta-core-xenial (0.9.4) xenial; urgency=medium
 
   * scripts/app-adjustments, app-installs, app-removals: cleanup for
