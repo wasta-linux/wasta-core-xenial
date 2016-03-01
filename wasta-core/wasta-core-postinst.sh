@@ -13,6 +13,8 @@
 #   2015-12-25 rik: initial xenial release - removed extension specific logic
 #       as those have been refactored out to wasta-gnome-ext-3-18
 #   2016-02-21 rik: refactored to remove any gnome-shell specific logic
+#   2016-03-01 rik: removing ubuntu 'proposed' repository: not needed to get
+#       cinnamon 2.8 anymore (has been moved to universe)
 #
 # ==============================================================================
 
@@ -91,25 +93,6 @@ sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
 sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
 
 # canonical.com lists include "partner" for things like skype, etc.
-PROPOSED_FOUND=$(grep 'xenial-proposed' $APT_SOURCES)
-if [ "$PROPOSED_FOUND" ];
-then
-    # ensure Ubuntu 'proposed' repositories enabled
-    echo
-    echo "*** Ubuntu proposed repository already exists, ensuring active"
-    echo
-    sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-proposed \)@\1@' $APT_SOURCES
-else
-    # retrieve current Ubuntu Server
-    UBU_SERVER=$(grep "deb .*ubuntu\.com/ubuntu xenial main" $APT_SOURCES | awk '{print $2}')
-    # add Ubuntu 'proposed' repositories
-    echo
-    echo "*** Adding Ubuntu proposed repository"
-    echo
-    echo "deb $UBU_SERVER xenial-proposed main restricted multiverse universe" | \
-        tee -a $APT_SOURCES
-fi
-
 sed -i -e 's@.*\(deb.*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 
 # legacy cleanup: PSO should NOT be in sources.list anymore (ubiquity will
@@ -271,7 +254,6 @@ else
     echo
 fi
 
-# FYI: text.plymouth doesn't seem to work if ModuleName isn't "ubuntu-text"
 WASTA_PLY_TEXT=$(cat /etc/alternatives/text.plymouth | \
     grep title=Wasta-Linux || true;)
 # if variable is still "", then need to set text.plymouth
@@ -293,7 +275,7 @@ then
     update-initramfs -u
 else
     echo
-    echo "*** Plymouth TEXT Theme already set to wasta-logo.  No update needed."
+    echo "*** Plymouth TEXT Theme already set to wasta-text.  No update needed."
     echo
 fi
 

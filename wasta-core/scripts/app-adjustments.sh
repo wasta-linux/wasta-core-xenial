@@ -154,7 +154,7 @@ fi
 # ------------------------------------------------------------------------------
 if [ -e /usr/share/applications/file-roller.desktop ];
 then
-    # hide from menu: only needed on right click
+    # hide from menu: only needed on nemo/nautilus right click
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/file-roller.desktop
 fi
@@ -163,7 +163,6 @@ fi
 # font-manager
 # ------------------------------------------------------------------------------
 # change to "Utility" ("Accessories"): default is "Graphics"
-
 if [ -e /usr/share/applications/font-manager.desktop ];
 then
     desktop-file-edit --add-category=Utility \
@@ -182,75 +181,6 @@ then
     desktop-file-edit --set-icon=gpick \
         /usr/share/applications/gcolor2.desktop
 fi
-
-# ------------------------------------------------------------------------------
-# gnome-control-center
-# ------------------------------------------------------------------------------
-# add items to "comments" so that found from gnomenu
-#   having gnomenu look at "Keywords" would be better
-if [ -e /usr/share/applications/gnome-control-center.desktop ];
-then
-    desktop-file-edit --set-comment="System Settings Control Center" \
-        /usr/share/applications/gnome-control-center.desktop
-fi
-
-# Would be good to add following keywords for gnomenu, but currently it doesn't
-# look at keywords, and if I add these to the comment it stretches the menu to
-# fill the whole screen: keeping list in hope that in future can be added to
-# keyterms
-
-#applications
-#backgrounds
-#battery
-#brightness
-#bluetooth
-#colors
-#configuration
-#date
-#default
-#desktops
-#details
-#displays
-#effects
-#ethernet
-#extensions
-#fonts
-#general
-#hotcorners
-#ibus
-#info
-#input
-#keyboards
-#kmfl
-#languages
-#locales
-#menus
-#mouse
-#networks
-#notifications
-#panels
-#preferences
-#preferred
-#printers
-#privacy
-#power
-#regions
-#screensavers
-#settings
-#sound
-#system
-#themes
-#time
-#touchpad
-#trackpad
-#users
-#universal access
-#volume
-#wacom
-#wifi
-#wireless
-#windows
-#workspaces
 
 # ------------------------------------------------------------------------------
 # gnome-font-viewer
@@ -297,17 +227,6 @@ then
     # to catfish instead
     desktop-file-edit --set-icon=catfish \
         /usr/share/applications/gnome-search-tool.desktop
-fi
-
-# ------------------------------------------------------------------------------
-# gpaste
-# ------------------------------------------------------------------------------
-if [ -e /usr/share/applications/org.gnome.GPaste.Settings.desktop ];
-then
-   # default icon of "gtk-paste" no found in Moka, uses low-res indicator icon
-   #    change to glippy instead
-    desktop-file-edit --set-icon=glippy \
-        /usr/share/applications/org.gnome.GPaste.Settings.desktop
 fi
 
 # ------------------------------------------------------------------------------

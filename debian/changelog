@@ -1,3 +1,10 @@
+wasta-core-xenial (0.9.4) xenial; urgency=medium
+
+  * scripts/app-adjustments, app-installs, app-removals: cleanup for
+    xenial / Unity base (remove any prior Gnome-Shell specific tweaks).
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 01 Mar 2016 15:04:56 +0300
+
 wasta-core-xenial (0.9.3) xenial; urgency=medium
 
   * plymouth-themes: changed background colors to match ambiance
