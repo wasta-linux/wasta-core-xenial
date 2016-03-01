@@ -254,7 +254,6 @@ else
     echo
 fi
 
-# FYI: text.plymouth doesn't seem to work if ModuleName isn't "ubuntu-text"
 WASTA_PLY_TEXT=$(cat /etc/alternatives/text.plymouth | \
     grep title=Wasta-Linux || true;)
 # if variable is still "", then need to set text.plymouth
@@ -276,7 +275,7 @@ then
     update-initramfs -u
 else
     echo
-    echo "*** Plymouth TEXT Theme already set to wasta-logo.  No update needed."
+    echo "*** Plymouth TEXT Theme already set to wasta-text.  No update needed."
     echo
 fi
 
