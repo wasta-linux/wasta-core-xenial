@@ -1,3 +1,9 @@
+wasta-core-xenial (0.9.6) xenial; urgency=medium
+
+  * scripts/app-installs: adding glipper
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 02 Mar 2016 10:43:02 +0300
+
 wasta-core-xenial (0.9.5) xenial; urgency=medium
 
   * scripts/app-removals: not removing adobe-flash-properties-gtk (not found)
