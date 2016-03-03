@@ -1,3 +1,9 @@
+wasta-core-xenial (0.9.7) xenial; urgency=medium
+
+  * debian/control: added wasta-vertex-ubuntu as a recommends
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 03 Mar 2016 15:02:27 +0300
+
 wasta-core-xenial (0.9.6) xenial; urgency=medium
 
   * scripts/app-installs: adding glipper
