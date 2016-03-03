@@ -49,6 +49,7 @@
 #   2015-11-10 rik: adding ubiquity (since needs tweaked in app-adjustments.sh)
 #   2016-03-01 rik: minor updates for 16.04: removing clamtk-nautilus,
 #       nautilus-converter, tracker*
+#   2016-03-02 rik: adding glipper (gpaste seemed to hang Cinnamon 2.8?)
 #
 # ==============================================================================
 
@@ -240,6 +241,7 @@ echo
 # fonts-sil-*: standard SIL fonts
 # gcolor2: color picker
 # gdebi: graphical .deb installer
+# glipper: clipboard manager
 # gnome-clocks: multi-timezone clocks, timers, alarms
 # gnome-font-viewer: better than "font-manager" for just viewing a font file.
 # gnome-nettool: network tool GUI (traceroute, lookup, etc)
@@ -318,6 +320,7 @@ apt-get $YES install \
         fonts-sil-gentiumpluscompact \
     gcolor2 \
     gdebi \
+    glipper \
     gnome-clocks \
     gnome-font-viewer \
     gnome-nettool \
