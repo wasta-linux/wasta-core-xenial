@@ -19,6 +19,9 @@
 #       https://bugs.launchpad.net/ubuntu/+source/appmenu-qt5/+bug/1514147
 #   2016-03-01 rik: not removing appmenu-qt5 for 16.04.  Also not removing
 #       adobe-flash-properties-gtk as it isn't found in 16.04.
+#   2016-03-13 rik: NOT removing overlay-scrollbars or webapps-common, as then
+#       unity-tweak-tool won't run correctly.  Instead using gschema.override
+#       to not use these 2 "features".
 #
 # ==============================================================================
 
@@ -72,11 +75,9 @@ echo
 # gdm: gnome display manager (we use lightdm)
 # gnome-orca: screen reader
 # landscape-client-ui-install: pay service only for big corporations
-# overlay-scrollbar*: these are garbage (15.10 still used for gtk2)
 # totem: not needed as vlc handles all video/audio
 # transmission: normal users doing torrents probably isn't preferred
 # ttf-* fonts: non-english font families
-# unity-webapps-common: amazon, etc.
 # webbrowser-app: ubuntu web browser (firefox only)
 # xterm: not sure how got installed, but don't need since gnome-terminal
 
@@ -93,7 +94,6 @@ apt-get $YES purge \
     gdm \
     gnome-orca \
     landscape-client-ui-install \
-    overlay-scrollbar* \
     totem \
         totem-common \
         totem-plugins \
@@ -106,7 +106,6 @@ apt-get $YES purge \
         ttf-thai-tlwg \
         ttf-unfonts-core \
         ttf-wqy-microhei \
-    unity-webapps-common \
     webbrowser-app \
     xterm
 

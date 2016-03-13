@@ -18,17 +18,24 @@
 #
 # ==============================================================================
 
+[com.canonical.desktop.interface]
+scrollbar-mode = 'normal'
+
+[com.canonical.unity.webapps]
+integration-allowed = false
+preauthorized-domains = ['one.ubuntu.com']
+
 [com.canonical.unity-greeter]
 background = '/usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
-# arc color '#30343A' ==> background-color = '#30343A'
+# arc-darker '#30343A' ==> background-color = '#30343A'
 # ambiance dark gray color: '#3C3C3C' ==> background-color = '#3C3C3C'
-background-color = '#3C3C3C'
+background-color = '#30343A'
 background-logo = '/usr/share/wasta-core/resources/wasta-linux.png'
 draw-grid = true
 draw-user-backgrounds = true
 logo = '/usr/share/wasta-core/resources/wasta-linux.png'
 play-ready-sound = false
-theme-name = 'Ambiance'
+theme-name = 'Arc-Darker'
 
 [org.gnome.desktop.background]
 picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
@@ -39,8 +46,8 @@ clock-format = '12h'
 clock-show-date = true
 cursor-theme = 'DMZ-White'
 font-name = 'Ubuntu 11'
-gtk-theme = 'Ambiance'
-icon-theme = 'ubuntu-mono-dark'
+gtk-theme = 'Arc-Darker'
+icon-theme = 'wasta-vertex'
 monospace-font-name = 'Ubuntu Mono 12'
 
 [org.gnome.desktop.lockdown]
@@ -56,4 +63,4 @@ picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 ubuntu-lock-on-suspend = false
 
 [org.gnome.desktop.wm.preferences]
-theme = 'Ambiance'
+theme = 'Arc-Darker'
