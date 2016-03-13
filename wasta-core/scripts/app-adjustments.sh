@@ -452,7 +452,7 @@ sed -i \
     -e '\@application/x-font-ttf=@d' \
     $DEFAULTS_FILE
 
-DEFAULTS_FILE=/usr/share/gnomeapplications/defaults.list
+DEFAULTS_FILE=/usr/share/gnome/applications/defaults.list
 
 if [ -e $DEFAULTS_FILE ];
 then

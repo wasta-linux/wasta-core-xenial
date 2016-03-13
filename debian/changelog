@@ -1,3 +1,16 @@
+wasta-core-xenial (0.9.8) xenial; urgency=medium
+
+  * gschema.override: set overlay-scrollbars to 'normal'
+    - set theme to arc-darker
+    - set icons to wasta-vertex
+    - disabled unity webapps integration
+    - remove amazon as pre-authorized domain
+  * plymouth-themes: updated to arc-darker colors
+  * app-removals.sh: not removing overlay-scrollbars or webapps-common: these
+    are now adjusted to not be used by gschema.override
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 13 Mar 2016 16:36:16 +0300
+
 wasta-core-xenial (0.9.7) xenial; urgency=medium
 
   * debian/control: added wasta-vertex-ubuntu as a recommends

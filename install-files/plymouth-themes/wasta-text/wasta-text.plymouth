@@ -5,7 +5,7 @@ ModuleName=ubuntu-text
 
 [ubuntu-text]
 title=Wasta-Linux 16.04
-black=0x474641
+black=0x30333b
 white=0xffffff
 brown=0xff4012
 blue=0x484C56
