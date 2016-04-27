@@ -50,6 +50,8 @@
 #   2016-03-01 rik: minor updates for 16.04: removing clamtk-nautilus,
 #       nautilus-converter, tracker*
 #   2016-03-02 rik: adding glipper (gpaste seemed to hang Cinnamon 2.8?)
+#   2016-04-27 rik: adding: goldendict, pandoc, vim
+#       - removing: artha
 #
 # ==============================================================================
 
@@ -224,13 +226,12 @@ echo
 
 # adobe-flashplugin: flash
 # aisleriot: solitare game
-# artha: offline thesaurus/dictionary based on wordnet
 # asunder: cd ripper
 # bcmwl-kernel-source: broadcom wifi driver
 # btrfs-tools: filesystem utilities
 # cheese: webcam recorder, picture taker
 # cifs-utils: "common internet filesystem utils" for fileshare utilities, etc.
-# clamtk: GUI for clamav antivirus tool
+# clamtk, nemo-sendto-clamktk: GUI for clamav antivirus tool
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
 # dos2unix: convert line endings of text files to / from windows to unix
 # exfat-fuse, exfat-utils: compatibility for exfat formatted disks
@@ -242,6 +243,7 @@ echo
 # gcolor2: color picker
 # gdebi: graphical .deb installer
 # glipper: clipboard manager
+# goldendict: more advanced dictionary/thesaurus tool than artha
 # gnome-clocks: multi-timezone clocks, timers, alarms
 # gnome-font-viewer: better than "font-manager" for just viewing a font file.
 # gnome-nettool: network tool GUI (traceroute, lookup, etc)
@@ -252,12 +254,12 @@ echo
 # gufw: GUI for "uncomplicated firewall"
 # hardinfo: system profiler
 # hddtemp: harddrive temp checker
-# ibus-kmfl: keyboard mapping for linux (Keyman port)
 # imagemagick: terminal utilty for image resizing, etc. (needed for nemo
 #   image resize action)
 # iperf: terminal utility for network bandwidth measuring
 # keepassx: password manager
 # klavaro: typing tutor
+# libdvd-pkg: enables DVD playback (downloads and installs libdvdcss2)
 # libreoffice-base
 # libreoffice-sdbc-hsqldb: db backend for LO base
 # libreoffice-style-tango: color icon set (more usable than 14.04 "human")
@@ -269,21 +271,23 @@ echo
 # openshot: video editor
 #   openshot-doc: documentation for openshot
 #   frei0r-plugins: visual effects for openshot
+# pandoc: general markup converter
 # pinta: MS Paint alternative: more simple for new users than gimp
 # shotwell: photo editor / manager (can edit single files easily)
 # skype
 #    libpulse0:i386: needed for skype sound to work, not listed as dependency
 # soundconverter: convert audio formats
 # ssh: remote access
+# synaptic: more advanced package manager
 # testdisk: photorec tool for recovery of deleted files
 # traceroute: terminal utility
 # ttf-mscorefonts-installer: installs standard Microsoft fonts
 # ubiquity ubiquity-slideshow-ubuntu:
-#   add here since needs tweaking (in app-adjustments.sh)
+#   add here since needs tweaking for ethiopia (in app-adjustments.sh)
 # ubuntu-restricted-extras: mp3, flash, etc.
-# vlc
-# w32codecs: several proprietary Windows audio and video codecs
-#   *** now not available since medibuntu repositories offline ??? ***
+# unity-tweak-tool: unity desktop settings tweak tool
+# vim: command-line text editor
+# vlc: play any audio or video files
 # wasta-backup: GUI for rdiff-backup
 # wasta-menus: applicationmenu limiting system
 # wasta-offline: offline updates and installs
@@ -291,18 +295,18 @@ echo
 # wavemon: terminal utility for wireless network diagonstics
 # xmlstarlet: terminal utility for reading / writing to xml files
 # xul-ext-lightning: Thunderbird Lightning (calendar) Extension
-
-# ??? adobe-flashplugin not available ???
+# youtube-dl: terminal utility for youtube / video downloads
 
 apt-get $YES install \
+    adobe-flashplugin \
     aisleriot \
-    artha \
     asunder \
     bcmwl-kernel-source \
     btrfs-tools \
     cheese \
     cifs-utils \
     clamtk \
+        nemo-sendto-clamktk \
     dconf-cli \
         dconf-tools \
     dos2unix \
@@ -321,6 +325,8 @@ apt-get $YES install \
     gcolor2 \
     gdebi \
     glipper \
+    goldendict \
+        goldendict-wordnet \
     gnome-clocks \
     gnome-font-viewer \
     gnome-nettool \
@@ -335,6 +341,7 @@ apt-get $YES install \
     iperf \
     keepassx \
     klavaro \
+    libdvd-pkg \
     libreoffice-base \
     libreoffice-sdbc-hsqldb \
     libreoffice-style-tango \
@@ -342,8 +349,8 @@ apt-get $YES install \
     linux-firmware-nonfree \
     mkusb-nox \
     modem-manager-gui \
-    myspell-en-gb \
     openshot openshot-doc frei0r-plugins \
+    pandoc \
     pinta \
     shotwell \
     skype \
@@ -356,6 +363,8 @@ apt-get $YES install \
     ttf-mscorefonts-installer \
     ubiquity ubiquity-slideshow-ubuntu \
     ubuntu-restricted-extras \
+    unity-tweak-tool \
+    vim \
     vlc \
     wasta-backup \
     wasta-menus \
@@ -363,7 +372,8 @@ apt-get $YES install \
     wasta-resources \
     wavemon \
     xmlstarlet \
-    xul-ext-lightning
+    xul-ext-lightning \
+    youtube-dl
 
     LASTERRORLEVEL=$?
     if [ "$LASTERRORLEVEL" -ne "0" ];

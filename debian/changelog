@@ -1,3 +1,18 @@
+wasta-core-xenial (1.0.0) xenial; urgency=medium
+
+  * debian/control: corrected dependencies, moved most to recommends
+    (this solves the problem of app-removals.sh removing wasta-core-xenial!)
+  * install-files/skel: added goldendict config
+  * app-adjustments.sh:
+    - goldendict: added fixes
+    - cleaned up defaults.list sed commands
+    - artha: removed config
+    - wasta-remastersys: fixed background image
+  * app-installs.sh: added goldendict, vim, a few others
+  * app-removals.sh: cleanup
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 27 Apr 2016 11:14:33 +0300
+
 wasta-core-xenial (0.9.8) xenial; urgency=medium
 
   * gschema.override: set overlay-scrollbars to 'normal'

@@ -17,6 +17,10 @@
 #   - remove PinguyBuilder processing, add wasta-remastersys processing
 # 2015-11-13 rik: fixing syntax of variables for wasta-remastersys.conf
 # 2015-11-21 rik: updating wasta-remastersys.conf location
+# 2016-04-27 rik: goldendict config updates (for http to https) and comment fix
+#   - artha: removing tweaks (no longer installed in Wasta-Linux by default)
+#   - wasta-remastersys: fixing splash screen background location
+#   - defaults.list syntax corrections (do all at once instead of looping)
 #
 # ==============================================================================
 
@@ -76,35 +80,6 @@ sed -i -e "\@<Filename>@d" /etc/xdg/menus/gnome-applications.menu
 # ------------------------------------------------------------------------------
 # SECOND: Clean up individual applications that are in bad places
 # ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# Artha
-# ------------------------------------------------------------------------------
-if [ -e /usr/share/applications/artha.desktop ];
-then
-    # change category, comment
-    desktop-file-edit --set-key=Categories --set-value="Education;" \
-        /usr/share/applications/artha.desktop
-
-    desktop-file-edit --set-comment="WordNet based thesaurus and dictionary" \
-        /usr/share/applications/artha.desktop
-
-    # Ensure system default is to show window on launch (or else starts
-    #   minimized in the system tray
-    xmlstarlet ed --inplace --update \
-        "/interface/object/child/object/child/object/child/object[@id='chkBtnLaunchMin']/property[@name='receives_default']" \
-        --value "True" /usr/share/artha/gui.glade
-
-    # 2014-12-22 rik: artha skel below not needed since do system adjustment above??
-
-    # Note: the ability to use the main window (not just a system notify event)
-    #   when hilighting a word in another application and hitting the key combo
-    #   (default is "ctrl + alt + w") is not in the gui.glade file, which only
-    #   controls the "options dialog window settings" it seems.  So, we are just
-    #   placing an /etc/skel/.config/arth.conf file that will NOT use the the
-    #   system notifications (thus popping the full artha window).
-    #su $(logname) -c "cp /etc/skel/.config/artha.conf /home/$(logname)/.config/artha.conf"
-fi
 
 # ------------------------------------------------------------------------------
 # baobab
@@ -180,6 +155,22 @@ then
     # change icon to gpick: gcolor2 not supported by moka, low quality
     desktop-file-edit --set-icon=gpick \
         /usr/share/applications/gcolor2.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# goldendict
+# ------------------------------------------------------------------------------
+if [ -x /usr/bin/goldendict ];
+then
+    # for all users, correct http to https for wikipedia and wiktionary sources
+    sed -i -e "s@http://\(.*\).wikipedia.org@https://\1.wikipedia.org@" \
+        /home/*/.goldendict/config
+    sed -i -e "s@http://\(.*\).wiktionary.org@https://\1.wiktionary.org@" \
+        /home/*/.goldendict/config
+
+    # fix comment
+    desktop-file-edit --set-comment="Dictionary / Thesaurus tool" \
+        /usr/share/applications/goldendict.desktop
 fi
 
 # ------------------------------------------------------------------------------
@@ -360,7 +351,8 @@ WASTA_REMASTERSYS_CONF=/etc/wasta-remastersys/wasta-remastersys.conf
 if [ -e "$WASTA_REMASTERSYS_CONF" ];
 then
     # change to wasta-linux splash screen
-    sed -i -e 's@SPLASHPNG=.*@SPLASHPNG="/lib/plymouth/themes/wasta-logo/wasta-linux-vga.png"@' \
+### FIX
+    sed -i -e 's@SPLASHPNG=.*@SPLASHPNG="/usr/share/wasta-core/resources/wasta-linux-vga.png"@' \
         "$WASTA_REMASTERSYS_CONF"
     
     # set default CD Label and ISO name
@@ -410,11 +402,6 @@ echo
 
 # preferred way to set defaults is with xdg-mime (but its man says that the
 #   default function shouldn't be used as root?)
-DEFAULTS_FILE=/etc/gnome/defaults.list
-if ! [ -e $DEFAULTS_FILE.save ];
-then
-    cp $DEFAULTS_FILE $DEFAULTS_FILE.save
-fi
 
 sed -i \
     -e 's@\(audio.*\)=.*@\1=vlc.desktop@' \
@@ -428,53 +415,9 @@ sed -i \
     -e '$a application/x-font-ttf=org.gnome.font-viewer.desktop' \
     -e '\@application/x-extension-htm=@d' \
     -e '\@application/x-font-ttf=@d' \
-    $DEFAULTS_FILE
-
-DEFAULTS_FILE=/usr/share/applications/defaults.list
-
-if ! [ -e $DEFAULTS_FILE.save ];
-then
-    cp $DEFAULTS_FILE \
-        $DEFAULTS_FILE.save
-fi
-
-sed -i \
-    -e 's@\(audio.*\)=.*@\1=vlc.desktop@' \
-    -e 's@\(video.*\)=.*@\1=vlc.desktop@' \
-    -e 's@totem.desktop@vlc.desktop@' \
-    -e 's@\(text/plain\)=.*@\1=org.gnome.gedit.desktop@' \
-    -e 's@\(application/x-deb\)=.*@\1=gdebi.desktop@' \
-    -e 's@\(application/x-debian-package\)=.*@\1=gdebi.desktop@' \
-    -e 's@\(text/xml\)=.*@\1=org.gnome.gedit.desktop@' \
-    -e '$a application/x-extension-htm=firefox.desktop' \
-    -e '$a application/x-font-ttf=org.gnome.font-viewer.desktop' \
-    -e '\@application/x-extension-htm=@d' \
-    -e '\@application/x-font-ttf=@d' \
-    $DEFAULTS_FILE
-
-DEFAULTS_FILE=/usr/share/gnome/applications/defaults.list
-
-if [ -e $DEFAULTS_FILE ];
-then
-    if ! [ -e $DEFAULTS_FILE.save ];
-    then
-        cp $DEFAULTS_FILE \
-            $DEFAULTS_FILE.save
-    fi
-    sed -i \
-        -e 's@\(audio.*\)=.*@\1=vlc.desktop@' \
-        -e 's@\(video.*\)=.*@\1=vlc.desktop@' \
-        -e 's@totem.desktop@vlc.desktop@' \
-        -e 's@\(text/plain\)=.*@\1=org.gnome.gedit.desktop@' \
-        -e 's@\(application/x-deb\)=.*@\1=gdebi.desktop@' \
-        -e 's@\(application/x-debian-package\)=.*@\1=gdebi.desktop@' \
-        -e 's@\(text/xml\)=.*@\1=org.gnome.gedit.desktop@' \
-        -e '$a application/x-extension-htm=firefox.desktop' \
-        -e '$a application/x-font-ttf=org.gnome.font-viewer.desktop' \
-        -e '\@application/x-extension-htm=@d' \
-        -e '\@application/x-font-ttf=@d' \
-        $DEFAULTS_FILE
-fi
+    /etc/gnome/defaults.list \
+    /usr/share/applications/defaults.list \
+    /usr/share/gnome/applications/defaults.list \
 
 # ------------------------------------------------------------------------------
 # Finished
