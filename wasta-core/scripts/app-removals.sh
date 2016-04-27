@@ -79,7 +79,7 @@ echo
 # transmission: normal users doing torrents probably isn't preferred
 # ttf-* fonts: non-english font families
 # webbrowser-app: ubuntu web browser (firefox only)
-# xterm: not sure how got installed, but don't need since gnome-terminal
+# xterm: not sure how got installed, but don't need since have gnome-terminal
 
 
 apt-get $YES purge \

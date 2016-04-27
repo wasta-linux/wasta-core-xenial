@@ -99,7 +99,7 @@ then
     read -p "Press <Enter> to continue..."
 fi
 
-# Setup Diretory for later reference
+# Setup Directory for later reference
 DIR=/usr/share/wasta-core
 
 # ------------------------------------------------------------------------------
