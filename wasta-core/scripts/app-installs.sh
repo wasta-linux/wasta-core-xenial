@@ -285,6 +285,7 @@ echo
 # ubiquity ubiquity-slideshow-ubuntu:
 #   add here since needs tweaking for ethiopia (in app-adjustments.sh)
 # ubuntu-restricted-extras: mp3, flash, etc.
+# ubuntu-wallpapers-*: wallpaper collections
 # unity-tweak-tool: unity desktop settings tweak tool
 # vim: command-line text editor
 # vlc: play any audio or video files
@@ -363,6 +364,8 @@ apt-get $YES install \
     ttf-mscorefonts-installer \
     ubiquity ubiquity-slideshow-ubuntu \
     ubuntu-restricted-extras \
+    ubuntu-wallpapers-karmic \
+    ubuntu-wallpapers-wily \
     unity-tweak-tool \
     vim \
     vlc \
