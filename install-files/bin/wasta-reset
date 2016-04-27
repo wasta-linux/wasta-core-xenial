@@ -35,12 +35,27 @@
 #       defined schemas, so changed to reset with "dconf reset" command.
 #       - adding dconf reset process for org.gnome.shell or else doesn't reset
 #         sub directories such as org.gnome.shell.extensions *
+#   2016-04-27 rik: adding Unity support
+#       - resetting based on detected sessions, not just active desktop
+#       - NOT restarting current session, instead just tell user to reboot
+#       - exit immediately if initiated as root user
 #
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
+# Ensure script running as regular user
+# ------------------------------------------------------------------------------
+if [ $(id -u) -eq 0 ]
+then
+    echo "Wasta-Reset started as root user."
+    echo "No processing done.  Exiting...."
+    exit 0
+fi
+
+# ------------------------------------------------------------------------------
 # Initial Setup
 # ------------------------------------------------------------------------------
+
 
 # if 'auto' parameter passed, run non-interactively
 if [ "$1" == "auto" ];
@@ -49,8 +64,6 @@ then
 else
     AUTO=""
 fi
-
-# TODO: if ROOT, then run rest of script as logged in user 
 
 if ! [ "$AUTO" ];
 then
@@ -75,6 +88,7 @@ else
     echo
     echo " *** Script Entry: wasta-reset (auto mode)"
     echo
+    MSG="Starting wasta [Reset]...\n\n"
 fi
 
 # ------------------------------------------------------------------------------
@@ -89,60 +103,9 @@ GNOME_ACTIVE=$(wmctrl -m | grep GNOME)
 # Check if MUFFIN window manager is active (Cinnamon)
 MUFFIN_ACTIVE=$(wmctrl -m | grep Muffin)
 
-if [ -n "$GNOME_ACTIVE" ];
+if [ -e /usr/share/xsessions/cinnamon.desktop ];
 then
-    # Current desktop is GNOME: reset
-
-    # --------------------------------------------------------------------------
-    # Save keys needing to be restored later
-    # --------------------------------------------------------------------------
-    SAVE_FAVORITES=$(gsettings get org.gnome.shell favorite-apps)
-    SAVE_BACKGROUND=$(gsettings get org.gnome.desktop.background picture-uri)
-
-    # --------------------------------------------------------------------------
-    # Remove all custom dconf settings to defaults
-    # --------------------------------------------------------------------------
-    # schema not defined: gsettings reset-recursively org.gnome.desktop
-    dconf reset -f /org/gnome/desktop/
-
-    # schema not defined: gsettings reset-recursively org.gnome.settings-daemon
-    dconf reset -f /org/gnome/settings-daemon/
-
-    # not resetting org.gnome.shell.extensions.*:
-    #   gsettings reset-recursively org.gnome.shell
-    dconf reset -f /org/gnome/shell/
-
-    gsettings reset-recursively org.gnome.nautilus
-
-    # --------------------------------------------------------------------------
-    # Restore saved keys
-    # --------------------------------------------------------------------------
-    gsettings set org.gnome.shell favorite-apps "$SAVE_FAVORITES"
-    gsettings set org.gnome.desktop.background picture-uri "$SAVE_BACKGROUND"
-
-    # Send ERRORS and STDOUTPUT to /dev/null.  This is because there will be warning
-    #   messages that will scare the user, but it all should work correctly...
-    #   Using "nohup" for now to see if it allows cinnamon to continue after window closed
-
-    echo
-    echo " *** restarting GNOME ***"
-    echo
-    sleep 3s
-
-    nohup gnome-shell --replace >/dev/null 2>&1 &
-
-    # give a few seconds for GNOME to finish restarting
-    sleep 3s
-
-    echo
-    echo " *** GNOME restarted ***"
-    echo
-
-    MSG="User settings for <b>GNOME Desktop</b> reset.\n\n"
-
-elif [ -n "$MUFFIN_ACTIVE" ];
-then
-    # Current desktop is Cinnamon: reset
+    # Cinnamon Reset
 
     # --------------------------------------------------------------------------
     # Save keys needing to be restored later
@@ -165,26 +128,72 @@ then
     gsettings set org.cinnamon number-workspaces "$SAVE_WORK"
     gsettings set org.cinnamon workspace-name-overrides "$SAVE_WORK_NAMES"
     gsettings set org.cinnamon.desktop.background picture-uri "$SAVE_BACKGROUND"
-    
-    # Send ERRORS and STDOUTPUT to /dev/null, else there will be warning
-    #   messages that will scare the user, but it all should work correctly...
-    #   Using "nohup" to see if it allows cinnamon to continue after closed
 
-    nohup cinnamon --replace >/dev/null 2>&1 &
-
-    # give a few seconds for Cinnamon to finish restarting
-    sleep 3s
-    
-    MSG="User settings for <b>Cinnamon Desktop</b> reset.\n\n"
-
-else
-    # Desktop not supported by Wasta-Rest.
-    MSG="Current desktop not supported by Wasta-Reset.
-
-<b> NO RESET DONE! </b>"
+    MSG+="User settings for <b>Cinnamon Desktop</b> reset.\n\n"
 fi
 
-MSG+="<b>Finished Processing:</b> You may need
+if [ -e /usr/share/xsessions/gnome.desktop ];
+then
+    # GNOME Reset
+
+    # --------------------------------------------------------------------------
+    # Save keys needing to be restored later
+    # --------------------------------------------------------------------------
+    SAVE_FAVORITES=$(gsettings get org.gnome.shell favorite-apps)
+    SAVE_BACKGROUND=$(gsettings get org.gnome.desktop.background picture-uri)
+
+    # --------------------------------------------------------------------------
+    # Reset all GNOME and Nautilus dconf settings to defaults
+    # --------------------------------------------------------------------------
+    # schema not defined: gsettings reset-recursively org.gnome.desktop
+    dconf reset -f /org/gnome/desktop/
+    # schema not defined: gsettings reset-recursively org.gnome.settings-daemon
+    dconf reset -f /org/gnome/settings-daemon/
+    # not resetting org.gnome.shell.extensions.*:
+    #   gsettings reset-recursively org.gnome.shell
+    dconf reset -f /org/gnome/shell/
+
+    gsettings reset-recursively org.gnome.nautilus
+
+    # --------------------------------------------------------------------------
+    # Restore saved keys
+    # --------------------------------------------------------------------------
+    gsettings set org.gnome.shell favorite-apps "$SAVE_FAVORITES"
+    gsettings set org.gnome.desktop.background picture-uri "$SAVE_BACKGROUND"
+
+    MSG+="User settings for <b>GNOME Desktop</b> reset.\n\n"
+fi
+
+if [ -e /usr/share/xsessions/ubuntu.desktop ];
+then
+    # Unity Reset
+
+    # --------------------------------------------------------------------------
+    # Save keys needing to be restored later
+    # --------------------------------------------------------------------------
+    SAVE_FAVORITES=$(gsettings get com.canonical.Unity.Launcher favorites)
+    SAVE_BACKGROUND=$(gsettings get org.gnome.desktop.background picture-uri)
+
+    # --------------------------------------------------------------------------
+    # Reset all Unity, Gnome, and Nautilus dconf settings to defaults
+    # --------------------------------------------------------------------------
+    gsettings reset-recursively com.canonical.Unity
+    gsettings reset-recursively org.gnome.nautilus
+    # schema not defined: gsettings reset-recursively org.gnome.desktop
+    dconf reset -f /org/gnome/desktop/
+    # schema not defined: gsettings reset-recursively org.gnome.settings-daemon
+    dconf reset -f /org/gnome/settings-daemon/
+
+    # --------------------------------------------------------------------------
+    # Restore saved keys
+    # --------------------------------------------------------------------------
+    gsettings set com.canonical.Unity.Launcher favorites "$SAVE_FAVORITES"
+    gsettings set org.gnome.desktop.background picture-uri "$SAVE_BACKGROUND"
+
+    MSG+="User settings for <b>Unity Desktop</b> reset.\n\n"
+fi
+
+MSG+="<b>Finished Processing:</b> You will need
 to restart to see the changes."
 
 # ------------------------------------------------------------------------------
