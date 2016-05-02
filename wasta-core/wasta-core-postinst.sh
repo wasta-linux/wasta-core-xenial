@@ -24,11 +24,11 @@
 #   No fancy "double click" here because normal user should never need to run
 if [ $(id -u) -ne 0 ]
 then
-	echo
-	echo "You must run this script with sudo." >&2
-	echo "Exiting...."
-	sleep 5s
-	exit 1
+    echo
+    echo "You must run this script with sudo." >&2
+    echo "Exiting...."
+    sleep 5s
+    exit 1
 fi
 
 # ------------------------------------------------------------------------------
@@ -336,7 +336,6 @@ glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1 || true;
 sed -i -e '$a GTK_OVERLAY_SCROLLING=0' \
     -i -e '\#GTK_OVERLAY_SCROLLING#d' \
     /etc/environment
-
 
 # ------------------------------------------------------------------------------
 # Reduce "Swappiness"

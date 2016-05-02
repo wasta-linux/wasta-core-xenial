@@ -22,6 +22,9 @@
 #   2016-03-13 rik: NOT removing overlay-scrollbars or webapps-common, as then
 #       unity-tweak-tool won't run correctly.  Instead using gschema.override
 #       to not use these 2 "features".
+#   2016-05-02 rik: NOT removing checkbox-common, webrowser-app, xterm since
+#       have unintended consequences.  Instead will need to use adjustments
+#       to hide them.
 #
 # ==============================================================================
 
@@ -68,22 +71,27 @@ echo
 echo "*** Removing Unwanted Applications"
 echo
 
-# checkbox-converged: ubuntu system checking app
+# checkbox-common:
+#   - but removing it will remove ubuntu-desktop so not removing
 # deja-dup: we use wasta-backup
 # empathy: chat client
 # fonts-*: non-english fonts
 # gdm: gnome display manager (we use lightdm)
+# glipper: we now use diodon
 # gnome-orca: screen reader
+# gnome-software: removing until we can sort out how to add SIL, PPA apps
+#   and "non-gui" apps.
 # landscape-client-ui-install: pay service only for big corporations
+# openshot: now use openshot-qt (2.x) ... openshot is 1.4.x
 # totem: not needed as vlc handles all video/audio
 # transmission: normal users doing torrents probably isn't preferred
 # ttf-* fonts: non-english font families
-# webbrowser-app: ubuntu web browser (firefox only)
-# xterm: not sure how got installed, but don't need since have gnome-terminal
-
+# unity-webapps-common: amazon shopping lens, etc.
+# webbrowser-app: ubuntu web browser
+# xterm:
+#   - removing it will remove scripture-app-builder, etc. so not removing
 
 apt-get $YES purge \
-    checkbox-converged \
     deja-dup \
     empathy-common \
     fonts-*tlwg* \
@@ -92,8 +100,11 @@ apt-get $YES purge \
         fonts-nanum \
         fonts-takao-pgothic \
     gdm \
+    glipper \
     gnome-orca \
+    gnome-software \
     landscape-client-ui-install \
+    openshot \
     totem \
         totem-common \
         totem-plugins \
@@ -106,8 +117,13 @@ apt-get $YES purge \
         ttf-thai-tlwg \
         ttf-unfonts-core \
         ttf-wqy-microhei \
-    webbrowser-app \
-    xterm
+    unity-webapps-common \
+    webbrowser-app
+
+# ------------------------------------------------------------------------------
+# run autoremove to cleanout unneeded dependent packages
+# ------------------------------------------------------------------------------
+apt-get $YES autoremove
 
 echo
 echo "*** Script Exit: app-removals.sh"

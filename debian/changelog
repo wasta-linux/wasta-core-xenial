@@ -1,3 +1,15 @@
+wasta-core-xenial (1.0.2) xenial; urgency=medium
+
+  * app-installs.sh: several additions based on user feedback
+    - removing unity-tweak-tool since pulls in unity-webapps, webbrowser-app
+  * app-adjustments.sh: adding "Advanced" to gimp comment
+    - hiding checkbox-converged (can't remove or ubuntu-desktop removed)
+  * app-removals.sh: adding openshot (use -qt), glipper (use diodon), others.
+  * install-files/icons: adding for catfish/search and chrome-app-launcher
+  * gchema-override: removing background setting (will keep Ubuntu defaults)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 02 May 2016 14:48:02 +0300
+
 wasta-core-xenial (1.0.1) xenial; urgency=medium
 
   * debian/control: adding ubuntu-wallpapers-wily as recommends since

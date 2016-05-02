@@ -96,10 +96,23 @@ fi
 # ------------------------------------------------------------------------------
 # live session userid coded to 999, but this conflicts with vbox user ids
 # change to 990
-if [ -e /usr/share/initramfs-tools/scripts/casper-bottom/25adduser ];
+#if [ -e /usr/share/initramfs-tools/scripts/casper-bottom/25adduser ];
+#then
+#    sed -i -e 's@user-uid [0-9]*@user-uid 990@' \
+#        /usr/share/initramfs-tools/scripts/casper-bottom/25adduser
+#fi
+# FIXED in wasta-remastersys? not needed xenial?
+
+# ------------------------------------------------------------------------------
+# checkbox-converged
+# ------------------------------------------------------------------------------
+# hide if found
+if [ -e /usr/share/applications/checkbox-converged.desktop ];
 then
-    sed -i -e 's@user-uid [0-9]*@user-uid 990@' \
-        /usr/share/initramfs-tools/scripts/casper-bottom/25adduser
+    # sending output to /dev/null because desktop file has errors from
+    #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/checkbox-converged.desktop >/dev/null 2>&1 || true;
 fi
 
 # ------------------------------------------------------------------------------
@@ -155,6 +168,16 @@ then
     # change icon to gpick: gcolor2 not supported by moka, low quality
     desktop-file-edit --set-icon=gpick \
         /usr/share/applications/gcolor2.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# gimp
+# ------------------------------------------------------------------------------
+if [ -x /usr/bin/gimp ];
+then
+    # add "Advanced" to comment
+    desktop-file-edit --set-comment="Advanced image and photo editor" \
+        /usr/share/applications/gimp.desktop
 fi
 
 # ------------------------------------------------------------------------------

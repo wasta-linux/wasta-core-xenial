@@ -28,7 +28,6 @@ preauthorized-domains = []
 # arc-darker '#30343A' ==> background-color = '#30343A'
 # ambiance dark gray color: '#3C3C3C' ==> background-color = '#3C3C3C'
 [com.canonical.unity-greeter]
-background = '/usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 background-color = '#30343A'
 background-logo = '/usr/share/wasta-core/resources/wasta-linux.png'
 draw-grid = true
@@ -39,7 +38,6 @@ play-ready-sound = false
 theme-name = 'Ambiance'
 
 [org.gnome.desktop.background]
-picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 show-desktop-icons = true
 
 [org.gnome.desktop.interface]
@@ -60,7 +58,6 @@ automount-open = false
 
 [org.gnome.desktop.screensaver]
 lock-enabled = false
-picture-uri = 'file:///usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 ubuntu-lock-on-suspend = false
 
 [org.gnome.desktop.wm.preferences]
