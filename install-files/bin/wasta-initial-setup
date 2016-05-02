@@ -112,14 +112,27 @@ echo
 update-initramfs -u
 
 echo
-echo "*** Calling app-installs.sh script"
+echo "*** Calling app-removals.sh script (before app-installs.sh)"
+echo
+bash $DIR/scripts/app-removals.sh $AUTO
+LASTERRORLEVEL=$?
+if [ "$LASTERRORLEVEL" -ne "0" ];
+then
+    echo
+    echo " *** ERROR in return from app-removals.sh pre app-installs. Exiting."
+    echo
+    exit 1
+fi
+
+echo
+echo "*** Calling app-installs.sh script (after app-installs.sh)"
 echo
 bash $DIR/scripts/app-installs.sh $AUTO
 LASTERRORLEVEL=$?
 if [ "$LASTERRORLEVEL" -ne "0" ];
 then
     echo
-    echo " *** ERROR in return from app-installs.sh. Exiting."
+    echo " *** ERROR in return from app-installs.sh post app installs. Exiting."
     echo
     exit 1
 fi

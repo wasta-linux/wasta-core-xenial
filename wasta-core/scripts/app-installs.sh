@@ -52,6 +52,14 @@
 #   2016-03-02 rik: adding glipper (gpaste seemed to hang Cinnamon 2.8?)
 #   2016-04-27 rik: adding: goldendict, pandoc, vim
 #       - removing: artha
+#   2016-05-02 rik:
+#       removing:
+#           - linux-firmware-nonfre: not available for xenial
+#       adding:
+#           - audacity
+#           - gimp
+#           - zim, python-appindicator
+#           - 
 #
 # ==============================================================================
 
@@ -226,13 +234,16 @@ echo
 
 # adobe-flashplugin: flash
 # aisleriot: solitare game
+# apt-xapian-index:
+# audacity: audio editing
 # asunder: cd ripper
 # bcmwl-kernel-source: broadcom wifi driver
 # btrfs-tools: filesystem utilities
 # cheese: webcam recorder, picture taker
 # cifs-utils: "common internet filesystem utils" for fileshare utilities, etc.
-# clamtk, nemo-sendto-clamktk: GUI for clamav antivirus tool
+# clamtk, clamtk-nautilus: GUI for clamav antivirus tool
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
+# diodon: clipboard manager
 # dos2unix: convert line endings of text files to / from windows to unix
 # exfat-fuse, exfat-utils: compatibility for exfat formatted disks
 # extundelete: terminal utility to restore deleted files
@@ -242,7 +253,8 @@ echo
 # fonts-sil-*: standard SIL fonts
 # gcolor2: color picker
 # gdebi: graphical .deb installer
-# glipper: clipboard manager
+# gimp: advanced graphics editor
+# git: command-line git
 # goldendict: more advanced dictionary/thesaurus tool than artha
 # gnome-clocks: multi-timezone clocks, timers, alarms
 # gnome-font-viewer: better than "font-manager" for just viewing a font file.
@@ -254,30 +266,36 @@ echo
 # gufw: GUI for "uncomplicated firewall"
 # hardinfo: system profiler
 # hddtemp: harddrive temp checker
+# httrack: website download utility
 # imagemagick: terminal utilty for image resizing, etc. (needed for nemo
 #   image resize action)
 # iperf: terminal utility for network bandwidth measuring
 # keepassx: password manager
 # klavaro: typing tutor
+# kmfl-keyboard-ipa: ipa keyboard for kmfl
 # libdvd-pkg: enables DVD playback (downloads and installs libdvdcss2)
 # libreoffice-base
 # libreoffice-sdbc-hsqldb: db backend for LO base
 # libreoffice-style-tango: color icon set (more usable than 14.04 "human")
 # libtext-pdf-perl: provides pdfbklt (make A5 booklet from pdf)
-# linux-firmware-nonfree: additional proprietary drivers
+# meld: graphical text file compare utility
 # mkusb-nox: teminal usb creator (15.10 issue with usb-creator-gtk)
 # modem-manager-gui: Check balance, top up, check signal strength, etc.
 # myspell-en-gb: spell checker for English (UK): needed for Libre Office
-# openshot: video editor
+# nautilus-compare: nautilus integration with meld
+# openshot-qt: video editor (-qt is the 2.x series)
 #   openshot-doc: documentation for openshot
 #   frei0r-plugins: visual effects for openshot
 # pandoc: general markup converter
 # pinta: MS Paint alternative: more simple for new users than gimp
+# python-appindicator: needed for zim app-indicator (maybe others?)
 # shotwell: photo editor / manager (can edit single files easily)
 # skype
 #    libpulse0:i386: needed for skype sound to work, not listed as dependency
 # soundconverter: convert audio formats
 # ssh: remote access
+# software-center: re-adding until gnome-software does what we need it
+#   to do.
 # synaptic: more advanced package manager
 # testdisk: photorec tool for recovery of deleted files
 # traceroute: terminal utility
@@ -287,29 +305,36 @@ echo
 # ubuntu-restricted-extras: mp3, flash, etc.
 # ubuntu-wallpapers-*: wallpaper collections
 # unity-tweak-tool: unity desktop settings tweak tool
+#   - NOT including because pulls in unity-webapps-tool which brings in
+#     amazon, etc.
 # vim: command-line text editor
 # vlc: play any audio or video files
 # wasta-backup: GUI for rdiff-backup
 # wasta-menus: applicationmenu limiting system
 # wasta-offline: offline updates and installs
-# wasta-resources: central distribution of documentation / reference materials
+# wasta-remastersys: create ISO of system
+# wasta-resources-core: wasta-core documentation and resources
 # wavemon: terminal utility for wireless network diagonstics
 # xmlstarlet: terminal utility for reading / writing to xml files
+# xsltproc: xslt, xml conversion program
 # xul-ext-lightning: Thunderbird Lightning (calendar) Extension
 # youtube-dl: terminal utility for youtube / video downloads
+# zim, python-appindicator:
 
 apt-get $YES install \
     adobe-flashplugin \
     aisleriot \
+    apt-xapian-index \
+    audacity \
     asunder \
     bcmwl-kernel-source \
     btrfs-tools \
     cheese \
     cifs-utils \
-    clamtk \
-        nemo-sendto-clamktk \
+    clamtk clamtk-nautilus \
     dconf-cli \
         dconf-tools \
+    diodon \
     dos2unix \
     exfat-fuse \
         exfat-utils \
@@ -325,7 +350,8 @@ apt-get $YES install \
         fonts-sil-gentiumpluscompact \
     gcolor2 \
     gdebi \
-    glipper \
+    gimp \
+    git \
     goldendict \
         goldendict-wordnet \
     gnome-clocks \
@@ -338,6 +364,8 @@ apt-get $YES install \
     gufw \
     hardinfo \
     hddtemp \
+    httrack \
+    kmfl-keyboard-ipa \
     imagemagick \
     iperf \
     keepassx \
@@ -347,17 +375,20 @@ apt-get $YES install \
     libreoffice-sdbc-hsqldb \
     libreoffice-style-tango \
     libtext-pdf-perl \
-    linux-firmware-nonfree \
+    meld \
     mkusb-nox \
     modem-manager-gui \
-    openshot openshot-doc frei0r-plugins \
+    nautilus-compare \
+    openshot-qt frei0r-plugins \
     pandoc \
     pinta \
+    python-appindicator \
     shotwell \
     skype \
         libpulse0:i386\
     soundconverter \
     ssh \
+    software-center \
     synaptic \
     testdisk \
     traceroute \
@@ -365,18 +396,22 @@ apt-get $YES install \
     ubiquity ubiquity-slideshow-ubuntu \
     ubuntu-restricted-extras \
     ubuntu-wallpapers-karmic \
+    ubuntu-wallpapers-utopic \
+    ubuntu-wallpapers-vivid \
     ubuntu-wallpapers-wily \
-    unity-tweak-tool \
     vim \
     vlc \
     wasta-backup \
     wasta-menus \
     wasta-offline \
-    wasta-resources \
+    wasta-remastersys \
+    wasta-resources-core \
     wavemon \
     xmlstarlet \
+    xsltproc \
     xul-ext-lightning \
-    youtube-dl
+    youtube-dl \
+    zim
 
     LASTERRORLEVEL=$?
     if [ "$LASTERRORLEVEL" -ne "0" ];
@@ -452,9 +487,16 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# Reconfigure libdvd-pkg to get libdvdcss2 installed
+# ------------------------------------------------------------------------------
+# during the install of libdvd-pkg it can't in turn install libdvdcss2 since
+#   another dpkg process is already active, so need to do it again
+dpkg-reconfigure libdvd-pkg
+
+# ------------------------------------------------------------------------------
 # Clean up apt cache
 # ------------------------------------------------------------------------------
-# not doing since we may want those packages to populate wasta-offline
+# not doing since we may want those packages to
 #apt-get autoremove
 #apt-get autoclean
 
