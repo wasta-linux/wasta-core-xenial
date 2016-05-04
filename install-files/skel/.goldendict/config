@@ -10,7 +10,7 @@
   <mutedDictionaries/>
  </inactiveDictionaries>
  <groups nextId="1"/>
- <hunspell dictionariesPath="/usr/share/myspell/dicts"/>
+ <hunspell dictionariesPath="/usr/share/hunspell"/>
  <transliteration>
   <enableRussianTransliteration>0</enableRussianTransliteration>
   <enableGermanTransliteration>0</enableGermanTransliteration>

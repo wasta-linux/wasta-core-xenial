@@ -1,3 +1,18 @@
+wasta-core-xenial (1.0.3) xenial; urgency=medium
+
+  * app-removals.sh: generating list to remove since if attempt to remove a
+        package that isn't found it will error and not remove anything.
+  * app-adjustments.sh: goldendict: correcting hunspell dictionary location
+      - meld: changing to "utility" category to keep "development" category
+        empty by default in Wasta-Linux.
+      - webbrowser-app: hiding (it is pulled in by unity-tweak-tool)
+  * app-installs.sh: adding debconf-tools so can use for wasta-offline "offline
+        distributables.
+      - adding clipit, removing diodon (it was hanging unity logout for 90 sec)
+      - adding fbreader, inkscape, scribus
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 04 May 2016 10:53:46 +0300
+
 wasta-core-xenial (1.0.2) xenial; urgency=medium
 
   * app-installs.sh: several additions based on user feedback

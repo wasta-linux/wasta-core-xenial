@@ -25,6 +25,10 @@
 #   2016-05-02 rik: NOT removing checkbox-common, webrowser-app, xterm since
 #       have unintended consequences.  Instead will need to use adjustments
 #       to hide them.
+#   2016-05-04 rik: if attempting to remove a package that doesn't exist (such
+#       as can happen when using wasta-offline "offline only mode") apt-get purge
+#       will error and not remove anything.  So instead generating list of
+#       packages that are installed to remove.
 #
 # ==============================================================================
 
@@ -87,11 +91,15 @@ echo
 # transmission: normal users doing torrents probably isn't preferred
 # ttf-* fonts: non-english font families
 # unity-webapps-common: amazon shopping lens, etc.
-# webbrowser-app: ubuntu web browser
+# webbrowser-app: ubuntu web browser brought in by unity-tweak-tool
 # xterm:
 #   - removing it will remove scripture-app-builder, etc. so not removing
 
-apt-get $YES purge \
+# 2016-05-04 rik: if attempting to remove a package that doesn't exist (such
+#   as can happen when using wasta-offline "offline only mode") apt-get purge
+#   will error and not remove anything.  So instead found this way to do it:
+#       http://superuser.com/questions/518859/ignore-packages-that-are-not-currently-installed-when-using-apt-get-remove
+pkgToRemoveListFull="\
     deja-dup \
     empathy-common \
     fonts-*tlwg* \
@@ -118,12 +126,23 @@ apt-get $YES purge \
         ttf-unfonts-core \
         ttf-wqy-microhei \
     unity-webapps-common \
-    webbrowser-app
+    webbrowser-app"
+pkgToRemoveList=""
+for pkgToRemove in $(echo $pkgToRemoveListFull); do
+  $(dpkg --status $pkgToRemove &> /dev/null)
+  if [[ $? -eq 0 ]]; then
+    pkgToRemoveList="$pkgToRemoveList $pkgToRemove"
+  fi
+done
+
+apt-get $YES purge $pkgToRemoveList
+
 
 # ------------------------------------------------------------------------------
 # run autoremove to cleanout unneeded dependent packages
 # ------------------------------------------------------------------------------
-apt-get $YES autoremove
+# 2016-05-04 rik: adding --purge so extra cruft from packages cleaned up
+apt-get $YES --purge autoremove
 
 echo
 echo "*** Script Exit: app-removals.sh"
