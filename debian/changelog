@@ -1,3 +1,10 @@
+wasta-core-xenial (1.0.5) xenial; urgency=medium
+
+  * install-files/xdg: adding .config/clipit/clipitrc so that new user not
+    prompted for usage
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 04 May 2016 15:59:32 +0300
+
 wasta-core-xenial (1.0.4) xenial; urgency=medium
 
   * app-removals.sh: removing diodon (it hangs unity up to 90 sec on logout)
