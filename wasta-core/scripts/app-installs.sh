@@ -59,7 +59,11 @@
 #           - audacity
 #           - gimp
 #           - zim, python-appindicator
-#           - 
+#   2016-05-04 rik: adding: clipit
+#       - fbreader
+#       - inkscape
+#       - scribus
+#     removing: diodon (hangs unity on logout for 90 seconds)
 #
 # ==============================================================================
 
@@ -69,11 +73,11 @@
 #   No fancy "double click" here because normal user should never need to run
 if [ $(id -u) -ne 0 ]
 then
-	echo
-	echo "You must run this script with sudo." >&2
-	echo "Exiting...."
-	sleep 5s
-	exit 1
+    echo
+    echo "You must run this script with sudo." >&2
+    echo "Exiting...."
+    sleep 5s
+    exit 1
 fi
 
 # ------------------------------------------------------------------------------
@@ -242,11 +246,13 @@ echo
 # cheese: webcam recorder, picture taker
 # cifs-utils: "common internet filesystem utils" for fileshare utilities, etc.
 # clamtk, clamtk-nautilus: GUI for clamav antivirus tool
+# clipit: clipboard manager
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
-# diodon: clipboard manager
+# debconf-utils: needed for debconf-get-selections, etc. for debconf configure
 # dos2unix: convert line endings of text files to / from windows to unix
 # exfat-fuse, exfat-utils: compatibility for exfat formatted disks
 # extundelete: terminal utility to restore deleted files
+# fbreader: e-book reader
 # font-manager: GUI for managing fonts
 # fonts-crosextra-caladea: metrically compatible with "Cambria"
 # fonts-crosextra-carlito: metrically compatible with "Calibri"
@@ -269,6 +275,7 @@ echo
 # httrack: website download utility
 # imagemagick: terminal utilty for image resizing, etc. (needed for nemo
 #   image resize action)
+# inkscape: vector graphics editor
 # iperf: terminal utility for network bandwidth measuring
 # keepassx: password manager
 # klavaro: typing tutor
@@ -289,6 +296,7 @@ echo
 # pandoc: general markup converter
 # pinta: MS Paint alternative: more simple for new users than gimp
 # python-appindicator: needed for zim app-indicator (maybe others?)
+# scribus: desktop publisher
 # shotwell: photo editor / manager (can edit single files easily)
 # skype
 #    libpulse0:i386: needed for skype sound to work, not listed as dependency
@@ -332,13 +340,15 @@ apt-get $YES install \
     cheese \
     cifs-utils \
     clamtk clamtk-nautilus \
+    clipit \
     dconf-cli \
         dconf-tools \
-    diodon \
+    debconf-utils \
     dos2unix \
     exfat-fuse \
         exfat-utils \
     extundelete \
+    fbreader \
     font-manager \
     fonts-crosextra-caladea \
     fonts-crosextra-carlito \
@@ -367,6 +377,7 @@ apt-get $YES install \
     httrack \
     kmfl-keyboard-ipa \
     imagemagick \
+    inkscape \
     iperf \
     keepassx \
     klavaro \
@@ -383,6 +394,7 @@ apt-get $YES install \
     pandoc \
     pinta \
     python-appindicator \
+    scribus scribus-doc scribus-template \
     shotwell \
     skype \
         libpulse0:i386\

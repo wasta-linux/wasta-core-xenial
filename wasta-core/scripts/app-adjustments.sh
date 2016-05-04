@@ -21,6 +21,9 @@
 #   - artha: removing tweaks (no longer installed in Wasta-Linux by default)
 #   - wasta-remastersys: fixing splash screen background location
 #   - defaults.list syntax corrections (do all at once instead of looping)
+# 2016-05-04 rik: goldendict point to correct hunspell dictionary location
+#   - webbrowser-app: hiding (brought in by unity-tweak-tool)
+#   - meld: changing to 'Utility' so no 'Development' category by default
 #
 # ==============================================================================
 
@@ -128,6 +131,16 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# clamtk-gnome
+# ------------------------------------------------------------------------------
+# hide if found since clamtk already in main menu
+if [ -e /usr/share/applications/clamtk-gnome.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/clamtk-gnome.desktop
+fi
+
+# ------------------------------------------------------------------------------
 # evince (pdf viewer)
 # ------------------------------------------------------------------------------
 if [ -e /usr/share/applications/evince.desktop ];
@@ -186,10 +199,15 @@ fi
 if [ -x /usr/bin/goldendict ];
 then
     # for all users, correct http to https for wikipedia and wiktionary sources
+    #   (suppress errors if no user has initialized goldendict)
     sed -i -e "s@http://\(.*\).wikipedia.org@https://\1.wikipedia.org@" \
-        /home/*/.goldendict/config
+        /home/*/.goldendict/config >/dev/null 2>&1
     sed -i -e "s@http://\(.*\).wiktionary.org@https://\1.wiktionary.org@" \
-        /home/*/.goldendict/config
+        /home/*/.goldendict/config >/dev/null 2>&1
+    # for all users, correct hunspell dictionary path
+    #   (suppress errors if no user has initialized goldendict)
+    sed -i -e 's@\(hunspell dictionariesPath\).*@\1="/usr/share/hunspell"/>@' \
+        /home/*/.goldendict/config >/dev/null 2>&1
 
     # fix comment
     desktop-file-edit --set-comment="Dictionary / Thesaurus tool" \
@@ -283,6 +301,20 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# meld
+# ------------------------------------------------------------------------------
+# change to "Utility" ("Accessories"): default is "Development" (only item
+#   in that category, so we are trying to not have "Programming" by default)
+if [ -e /usr/share/applications/meld.desktop ];
+then
+    desktop-file-edit --add-category=Utility \
+        /usr/share/applications/meld.desktop
+
+    desktop-file-edit --remove-category=Development \
+        /usr/share/applications/meld.desktop
+fi
+
+# ------------------------------------------------------------------------------
 # modem-manager-gui
 # ------------------------------------------------------------------------------
 # change "Categories" to "Utility" ("Accessories"): default is "System
@@ -323,7 +355,16 @@ then
     # Send output to /dev/null since there are warnings generated
     #   by the comment fields
     desktop-file-edit --set-key=NoDisplay --set-value=true \
-        /usr/share/applications/openjdk-7-policytool.desktop >/dev/null
+        /usr/share/applications/openjdk-7-policytool.desktop  >/dev/null 2>&1 || true;
+fi
+
+if [ -e /usr/share/applications/openjdk-8-policytool.desktop ];
+then
+    # Hide GUI from start menu
+    # Send output to /dev/null since there are warnings generated
+    #   by the comment fields
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/openjdk-8-policytool.desktop  >/dev/null 2>&1 || true;
 fi
 
 # ------------------------------------------------------------------------------
@@ -334,6 +375,23 @@ then
     # remove from "Accessibility" (only 2 items there): already in "Utility"
     desktop-file-edit --remove-category=Accessibility \
         /usr/share/applications/orca.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# software-properties-gnome,gtk
+# ------------------------------------------------------------------------------
+if [ -e /usr/share/applications/software-properties-gnome.desktop ];
+then
+    # rename to "Software Settings" or else get confused with "Software Updates"
+    desktop-file-edit --set-name="Software Settings" \
+        /usr/share/applications/software-properties-gnome.desktop
+fi
+
+if [ -e /usr/share/applications/software-properties-gtk.desktop ];
+then
+    # rename to "Software Settings" or else get confused with "Software Updates"
+    desktop-file-edit --set-name="Software Settings" \
+        /usr/share/applications/software-properties-gtk.desktop
 fi
 
 # ------------------------------------------------------------------------------
@@ -403,6 +461,16 @@ if [ -e /usr/share/applications/web2py.desktop ];
 then
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/web2py.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# webbrowser-app
+# ------------------------------------------------------------------------------
+# hide if found (unity-tweak-tool installs it)
+if [ -e /usr/share/applications/webbrowser-app.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/webbrowser-app.desktop
 fi
 
 # ------------------------------------------------------------------------------
