@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.4) xenial; urgency=medium
+
+  * app-removals.sh: removing diodon (it hangs unity up to 90 sec on logout)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 04 May 2016 11:14:58 +0300
+
 wasta-core-xenial (1.0.3) xenial; urgency=medium
 
   * app-removals.sh: generating list to remove since if attempt to remove a
