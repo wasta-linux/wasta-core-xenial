@@ -1,3 +1,10 @@
+wasta-core-xenial (1.0.7) xenial; urgency=medium
+
+  * app-adjustments.sh: commenting out zim section for now
+  * install-files/icons: adding gpick icons (humanity doesn't include)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 06 May 2016 12:01:21 +0300
+
 wasta-core-xenial (1.0.6) xenial; urgency=medium
 
   * install-files/skel: adding .config/zim so that the trayicon is enabled

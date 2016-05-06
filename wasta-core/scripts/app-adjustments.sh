@@ -136,8 +136,10 @@ fi
 # hide if found since clamtk already in main menu
 if [ -e /usr/share/applications/clamtk-gnome.desktop ];
 then
+    # sending output to /dev/null because desktop file has errors from
+    #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
-        /usr/share/applications/clamtk-gnome.desktop
+        /usr/share/applications/clamtk-gnome.desktop >/dev/null 2>&1 || true;
 fi
 
 # ------------------------------------------------------------------------------
@@ -486,11 +488,11 @@ fi
 # ------------------------------------------------------------------------------
 # zim
 # ------------------------------------------------------------------------------
-if [ -x /usr/bin/zim ];
-then
+#if [ -x /usr/bin/zim ];
+#then
     # TODO:if no current .config/zim then copy it from /etc/skel
     # this is needed to enable trayicon plugin by default
-fi
+#fi
 
 # ------------------------------------------------------------------------------
 # Default Application Fixes: ??? better command to do this ???
