@@ -486,11 +486,11 @@ fi
 # ------------------------------------------------------------------------------
 # zim
 # ------------------------------------------------------------------------------
-if [ -x /usr/bin/zim ];
-then
+#if [ -x /usr/bin/zim ];
+#then
     # TODO:if no current .config/zim then copy it from /etc/skel
     # this is needed to enable trayicon plugin by default
-fi
+#fi
 
 # ------------------------------------------------------------------------------
 # Default Application Fixes: ??? better command to do this ???
