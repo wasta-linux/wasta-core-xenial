@@ -1,3 +1,12 @@
+wasta-core-xenial (1.0.6) xenial; urgency=medium
+
+  * install-files/skel: adding .config/zim so that the trayicon is enabled
+    by default.  This will only be for new users.  Later will see if an
+    app adjustment can make it happen for all users.
+  * install-files/xdg: adding "zim.desktop" autostart (disabled by default)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 06 May 2016 07:18:50 +0300
+
 wasta-core-xenial (1.0.5) xenial; urgency=medium
 
   * install-files/xdg: adding .config/clipit/clipitrc so that new user not
