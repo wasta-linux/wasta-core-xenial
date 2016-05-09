@@ -78,7 +78,6 @@ echo
 # checkbox-common:
 #   - but removing it will remove ubuntu-desktop so not removing
 # deja-dup: we use wasta-backup
-# diodon: hangs unity 90 seconds on logout (changed over to clipit)
 # empathy: chat client
 # fonts-*: non-english fonts
 # gdm: gnome display manager (we use lightdm)
@@ -102,7 +101,6 @@ echo
 #       http://superuser.com/questions/518859/ignore-packages-that-are-not-currently-installed-when-using-apt-get-remove
 pkgToRemoveListFull="\
     deja-dup \
-    diodon \
     empathy-common \
     fonts-*tlwg* \
         fonts-khmeros-core \
