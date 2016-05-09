@@ -1,3 +1,11 @@
+wasta-core-xenial (1.0.11) xenial; urgency=medium
+
+  * app-adjustments.sh: removing gcolor2 icon fix (moving to gcolor3)
+  * app-installs.sh: adding gcolor3 to installs  
+  * app-removals.sh: adding gcolor2 to removals
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 10 May 2016 02:40:51 +0300
+
 wasta-core-xenial (1.0.10) xenial; urgency=medium
 
   * app-adjustments.sh: reverting icon tweaks for gcolor2, gnome-search-tool

@@ -256,7 +256,7 @@ echo
 # fonts-crosextra-caladea: metrically compatible with "Cambria"
 # fonts-crosextra-carlito: metrically compatible with "Calibri"
 # fonts-sil-*: standard SIL fonts
-# gcolor2: color picker
+# gcolor3: color picker
 # gdebi: graphical .deb installer
 # gimp: advanced graphics editor
 # git: command-line git
@@ -356,7 +356,7 @@ apt-get $YES install \
         fonts-sil-doulossil \
         fonts-sil-gentiumplus \
         fonts-sil-gentiumpluscompact \
-    gcolor2 \
+    gcolor3 \
     gdebi \
     gimp \
     git \

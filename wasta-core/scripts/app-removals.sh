@@ -80,6 +80,7 @@ echo
 # deja-dup: we use wasta-backup
 # empathy: chat client
 # fonts-*: non-english fonts
+# gcolor2: color picker (but we upgraded to gcolor3)
 # gdm: gnome display manager (we use lightdm)
 # glipper: we now use diodon
 # gnome-orca: screen reader
@@ -107,6 +108,7 @@ pkgToRemoveListFull="\
         fonts-lao \
         fonts-nanum \
         fonts-takao-pgothic \
+    gcolor2 \
     gdm \
     glipper \
     gnome-orca \
@@ -127,6 +129,7 @@ pkgToRemoveListFull="\
         ttf-wqy-microhei \
     unity-webapps-common \
     webbrowser-app"
+
 pkgToRemoveList=""
 for pkgToRemove in $(echo $pkgToRemoveListFull); do
   $(dpkg --status $pkgToRemove &> /dev/null)
@@ -136,7 +139,6 @@ for pkgToRemove in $(echo $pkgToRemoveListFull); do
 done
 
 apt-get $YES purge $pkgToRemoveList
-
 
 # ------------------------------------------------------------------------------
 # run autoremove to cleanout unneeded dependent packages
