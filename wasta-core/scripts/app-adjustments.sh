@@ -28,6 +28,7 @@
 #   doesn't support gpick and catfish, so then would be empty (I had previously
 #   put in these manually into hicolor, but then will prevent install of gpick
 #   or catfish!)
+# 2016-05-10 rik: moving to gcolor3, so taking out gcolor2 icon fix
 #
 # ==============================================================================
 
@@ -177,17 +178,6 @@ then
 
     desktop-file-edit --remove-category=Graphics \
         /usr/share/applications/font-manager.desktop
-fi
-
-# ------------------------------------------------------------------------------
-# gcolor2
-# ------------------------------------------------------------------------------
-if [ -e /usr/share/applications/gcolor2.desktop ];
-then
-    # change icon to gpick: gcolor2 not supported by moka, low quality
-    # 16.04: revert as gpick icon not available for many icon sets
-    desktop-file-edit --set-icon=/usr/share/pixmaps/gcolor2/gcolor2.xpm
-        /usr/share/applications/gcolor2.desktop
 fi
 
 # ------------------------------------------------------------------------------
