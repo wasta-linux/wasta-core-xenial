@@ -1,3 +1,10 @@
+wasta-core-xenial (1.0.10) xenial; urgency=medium
+
+  * app-adjustments.sh: reverting icon tweaks for gcolor2, gnome-search-tool
+    (instead of relying on other app icons which may not be part of the theme)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 09 May 2016 20:45:34 +0300
+
 wasta-core-xenial (1.0.9) xenial; urgency=medium
 
   * app-removals.sh: don't remove diodon
