@@ -1,3 +1,13 @@
+wasta-core-xenial (1.0.8) xenial; urgency=medium
+
+  * app-installs.sh: again using diodon instead of clipit.  Diodon fix to
+      not delay Unity logout solved in PPA vesion 1.5.  That version copied to
+      Wasta PPA.
+    - Removing bcmwl-kernel-source as Justin reports it breaks his broadcom
+      install.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 09 May 2016 07:26:50 +0300
+
 wasta-core-xenial (1.0.7) xenial; urgency=medium
 
   * app-adjustments.sh: commenting out zim section for now

@@ -241,14 +241,13 @@ echo
 # apt-xapian-index:
 # audacity: audio editing
 # asunder: cd ripper
-# bcmwl-kernel-source: broadcom wifi driver
 # btrfs-tools: filesystem utilities
 # cheese: webcam recorder, picture taker
 # cifs-utils: "common internet filesystem utils" for fileshare utilities, etc.
 # clamtk, clamtk-nautilus: GUI for clamav antivirus tool
-# clipit: clipboard manager
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
 # debconf-utils: needed for debconf-get-selections, etc. for debconf configure
+# diodon: clipboard manager
 # dos2unix: convert line endings of text files to / from windows to unix
 # exfat-fuse, exfat-utils: compatibility for exfat formatted disks
 # extundelete: terminal utility to restore deleted files
@@ -335,15 +334,14 @@ apt-get $YES install \
     apt-xapian-index \
     audacity \
     asunder \
-    bcmwl-kernel-source \
     btrfs-tools \
     cheese \
     cifs-utils \
     clamtk clamtk-nautilus \
-    clipit \
     dconf-cli \
         dconf-tools \
     debconf-utils \
+    diodon \
     dos2unix \
     exfat-fuse \
         exfat-utils \
