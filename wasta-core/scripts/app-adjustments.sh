@@ -24,6 +24,10 @@
 # 2016-05-04 rik: goldendict point to correct hunspell dictionary location
 #   - webbrowser-app: hiding (brought in by unity-tweak-tool)
 #   - meld: changing to 'Utility' so no 'Development' category by default
+# 2016-05-09 rik: reverting gcolor2, gnome-search-tool icons as humanity
+#   doesn't support gpick and catfish, so then would be empty (I had previously
+#   put in these manually into hicolor, but then will prevent install of gpick
+#   or catfish!)
 #
 # ==============================================================================
 
@@ -181,7 +185,8 @@ fi
 if [ -e /usr/share/applications/gcolor2.desktop ];
 then
     # change icon to gpick: gcolor2 not supported by moka, low quality
-    desktop-file-edit --set-icon=gpick \
+    # 16.04: revert as gpick icon not available for many icon sets
+    desktop-file-edit --set-icon=/usr/share/pixmaps/gcolor2/gcolor2.xpm
         /usr/share/applications/gcolor2.desktop
 fi
 
@@ -259,7 +264,8 @@ then
 
     # default icon of "system-search" seems overridden by low-res icon, change
     # to catfish instead
-    desktop-file-edit --set-icon=catfish \
+    # 16.04: reverting hack, as some icons sets don't have catfish
+    desktop-file-edit --set-icon=system-search \
         /usr/share/applications/gnome-search-tool.desktop
 fi
 
