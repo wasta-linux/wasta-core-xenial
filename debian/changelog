@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.9) xenial; urgency=medium
+
+  * app-removals.sh: don't remove diodon
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 09 May 2016 13:03:00 +0300
+
 wasta-core-xenial (1.0.8) xenial; urgency=medium
 
   * app-installs.sh: again using diodon instead of clipit.  Diodon fix to
