@@ -29,6 +29,9 @@
 #   put in these manually into hicolor, but then will prevent install of gpick
 #   or catfish!)
 # 2016-05-10 rik: moving to gcolor3, so taking out gcolor2 icon fix
+# 2016-07-19 rik: adding xfce compatibility
+#  - hiding ubuntu-amazon-default
+#  - classicmenu-indicator: only show in unity
 #
 # ==============================================================================
 
@@ -136,6 +139,22 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# cinnamon-settings-users
+# ------------------------------------------------------------------------------
+# show and add to XFCE Settings Manager
+if [ -e /usr/share/applications/cinnamon-settings-users.desktop ];
+then
+    desktop-file-edit --add-only-show-in=XFCE \
+        /usr/share/applications/cinnamon-settings-users.desktop
+
+    desktop-file-edit --add-category=X-XFCE-SettingsDialog \
+        /usr/share/applications/cinnamon-settings-users.desktop
+
+    desktop-file-edit --add-category=X-XFCE-SystemSettings \
+        /usr/share/applications/cinnamon-settings-users.desktop
+fi
+
+# ------------------------------------------------------------------------------
 # clamtk-gnome
 # ------------------------------------------------------------------------------
 # hide if found since clamtk already in main menu
@@ -145,6 +164,16 @@ then
     #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/clamtk-gnome.desktop >/dev/null 2>&1 || true;
+fi
+
+# ------------------------------------------------------------------------------
+# classicmenu-indicator
+# ------------------------------------------------------------------------------
+#classicmenu-indicator: only show in unity
+if [ -x /usr/bin/classicmenu-indicator ];
+then
+    desktop-file-edit --add-only-show-in=Unity \
+        /usr/share/applications/classicmenu-indicator.desktop
 fi
 
 # ------------------------------------------------------------------------------
@@ -257,6 +286,21 @@ then
     # 16.04: reverting hack, as some icons sets don't have catfish
     desktop-file-edit --set-icon=system-search \
         /usr/share/applications/gnome-search-tool.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# ibus-setup
+# ------------------------------------------------------------------------------
+# add to XFCE Settings Manager
+if [ -e /usr/share/applications/ibus-setup.desktop ];
+then
+    # Sending any output to null (don't want to worry user)
+    desktop-file-edit --add-category=X-XFCE-SettingsDialog \
+        /usr/share/applications/ibus-setup.desktop > /dev/null 2>&1 || true;
+
+    # Sending any output to null (don't want to worry user)
+    desktop-file-edit --add-category=X-XFCE-HardwareSettings \
+        /usr/share/applications/ibus-setup.desktop > /dev/null 2>&1 || true;
 fi
 
 # ------------------------------------------------------------------------------
@@ -376,6 +420,19 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# PulseAudio Control
+# ------------------------------------------------------------------------------
+# add to XFCE Settings Manager
+if [ -e /usr/share/applications/pavucontrol.desktop ];
+then
+    desktop-file-edit --add-category=X-XFCE-SettingsDialog \
+        /usr/share/applications/pavucontrol.desktop
+
+    desktop-file-edit --add-category=X-XFCE-HardwareSettings \
+        /usr/share/applications/pavucontrol.desktop
+fi
+
+# ------------------------------------------------------------------------------
 # software-properties-gnome,gtk
 # ------------------------------------------------------------------------------
 if [ -e /usr/share/applications/software-properties-gnome.desktop ];
@@ -404,6 +461,17 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# ubuntu-amazon-default
+# ------------------------------------------------------------------------------
+# always hide
+if [ -e /usr/share/applications/vim.desktop ];
+then
+    # hide from main menu (terminal only)
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/vim.desktop
+fi
+
+# ------------------------------------------------------------------------------
 # unity-lens-photos
 # ------------------------------------------------------------------------------
 #unity-lens-photos: only show in unity
@@ -414,13 +482,13 @@ then
 fi
 
 # ------------------------------------------------------------------------------
-# vim
+# ubuntu-amazon-default
 # ------------------------------------------------------------------------------
-if [ -e /usr/share/applications/vim.desktop ];
+if [ -e /usr/share/applications/ubuntu-amazon-default.desktop ];
 then
-    # hide from main menu (terminal only)
+    # hide from main menu
     desktop-file-edit --set-key=NoDisplay --set-value=true \
-        /usr/share/applications/vim.desktop
+        /usr/share/applications/ubuntu-amazon-default.desktop
 fi
 
 # ------------------------------------------------------------------------------
@@ -430,7 +498,6 @@ WASTA_REMASTERSYS_CONF=/etc/wasta-remastersys/wasta-remastersys.conf
 if [ -e "$WASTA_REMASTERSYS_CONF" ];
 then
     # change to wasta-linux splash screen
-### FIX
     sed -i -e 's@SPLASHPNG=.*@SPLASHPNG="/usr/share/wasta-core/resources/wasta-linux-vga.png"@' \
         "$WASTA_REMASTERSYS_CONF"
     
@@ -479,6 +546,39 @@ if [ -e /usr/share/applications/xdiagnose.desktop ];
 then
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/xdiagnose.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# xfce4-appfinder
+# ------------------------------------------------------------------------------
+# hide from all desktops even from xfce (only used via shortcut)
+# if [ -e /usr/share/applications/xfce4-appfinder.desktop ];
+# then
+#     desktop-file-edit --set-key=NoDisplay --set-value=true \
+#         /usr/share/applications/xfce4-appfinder.desktop
+# fi
+
+# ------------------------------------------------------------------------------
+# xfce4-power-manager-settings
+# ------------------------------------------------------------------------------
+# Only show in xfce
+if [ -e /usr/share/applications/xfce4-power-manager-settings.desktop ];
+then
+    desktop-file-edit --remove-key=NotShowIn \
+        /usr/share/applications/xfce4-power-manager-settings.desktop
+
+    desktop-file-edit --add-only-show-in=XFCE \
+        /usr/share/applications/xfce4-power-manager-settings.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# xfce4-xscreenshooter
+# ------------------------------------------------------------------------------
+# hide all desktops even from xfce (use gnome instead)
+if [ -e /usr/share/applications/xfce4-xscreenshooter.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/xfce4-xscreenshooter.desktop
 fi
 
 # ------------------------------------------------------------------------------

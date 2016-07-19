@@ -238,13 +238,16 @@ echo
 
 # adobe-flashplugin: flash
 # aisleriot: solitare game
-# apt-xapian-index:
+# apt-rdepends: reverse dependency lookup
+# apt-xapian-index: for synpatic indexing
 # audacity: audio editing
 # asunder: cd ripper
+# brasero: CD/DVD burner
 # btrfs-tools: filesystem utilities
 # cheese: webcam recorder, picture taker
 # cifs-utils: "common internet filesystem utils" for fileshare utilities, etc.
 # clamtk, clamtk-nautilus: GUI for clamav antivirus tool
+# classicmenu-indicator: categorized app menu for unity
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
 # debconf-utils: needed for debconf-get-selections, etc. for debconf configure
 # diodon: clipboard manager
@@ -271,6 +274,7 @@ echo
 # gufw: GUI for "uncomplicated firewall"
 # hardinfo: system profiler
 # hddtemp: harddrive temp checker
+# htop: process browser
 # httrack: website download utility
 # imagemagick: terminal utilty for image resizing, etc. (needed for nemo
 #   image resize action)
@@ -279,6 +283,7 @@ echo
 # keepassx: password manager
 # klavaro: typing tutor
 # kmfl-keyboard-ipa: ipa keyboard for kmfl
+# lame: MP3 encoder
 # libdvd-pkg: enables DVD playback (downloads and installs libdvdcss2)
 # libreoffice-base
 # libreoffice-sdbc-hsqldb: db backend for LO base
@@ -287,6 +292,7 @@ echo
 # meld: graphical text file compare utility
 # mkusb-nox: teminal usb creator (15.10 issue with usb-creator-gtk)
 # modem-manager-gui: Check balance, top up, check signal strength, etc.
+# mtpfs, mtp-tools: media-transfer-protocol tools: needed for smartphones
 # myspell-en-gb: spell checker for English (UK): needed for Libre Office
 # nautilus-compare: nautilus integration with meld
 # openshot-qt: video editor (-qt is the 2.x series)
@@ -295,11 +301,14 @@ echo
 # pandoc: general markup converter
 # pinta: MS Paint alternative: more simple for new users than gimp
 # python-appindicator: needed for zim app-indicator (maybe others?)
+# rhythmbox: music manager
 # scribus: desktop publisher
 # shotwell: photo editor / manager (can edit single files easily)
+# simplescreenrecorder: 
 # skype
 #    libpulse0:i386: needed for skype sound to work, not listed as dependency
 # soundconverter: convert audio formats
+# soundjuicer: rip CDs
 # ssh: remote access
 # software-center: re-adding until gnome-software does what we need it
 #   to do.
@@ -331,13 +340,16 @@ echo
 apt-get $YES install \
     adobe-flashplugin \
     aisleriot \
+    apt-rdepends \
     apt-xapian-index \
     audacity \
     asunder \
+    brasero \
     btrfs-tools \
     cheese \
     cifs-utils \
     clamtk clamtk-nautilus \
+    classicmenu-indicator \
     dconf-cli \
         dconf-tools \
     debconf-utils \
@@ -372,6 +384,7 @@ apt-get $YES install \
     gufw \
     hardinfo \
     hddtemp \
+    htop \
     httrack \
     kmfl-keyboard-ipa \
     imagemagick \
@@ -379,6 +392,7 @@ apt-get $YES install \
     iperf \
     keepassx \
     klavaro \
+    lame \
     libdvd-pkg \
     libreoffice-base \
     libreoffice-sdbc-hsqldb \
@@ -387,16 +401,20 @@ apt-get $YES install \
     meld \
     mkusb-nox \
     modem-manager-gui \
+    mtpfs mpt-tools \
     nautilus-compare \
     openshot-qt frei0r-plugins \
     pandoc \
     pinta \
     python-appindicator \
+    rhythmbox \
     scribus scribus-doc scribus-template \
     shotwell \
+    simplescreenrecorder \
     skype \
         libpulse0:i386\
     soundconverter \
+    soundjuicer \
     ssh \
     software-center \
     synaptic \

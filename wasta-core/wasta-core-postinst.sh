@@ -15,6 +15,8 @@
 #   2016-02-21 rik: refactored to remove any gnome-shell specific logic
 #   2016-03-01 rik: removing ubuntu 'proposed' repository: not needed to get
 #       cinnamon 2.8 anymore (has been moved to universe)
+#   2016-07-19 rik: enabling ubuntu repositories with "deb .*" instead of
+#       "deb.*" so that deb-src repos not all automatically enabled
 #
 # ==============================================================================
 
@@ -88,12 +90,12 @@ then
 fi
 
 # ensure all ubuntu repositories enabled (will ensure not commented out)
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
-sed -i -e 's@.*\(deb.*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb .*ubuntu.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb .*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb .*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
 
 # canonical.com lists include "partner" for things like skype, etc.
-sed -i -e 's@.*\(deb.*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
+sed -i -e 's@.*\(deb .*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 
 # legacy cleanup: PSO should NOT be in sources.list anymore (ubiquity will
 #   remove when installing)
@@ -327,6 +329,10 @@ echo
 # MAIN System schemas: we have placed our override file in this directory
 # Sending any "error" to null (if key not found don't want to worry user)
 glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1 || true;
+
+# Some Unity dconf values have no schema, need to manually set:
+# /org/compiz/profiles/unity/plugins/unityshell/icon-size 32   NO SCHEMA
+# /org/compiz/profiles/unity/plugins/expo/x-offset 48   NO SCHEMA
 
 # ------------------------------------------------------------------------------
 # Disable GNOME Overlay Scrollbars
