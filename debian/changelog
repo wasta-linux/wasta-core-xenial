@@ -1,3 +1,14 @@
+wasta-core-xenial (1.0.12) xenial; urgency=medium
+
+  * app-adjustments.sh: updates for xfce compatibility
+    - classicmenu-indicator: only show in unity
+    - ubuntu-amazon-default: hide
+  * app-installs.sh: add several apps
+  * postinst: make sure only "deb .*" active, not "deb.*" (or else deb-src
+      activated).
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 19 Jul 2016 14:36:31 -0500
+
 wasta-core-xenial (1.0.11) xenial; urgency=medium
 
   * app-adjustments.sh: removing gcolor2 icon fix (moving to gcolor3)
