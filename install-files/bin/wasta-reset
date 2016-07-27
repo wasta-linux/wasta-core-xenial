@@ -39,6 +39,9 @@
 #       - resetting based on detected sessions, not just active desktop
 #       - NOT restarting current session, instead just tell user to reboot
 #       - exit immediately if initiated as root user
+#   2016-07-27 rik: update unity / gnome reset logic
+#       - xfce: add initial xfce reset logic
+#       - cinnamon: add nemo bookmark restore
 #
 # ==============================================================================
 
@@ -92,16 +95,8 @@ else
 fi
 
 # ------------------------------------------------------------------------------
-# Processing based on active Window Manager
+# Processing based on detected sessions
 # ------------------------------------------------------------------------------
-
-# Searching for "Name: <Anything>".  If WM isn't initialized, will not match
-
-# Check if GNOME window manager is active
-GNOME_ACTIVE=$(wmctrl -m | grep GNOME)
-
-# Check if MUFFIN window manager is active (Cinnamon)
-MUFFIN_ACTIVE=$(wmctrl -m | grep Muffin)
 
 if [ -e /usr/share/xsessions/cinnamon.desktop ];
 then
@@ -114,6 +109,10 @@ then
     SAVE_WORK=$(gsettings get org.cinnamon number-workspaces)
     SAVE_WORK_NAMES=$(gsettings get org.cinnamon workspace-name-overrides)
     SAVE_BACKGROUND=$(gsettings get org.cinnamon.desktop.background picture-uri)
+    SAVE_BOOKMARK_BREAKPOINT=$(gsettings get \
+        org.nemo.window-state sidebar-bookmark-breakpoint)
+
+read -p "bookmark-breakpoint: "$SAVE_BOOKMARK_BREAKPOINT
 
     # --------------------------------------------------------------------------
     # Reset all Cinnamon and Nemo settings to defaults
@@ -128,73 +127,96 @@ then
     gsettings set org.cinnamon number-workspaces "$SAVE_WORK"
     gsettings set org.cinnamon workspace-name-overrides "$SAVE_WORK_NAMES"
     gsettings set org.cinnamon.desktop.background picture-uri "$SAVE_BACKGROUND"
+    gsettings set org.nemo.window-state sidebar-bookmark-breakpoint \
+        "$SAVE_BOOKMARK_BREAKPOINT"
 
     MSG+="User settings for <b>Cinnamon Desktop</b> reset.\n\n"
 fi
 
-if [ -e /usr/share/xsessions/gnome.desktop ];
+if [ -e /usr/share/xsessions/ubuntu.desktop ] | \
+   [ -e /usr/share/xsessions/gnome.desktop ];
 then
-    # GNOME Reset
+    # Unity and GNOME Reset
 
     # --------------------------------------------------------------------------
     # Save keys needing to be restored later
     # --------------------------------------------------------------------------
-    SAVE_FAVORITES=$(gsettings get org.gnome.shell favorite-apps)
     SAVE_BACKGROUND=$(gsettings get org.gnome.desktop.background picture-uri)
+    SAVE_KEYBOARDS=$(gsettings get org.gnome.desktop.input-sources sources)
 
     # --------------------------------------------------------------------------
-    # Reset all GNOME and Nautilus dconf settings to defaults
+    # Reset all shared GNOME and Nautilus dconf settings to defaults
     # --------------------------------------------------------------------------
+    gsettings reset-recursively org.gnome.nautilus
     # schema not defined: gsettings reset-recursively org.gnome.desktop
     dconf reset -f /org/gnome/desktop/
     # schema not defined: gsettings reset-recursively org.gnome.settings-daemon
     dconf reset -f /org/gnome/settings-daemon/
-    # not resetting org.gnome.shell.extensions.*:
-    #   gsettings reset-recursively org.gnome.shell
-    dconf reset -f /org/gnome/shell/
-
-    gsettings reset-recursively org.gnome.nautilus
 
     # --------------------------------------------------------------------------
-    # Restore saved keys
+    # Restore saved shared keys
     # --------------------------------------------------------------------------
-    gsettings set org.gnome.shell favorite-apps "$SAVE_FAVORITES"
     gsettings set org.gnome.desktop.background picture-uri "$SAVE_BACKGROUND"
+    gsettings set org.gnome.desktop.input-sources sources "$SAVE_KEYBOARDS"
 
-    MSG+="User settings for <b>GNOME Desktop</b> reset.\n\n"
+    # --------------------------------------------------------------------------
+    # If detected, reset Gnome-Shell settings to defaults
+    # --------------------------------------------------------------------------
+    if [ -e /usr/share/xsessions/gnome.desktop ];
+    then
+        # save Gnome specific settings
+        SAVE_GNOME_FAVORITES=$(gsettings get org.gnome.shell favorite-apps)
+
+        # not resetting org.gnome.shell.extensions.*:
+        #   gsettings reset-recursively org.gnome.shell
+        dconf reset -f /org/gnome/shell/
+
+        # restore Gnome specific settings
+        gsettings set org.gnome.shell favorite-apps "$SAVE_GNOME_FAVORITES"
+
+        MSG+="User settings for <b>GNOME Desktop</b> reset.\n\n"
+    fi
+
+    # --------------------------------------------------------------------------
+    # If detected, reset Unity settings to defaults
+    # --------------------------------------------------------------------------
+    if [ -e /usr/share/xsessions/ubuntu.desktop ];
+    then
+        # save Unity specific settings
+        SAVE_UNITY_FAVORITES=$(gsettings get com.canonical.Unity.Launcher favorites)
+
+        # Unity Reset
+        dconf reset -f /com/canonical/
+        gsettings reset-recursively org.compiz
+
+        # restore Unity specific settings
+        gsettings set com.canonical.Unity.Launcher favorites "$SAVE_UNITY_FAVORITES"
+
+        MSG+="User settings for <b>Ubuntu Unity Desktop</b> reset.\n\n"
+    fi
 fi
 
-if [ -e /usr/share/xsessions/ubuntu.desktop ];
+if [ -e /usr/share/xsessions/xfce.desktop ];
 then
-    # Unity Reset
+    # XFCE Reset
+    rm -rf $HOME/.config/xfce4
 
-    # --------------------------------------------------------------------------
-    # Save keys needing to be restored later
-    # --------------------------------------------------------------------------
-    SAVE_FAVORITES=$(gsettings get com.canonical.Unity.Launcher favorites)
-    SAVE_BACKGROUND=$(gsettings get org.gnome.desktop.background picture-uri)
-
-    # --------------------------------------------------------------------------
-    # Reset all Unity, Gnome, and Nautilus dconf settings to defaults
-    # --------------------------------------------------------------------------
-    gsettings reset-recursively com.canonical.Unity
-    gsettings reset-recursively org.gnome.nautilus
-    # schema not defined: gsettings reset-recursively org.gnome.desktop
-    dconf reset -f /org/gnome/desktop/
-    # schema not defined: gsettings reset-recursively org.gnome.settings-daemon
-    dconf reset -f /org/gnome/settings-daemon/
-
-    # --------------------------------------------------------------------------
-    # Restore saved keys
-    # --------------------------------------------------------------------------
-    gsettings set com.canonical.Unity.Launcher favorites "$SAVE_FAVORITES"
-    gsettings set org.gnome.desktop.background picture-uri "$SAVE_BACKGROUND"
-
-    MSG+="User settings for <b>Unity Desktop</b> reset.\n\n"
+    MSG+="User settings for <b>XFCE Desktop</b> reset.\n\n"
 fi
 
 MSG+="<b>Finished Processing:</b> You will need
 to restart to see the changes."
+
+# ------------------------------------------------------------------------------
+# TODO: Restart current session
+# ------------------------------------------------------------------------------
+# Searching for "Name: <Anything>".  If WM isn't initialized, will not match
+
+# Check if GNOME window manager is active
+# GNOME_ACTIVE=$(wmctrl -m | grep GNOME)
+
+# Check if MUFFIN window manager is active (Cinnamon)
+# MUFFIN_ACTIVE=$(wmctrl -m | grep Muffin)
 
 # ------------------------------------------------------------------------------
 # Finished
