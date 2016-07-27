@@ -1,3 +1,12 @@
+wasta-core-xenial (1.0.13) xenial; urgency=medium
+
+  * wasta-reset: save and restore nemo sidebar-bookmark-breakpoint
+    - save and restore unity/gnome keyboard settings
+    - initial xfce reset logic
+    - testing new unity reset logic
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 27 Jul 2016 10:05:04 -0500
+
 wasta-core-xenial (1.0.12) xenial; urgency=medium
 
   * app-adjustments.sh: updates for xfce compatibility
