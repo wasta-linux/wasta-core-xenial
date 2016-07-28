@@ -59,11 +59,11 @@
 #           - audacity
 #           - gimp
 #           - zim, python-appindicator
-#   2016-05-04 rik: adding: clipit
+#   2016-05-04 rik: adding:
 #       - fbreader
 #       - inkscape
 #       - scribus
-#     removing: diodon (hangs unity on logout for 90 seconds)
+#   2016-07-28: mtpfs, mtp-tools, sound-juicer, brasero additions
 #
 # ==============================================================================
 
@@ -308,7 +308,7 @@ echo
 # skype
 #    libpulse0:i386: needed for skype sound to work, not listed as dependency
 # soundconverter: convert audio formats
-# soundjuicer: rip CDs
+# sound-juicer: rip CDs
 # ssh: remote access
 # software-center: re-adding until gnome-software does what we need it
 #   to do.
@@ -401,7 +401,7 @@ apt-get $YES install \
     meld \
     mkusb-nox \
     modem-manager-gui \
-    mtpfs mpt-tools \
+    mtpfs mtp-tools \
     nautilus-compare \
     openshot-qt frei0r-plugins \
     pandoc \
@@ -414,7 +414,7 @@ apt-get $YES install \
     skype \
         libpulse0:i386\
     soundconverter \
-    soundjuicer \
+    sound-juicer \
     ssh \
     software-center \
     synaptic \

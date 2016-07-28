@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.14) xenial; urgency=medium
+
+  * app-installs.sh: spelling fix on sound-juicer and mtp-tools
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 28 Jul 2016 09:48:40 -0500
+
 wasta-core-xenial (1.0.13) xenial; urgency=medium
 
   * wasta-reset: save and restore nemo sidebar-bookmark-breakpoint
