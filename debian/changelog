@@ -1,3 +1,10 @@
+wasta-core-xenial (1.0.15) xenial; urgency=medium
+
+  * wasta-reset: explicitly resetting org.cinnamon.* sub schemas, otherwise
+    not getting reset
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 29 Jul 2016 12:31:53 -0500
+
 wasta-core-xenial (1.0.14) xenial; urgency=medium
 
   * app-installs.sh: spelling fix on sound-juicer and mtp-tools

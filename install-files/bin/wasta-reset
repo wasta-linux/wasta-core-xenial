@@ -42,6 +42,9 @@
 #   2016-07-27 rik: update unity / gnome reset logic
 #       - xfce: add initial xfce reset logic
 #       - cinnamon: add nemo bookmark restore
+#   2016-07-29 rik: cinnamon: explicitly resetting the schemas instead of
+#       relying on the rescursive reset of org.cinnamon: some sub-schemas
+#       weren't getting reset otherwise.
 #
 # ==============================================================================
 
@@ -112,12 +115,24 @@ then
     SAVE_BOOKMARK_BREAKPOINT=$(gsettings get \
         org.nemo.window-state sidebar-bookmark-breakpoint)
 
-read -p "bookmark-breakpoint: "$SAVE_BOOKMARK_BREAKPOINT
-
     # --------------------------------------------------------------------------
     # Reset all Cinnamon and Nemo settings to defaults
     # --------------------------------------------------------------------------
     gsettings reset-recursively org.cinnamon
+    gsettings reset-recursively org.cinnamon.desktop.background
+    gsettings reset-recursively org.cinnamon.desktop.interface
+    gsettings reset-recursively org.cinnamon.desktop.lockdown
+    gsettings reset-recursively org.cinnamon.desktop.media-handling
+    gsettings reset-recursively org.cinnamon.desktop.screensaver
+    gsettings reset-recursively org.cinnamon.desktop.session
+    gsettings reset-recursively org.cinnamon.desktop.sound
+    gsettings reset-recursively org.cinnamon.muffin
+    gsettings reset-recursively org.cinnamon.settings-daemon.peripherals.touchpad
+    gsettings reset-recursively org.cinnamon.settings-daemon.plugins.media-keys
+    gsettings reset-recursively org.cinnamon.settings-daemon.plugins.power
+    gsettings reset-recursively org.cinnamon.sounds
+    gsettings reset-recursively org.cinnamon.theme
+    gsettings reset-recursively org.cinnamon.desktop.wm.preferences
     gsettings reset-recursively org.nemo
 
     # --------------------------------------------------------------------------
