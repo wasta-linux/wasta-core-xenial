@@ -32,6 +32,9 @@
 # 2016-07-19 rik: adding xfce compatibility
 #  - hiding ubuntu-amazon-default
 #  - classicmenu-indicator: only show in unity
+# 2016-08-22 rik: org.gnome.font-viewer: won't launch in 16.04 unless comment
+#   out DBus line from desktop file.  Fixed for yakkety, not sure if will
+#   backport to xenial.
 #
 # ==============================================================================
 
@@ -249,6 +252,16 @@ fi
 if [ -e /usr/share/applications/org.gnome.font-viewer.desktop ] && [ -e /usr/share/applications/font-manager.desktop ];
 then
     desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/org.gnome.font-viewer.desktop
+fi
+
+# rik: 16.04 issue launching gnome-font-viewer: see this report:
+# http://askubuntu.com/questions/804639/font-viewer-not-running-in-ubuntu-16-04
+# "solution" is to comment out DBus line.  This should be fixed in future
+# versions but not sure if it will get backported to xenial or not
+if [ -e /usr/share/applications/org.gnome.font-viewer.desktop ];
+then
+    sed -i -e 's@^\(DBus\)@#\1@' \
         /usr/share/applications/org.gnome.font-viewer.desktop
 fi
 
