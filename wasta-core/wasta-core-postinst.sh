@@ -17,6 +17,8 @@
 #       cinnamon 2.8 anymore (has been moved to universe)
 #   2016-07-19 rik: enabling ubuntu repositories with "deb .*" instead of
 #       "deb.*" so that deb-src repos not all automatically enabled
+#   2016-08-22 rik: legacy cleanup: removing 'at' jobs 49, 50 (were part of
+#       64bit Beta ISOs)
 #
 # ==============================================================================
 
@@ -362,6 +364,26 @@ sed -i -e '$a vm.swappiness=10' \
 #    /usr/share/mime/packages/freedesktop.org.xml
 
 #update-mime-database /usr/share/mime
+
+# ------------------------------------------------------------------------------
+# Legacy Cleanup
+# ------------------------------------------------------------------------------
+# original 16.04 64bit BETA ISOs had 2 active "at" jobs.  Need to remove
+if [ "$(atq | grep 49)" ];
+then
+    echo
+    echo "*** removing legacy 'at' job 49"
+    echo
+    atrm 49
+fi
+
+if [ "$(atq | grep 50)" ];
+then
+    echo
+    echo "*** removing legacy 'at' job 50"
+    echo
+    atrm 50
+fi
 
 # ------------------------------------------------------------------------------
 # Finished

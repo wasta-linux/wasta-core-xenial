@@ -63,7 +63,8 @@
 #       - fbreader
 #       - inkscape
 #       - scribus
-#   2016-07-28: mtpfs, mtp-tools, sound-juicer, brasero additions
+#   2016-07-28 rik: mtpfs, mtp-tools, sound-juicer, brasero additions
+#   2016-08-22 rik: inotify-tools, wasta-ibus-xkb
 #
 # ==============================================================================
 
@@ -279,6 +280,7 @@ echo
 # imagemagick: terminal utilty for image resizing, etc. (needed for nemo
 #   image resize action)
 # inkscape: vector graphics editor
+# inotify-tools: terminal utility to watch for file changes
 # iperf: terminal utility for network bandwidth measuring
 # keepassx: password manager
 # klavaro: typing tutor
@@ -326,6 +328,7 @@ echo
 # vim: command-line text editor
 # vlc: play any audio or video files
 # wasta-backup: GUI for rdiff-backup
+# wasta-ibus-xkb: setup of xkb keyboards for ibus input method menu
 # wasta-menus: applicationmenu limiting system
 # wasta-offline: offline updates and installs
 # wasta-remastersys: create ISO of system
@@ -389,6 +392,7 @@ apt-get $YES install \
     kmfl-keyboard-ipa \
     imagemagick \
     inkscape \
+    inotify-tools \
     iperf \
     keepassx \
     klavaro \
@@ -430,6 +434,7 @@ apt-get $YES install \
     vim \
     vlc \
     wasta-backup \
+    wasta-ibus-xkb \
     wasta-menus \
     wasta-offline \
     wasta-remastersys \
