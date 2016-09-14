@@ -35,6 +35,7 @@
 # 2016-08-22 rik: org.gnome.font-viewer: won't launch in 16.04 unless comment
 #   out DBus line from desktop file.  Fixed for yakkety, not sure if will
 #   backport to xenial.
+# 2016-09-14 rik: adding wesay to "Education" category (removing from "Office")
 #
 # ==============================================================================
 
@@ -549,6 +550,28 @@ if [ -e /usr/share/applications/webbrowser-app.desktop ];
 then
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/webbrowser-app.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# wesay
+# ------------------------------------------------------------------------------
+# change to "Education": default is "Office" (other SIL apps all to Education)
+if [ -e /usr/share/applications/sil-wesay.desktop ];
+then
+    desktop-file-edit --add-category=Education \
+        /usr/share/applications/sil-wesay.desktop
+
+    desktop-file-edit --remove-category=Office \
+        /usr/share/applications/sil-wesay.desktop
+fi
+
+if [ -e /usr/share/applications/sil-wesay-config.desktop ];
+then
+    desktop-file-edit --add-category=Education \
+        /usr/share/applications/sil-wesay-config.desktop
+
+    desktop-file-edit --remove-category=Office \
+        /usr/share/applications/sil-wesay-config.desktop
 fi
 
 # ------------------------------------------------------------------------------
