@@ -1,3 +1,10 @@
+wasta-core-xenial (1.0.17) xenial; urgency=medium
+
+  * gschema-override: set unity-greeter background to wasta default
+  * debian/control: added ubuntu-wallpapers-wily, as it includes default bg
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 14 Sep 2016 16:22:14 +0300
+
 wasta-core-xenial (1.0.16) xenial; urgency=medium
 
   * app-adjustments.sh: gnome-font-viewer: need to comment out DBus line in
