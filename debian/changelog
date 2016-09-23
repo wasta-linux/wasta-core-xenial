@@ -1,3 +1,12 @@
+wasta-core-xenial (1.0.18) xenial; urgency=medium
+
+  * install-files/rules.d: adding usb_modeswitch rules file for Huawei modems.
+    For some reason in 16.04 (maybe 14.04 also?) the 'generic Huawei' rule
+    isn't matching the modems (or it will only match the first time each boot).
+    Explicit matches of the rules however work more reliably.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 23 Sep 2016 12:45:34 +0300
+
 wasta-core-xenial (1.0.17) xenial; urgency=medium
 
   * gschema-override: set unity-greeter background to wasta default
