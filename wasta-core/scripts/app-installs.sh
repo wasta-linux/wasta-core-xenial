@@ -65,6 +65,8 @@
 #       - scribus
 #   2016-07-28 rik: mtpfs, mtp-tools, sound-juicer, brasero additions
 #   2016-08-22 rik: inotify-tools, wasta-ibus-xkb
+#   2016-09-30 rik: adding "booketimposer" to replace pdfbklt
+#       - removing gnome-sushi/unoconv since seems confusing for some
 #
 # ==============================================================================
 
@@ -243,6 +245,7 @@ echo
 # apt-xapian-index: for synpatic indexing
 # audacity: audio editing
 # asunder: cd ripper
+# bookletimposer: pdf booklet / imposition tool
 # brasero: CD/DVD burner
 # btrfs-tools: filesystem utilities
 # cheese: webcam recorder, picture taker
@@ -269,7 +272,6 @@ echo
 # gnome-font-viewer: better than "font-manager" for just viewing a font file.
 # gnome-nettool: network tool GUI (traceroute, lookup, etc)
 # gnome-search-tool: more in-depth search than nemo gives
-# gnome-sushi unoconv: file preview (hit spacebar) unoconv needed for lo docs 
 # gparted: partition manager
 # grsync: GUI rsync tool
 # gufw: GUI for "uncomplicated firewall"
@@ -347,6 +349,7 @@ apt-get $YES install \
     apt-xapian-index \
     audacity \
     asunder \
+    bookletimposer \
     brasero \
     btrfs-tools \
     cheese \
@@ -381,7 +384,6 @@ apt-get $YES install \
     gnome-font-viewer \
     gnome-nettool \
     gnome-search-tool \
-    gnome-sushi unoconv \
     gparted \
     grsync \
     gufw \

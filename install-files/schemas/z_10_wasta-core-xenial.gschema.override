@@ -41,6 +41,7 @@ theme-name = 'Ambiance'
 
 [org.gnome.desktop.background]
 show-desktop-icons = true
+picture-uri = '/usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
 
 [org.gnome.desktop.interface]
 clock-format = '12h'

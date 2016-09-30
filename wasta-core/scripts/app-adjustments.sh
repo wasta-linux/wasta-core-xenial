@@ -36,6 +36,8 @@
 #   out DBus line from desktop file.  Fixed for yakkety, not sure if will
 #   backport to xenial.
 # 2016-09-14 rik: adding wesay to "Education" category (removing from "Office")
+# 2016-09-30 rik: removing chromium-app-launcher customization: Google has
+#   deprecated it.
 #
 # ==============================================================================
 
@@ -128,18 +130,6 @@ then
     #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/checkbox-converged.desktop >/dev/null 2>&1 || true;
-fi
-
-# ------------------------------------------------------------------------------
-# chromium-browser
-# ------------------------------------------------------------------------------
-if [ -e /usr/bin/chromium-browser ];
-then
-    if ! [ -e /usr/share/applications/chromium-app-list.desktop ];
-    then
-        # add app launcher if not found
-        cp $DIR/resources/chromium-app-list.desktop /usr/share/applications
-    fi
 fi
 
 # ------------------------------------------------------------------------------
@@ -637,6 +627,8 @@ echo
 # preferred way to set defaults is with xdg-mime (but its man says that the
 #   default function shouldn't be used as root?)
 
+# rik: to find "filetype" for file: xdg-mime query filetype <filename>
+
 sed -i \
     -e 's@\(audio.*\)=.*@\1=vlc.desktop@' \
     -e 's@\(video.*\)=.*@\1=vlc.desktop@' \
@@ -647,8 +639,10 @@ sed -i \
     -e 's@\(text/xml\)=.*@\1=org.gnome.gedit.desktop@' \
     -e '$a application/x-extension-htm=firefox.desktop' \
     -e '$a application/x-font-ttf=org.gnome.font-viewer.desktop' \
+    -e '$a application/x-shellscript=org.gnome.gedit.desktop' \
     -e '\@application/x-extension-htm=@d' \
     -e '\@application/x-font-ttf=@d' \
+    -e '\@application/x-shellscript=@d' \
     /etc/gnome/defaults.list \
     /usr/share/applications/defaults.list \
     /usr/share/gnome/applications/defaults.list \

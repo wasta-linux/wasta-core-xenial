@@ -29,6 +29,8 @@
 #       as can happen when using wasta-offline "offline only mode") apt-get purge
 #       will error and not remove anything.  So instead generating list of
 #       packages that are installed to remove.
+#   2016-09-30 rik: adding fonts-noto-cjk (conflicts with font manager)
+#       - adding gnome-sushi, nemo-preview (confusing for some)
 #
 # ==============================================================================
 
@@ -79,6 +81,8 @@ echo
 #   - but removing it will remove ubuntu-desktop so not removing
 # deja-dup: we use wasta-backup
 # empathy: chat client
+# fonts-noto-cjk: conflicts with font-manager: newer font-manager from ppa
+#       handles it, but it is too different to use
 # fonts-*: non-english fonts
 # gcolor2: color picker (but we upgraded to gcolor3)
 # gdm: gnome display manager (we use lightdm)
@@ -86,7 +90,9 @@ echo
 # gnome-orca: screen reader
 # gnome-software: removing until we can sort out how to add SIL, PPA apps
 #   and "non-gui" apps.
+# gnome-sushi unoconv:confusing for some
 # landscape-client-ui-install: pay service only for big corporations
+# nemo-preview: confusing for some
 # openshot: now use openshot-qt (2.x) ... openshot is 1.4.x
 # totem: not needed as vlc handles all video/audio
 # transmission: normal users doing torrents probably isn't preferred
@@ -103,6 +109,7 @@ echo
 pkgToRemoveListFull="\
     deja-dup \
     empathy-common \
+    fonts-noto-cjk \
     fonts-*tlwg* \
         fonts-khmeros-core \
         fonts-lao \
@@ -113,7 +120,9 @@ pkgToRemoveListFull="\
     glipper \
     gnome-orca \
     gnome-software \
+    gnome-sushi unoconv \
     landscape-client-ui-install \
+    nemo-preview \
     openshot \
     totem \
         totem-common \
