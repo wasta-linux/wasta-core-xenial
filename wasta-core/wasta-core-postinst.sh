@@ -20,6 +20,7 @@
 #   2016-08-22 rik: legacy cleanup: removing 'at' jobs 49, 50 (were part of
 #       64bit Beta ISOs)
 #   2016-09-30 rik: usb_modeswitch.conf: enabling SetStorageDelay
+#       - added LibreOffice 5.1 PPA
 #
 # ==============================================================================
 
@@ -187,6 +188,26 @@ else
     sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main' \
         -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main@d' \
         $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
+fi
+
+# add LibreOffice 5.1 PPA
+if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list ];
+then
+    echo
+    echo "*** Adding LibreOffice 5.1 PPA"
+    echo
+    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main" | \
+        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list
+    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list
+else
+    # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
+    echo
+    echo "*** LibreOffice 5.1 PPA already exists, ensuring active"
+    echo
+    sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main' \
+        -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main@d' \
+        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list
 fi
 
 # apt-get adjustments

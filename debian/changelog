@@ -1,6 +1,7 @@
 wasta-core-xenial (1.0.19) xenial; urgency=medium
 
   * postinst: usb_modeswitch: enabling SetStorageDelay=4
+    - added LO 5.1 PPA
   * app-adjustments.sh: setting gedit as default for application/x-shellscript
   * wasta-initial-setup: adding apt-get autoremove
   * app-removals.sh: removing fonts-noto-cjk (conflicts with font-manager)
