@@ -19,6 +19,7 @@
 #       "deb.*" so that deb-src repos not all automatically enabled
 #   2016-08-22 rik: legacy cleanup: removing 'at' jobs 49, 50 (were part of
 #       64bit Beta ISOs)
+#   2016-09-30 rik: usb_modeswitch.conf: enabling SetStorageDelay
 #
 # ==============================================================================
 
@@ -316,6 +317,17 @@ else
     cat << EOF > /etc/default/apport
 enabled=0
 EOF
+fi
+
+# ------------------------------------------------------------------------------
+# usb_modeswitch: enable SetStorageDelay
+# ------------------------------------------------------------------------------
+if [ -e /etc/usb_modeswitch.conf ];
+then
+    echo
+    echo "*** usb_modeswitch: enabling SetStorageDelay"
+    echo
+    sed -i -e 's@#.*\(SetStorageDelay\)@\1=4@' /etc/usb_modeswitch.conf
 fi
 
 # ------------------------------------------------------------------------------

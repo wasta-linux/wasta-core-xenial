@@ -637,6 +637,8 @@ echo
 # preferred way to set defaults is with xdg-mime (but its man says that the
 #   default function shouldn't be used as root?)
 
+# rik: to find "filetype" for file: xdg-mime query filetype <filename>
+
 sed -i \
     -e 's@\(audio.*\)=.*@\1=vlc.desktop@' \
     -e 's@\(video.*\)=.*@\1=vlc.desktop@' \
@@ -647,8 +649,10 @@ sed -i \
     -e 's@\(text/xml\)=.*@\1=org.gnome.gedit.desktop@' \
     -e '$a application/x-extension-htm=firefox.desktop' \
     -e '$a application/x-font-ttf=org.gnome.font-viewer.desktop' \
+    -e '$a application/x-shellscript=org.gnome.gedit.desktop' \
     -e '\@application/x-extension-htm=@d' \
     -e '\@application/x-font-ttf=@d' \
+    -e '\@application/x-shellscript=@d' \
     /etc/gnome/defaults.list \
     /usr/share/applications/defaults.list \
     /usr/share/gnome/applications/defaults.list \

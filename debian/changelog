@@ -1,3 +1,13 @@
+wasta-core-xenial (1.0.19) xenial; urgency=medium
+
+  * postinst: usb_modeswitch: enabling SetStorageDelay=4
+  * app-adjustments.sh: setting gedit as default for application/x-shellscript
+  * wasta-initial-setup: adding apt-get autoremove
+  * app-removals.sh: removing fonts-noto-cjk (conflicts with font-manager)
+  * gschema-overrides: setting background for Unity (goodbye purple!)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 30 Sep 2016 13:56:50 +0300
+
 wasta-core-xenial (1.0.18) xenial; urgency=medium
 
   * install-files/rules.d: adding usb_modeswitch rules file for Huawei modems.

@@ -10,6 +10,7 @@
 #   2015-10-25 rik: re-working for Ubuntu 15.10
 #       - accounting for 'auto' input parameter: will then run
 #         non-interactively.
+#   2016-09-30 rik: adding 'apt-get autoremove' at end of script
 #
 # ==============================================================================
 
@@ -74,8 +75,12 @@ fi
 if [ "$1" == "auto" ];
 then
     AUTO="auto"
+    
+    # needed for apt-get
+    YES="--yes"
 else
     AUTO=""
+    YES=""
 fi
 
 echo
@@ -138,7 +143,7 @@ then
 fi
 
 echo
-echo "*** Calling app-removals.sh script"
+echo "*** Calling app-removals.sh script (cleanup after app-installs.sh)"
 echo
 bash $DIR/scripts/app-removals.sh $AUTO
 LASTERRORLEVEL=$?
@@ -161,6 +166,33 @@ then
     echo " *** ERROR in return from app-adjustments.sh. Exiting."
     echo
     exit 1
+fi
+
+echo
+echo "*** Performing apt-get autoremove"
+echo
+apt-get $YES autoremove
+LASTERRORLEVEL=$?
+if [ "$LASTERRORLEVEL" -ne "0" ];
+then
+    if [ "$AUTO" ];
+    then
+        echo
+        echo "*** ERROR: apt-get command failed. You may want to re-run!"
+        echo
+    else
+        echo
+        echo "     --------------------------------------------------------"
+        echo "     'APT' Error During Update / Installation"
+        echo "     --------------------------------------------------------"
+        echo
+        echo "     An error was encountered with the last 'apt' command."
+        echo "     You should close this script and re-start it, or"
+        echo "     correct the error manually before proceeding."
+        echo
+        read -p "     Press any key to proceed..."
+        echo
+    fi
 fi
 
 echo

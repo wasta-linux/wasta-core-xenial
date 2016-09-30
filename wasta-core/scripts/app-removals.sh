@@ -29,6 +29,7 @@
 #       as can happen when using wasta-offline "offline only mode") apt-get purge
 #       will error and not remove anything.  So instead generating list of
 #       packages that are installed to remove.
+#   2016-09-30 rik: removing fonts-noto-cjk (conflicts with font manager)
 #
 # ==============================================================================
 
@@ -79,6 +80,8 @@ echo
 #   - but removing it will remove ubuntu-desktop so not removing
 # deja-dup: we use wasta-backup
 # empathy: chat client
+# fonts-noto-cjk: conflicts with font-manager: newer font-manager from ppa
+#       handles it, but it is too different to use
 # fonts-*: non-english fonts
 # gcolor2: color picker (but we upgraded to gcolor3)
 # gdm: gnome display manager (we use lightdm)
@@ -103,6 +106,7 @@ echo
 pkgToRemoveListFull="\
     deja-dup \
     empathy-common \
+    fonts-noto-cjk \
     fonts-*tlwg* \
         fonts-khmeros-core \
         fonts-lao \
