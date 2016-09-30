@@ -36,6 +36,8 @@
 #   out DBus line from desktop file.  Fixed for yakkety, not sure if will
 #   backport to xenial.
 # 2016-09-14 rik: adding wesay to "Education" category (removing from "Office")
+# 2016-09-30 rik: removing chromium-app-launcher customization: Google has
+#   deprecated it.
 #
 # ==============================================================================
 
@@ -128,18 +130,6 @@ then
     #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/checkbox-converged.desktop >/dev/null 2>&1 || true;
-fi
-
-# ------------------------------------------------------------------------------
-# chromium-browser
-# ------------------------------------------------------------------------------
-if [ -e /usr/bin/chromium-browser ];
-then
-    if ! [ -e /usr/share/applications/chromium-app-list.desktop ];
-    then
-        # add app launcher if not found
-        cp $DIR/resources/chromium-app-list.desktop /usr/share/applications
-    fi
 fi
 
 # ------------------------------------------------------------------------------
