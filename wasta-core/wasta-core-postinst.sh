@@ -348,7 +348,7 @@ then
     echo
     echo "*** usb_modeswitch: enabling SetStorageDelay"
     echo
-    sed -i -e 's@#.*\(SetStorageDelay\)@\1=4@' /etc/usb_modeswitch.conf
+    sed -i -e 's@.*\(SetStorageDelay\)=.*@\1=4@' /etc/usb_modeswitch.conf
 fi
 
 # ------------------------------------------------------------------------------
