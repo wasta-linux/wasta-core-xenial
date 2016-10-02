@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.22) xenial; urgency=medium
+
+  * postinst: correcting usb-modeswitch 'SetStorageDelay' syntax
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 02 Oct 2016 20:28:51 +0300
+
 wasta-core-xenial (1.0.21) xenial; urgency=medium
 
   * app-removals.sh: adding mpv, gnome-flashback (not sure how installed)
