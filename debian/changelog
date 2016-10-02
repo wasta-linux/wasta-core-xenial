@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.20) xenial; urgency=medium
+
+  * postinst: syntax fix on LO 5.1 PPA addition
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 02 Oct 2016 12:39:26 +0300
+
 wasta-core-xenial (1.0.19) xenial; urgency=medium
 
   * postinst: usb_modeswitch: enabling SetStorageDelay=4
