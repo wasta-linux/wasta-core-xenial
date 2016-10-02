@@ -31,6 +31,7 @@
 #       packages that are installed to remove.
 #   2016-09-30 rik: adding fonts-noto-cjk (conflicts with font manager)
 #       - adding gnome-sushi, nemo-preview (confusing for some)
+#   2016-10-02 rik: adding gnome-flashback, mpv
 #
 # ==============================================================================
 
@@ -87,11 +88,13 @@ echo
 # gcolor2: color picker (but we upgraded to gcolor3)
 # gdm: gnome display manager (we use lightdm)
 # glipper: we now use diodon
+# gnome-flashback: not sure how this got installed, but don't want as default
 # gnome-orca: screen reader
 # gnome-software: removing until we can sort out how to add SIL, PPA apps
 #   and "non-gui" apps.
 # gnome-sushi unoconv:confusing for some
 # landscape-client-ui-install: pay service only for big corporations
+# mpv: media player - not sure how this got installed
 # nemo-preview: confusing for some
 # openshot: now use openshot-qt (2.x) ... openshot is 1.4.x
 # totem: not needed as vlc handles all video/audio
@@ -118,10 +121,12 @@ pkgToRemoveListFull="\
     gcolor2 \
     gdm \
     glipper \
+    gnome-flashback \
     gnome-orca \
     gnome-software \
     gnome-sushi unoconv \
     landscape-client-ui-install \
+    mpv \
     nemo-preview \
     openshot \
     totem \
