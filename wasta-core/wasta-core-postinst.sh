@@ -191,7 +191,7 @@ else
 fi
 
 # add LibreOffice 5.1 PPA
-if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list ];
+if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list ];
 then
     echo
     echo "*** Adding LibreOffice 5.1 PPA"
