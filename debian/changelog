@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.21) xenial; urgency=medium
+
+  * app-removals.sh: adding mpv, gnome-flashback (not sure how installed)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 02 Oct 2016 13:31:33 +0300
+
 wasta-core-xenial (1.0.20) xenial; urgency=medium
 
   * postinst: syntax fix on LO 5.1 PPA addition
