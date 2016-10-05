@@ -1,3 +1,10 @@
+wasta-core-xenial (1.0.23) xenial; urgency=medium
+
+  * app-installs.sh: ubiquity changed to --no-install-recommends so doesn't
+    pull in all the kde stuff
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Wed, 05 Oct 2016 11:14:28 +0300
+
 wasta-core-xenial (1.0.22) xenial; urgency=medium
 
   * postinst: correcting usb-modeswitch 'SetStorageDelay' syntax

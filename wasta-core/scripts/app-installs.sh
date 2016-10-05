@@ -67,6 +67,8 @@
 #   2016-08-22 rik: inotify-tools, wasta-ibus-xkb
 #   2016-09-30 rik: adding "booketimposer" to replace pdfbklt
 #       - removing gnome-sushi/unoconv since seems confusing for some
+#   2016-10-05 rik: changing 'ubiquity' to install 'no-recommends' or else will
+#       pull in all the kde dependencies.
 #
 # ==============================================================================
 
@@ -320,8 +322,10 @@ echo
 # testdisk: photorec tool for recovery of deleted files
 # traceroute: terminal utility
 # ttf-mscorefonts-installer: installs standard Microsoft fonts
-# ubiquity ubiquity-slideshow-ubuntu:
-#   add here since needs tweaking for ethiopia (in app-adjustments.sh)
+# ubiquity: done with --no-install-recommends so don't pull kde stuff
+#   - ubiquity installed here since needed to be customized for Ethiopia
+#   in app-adjustments.sh
+# ubiquity-slideshow-ubuntu: add here so not needed by wasta-remastersys
 # ubuntu-restricted-extras: mp3, flash, etc.
 # ubuntu-wallpapers-*: wallpaper collections
 # unity-tweak-tool: unity desktop settings tweak tool
@@ -427,7 +431,7 @@ apt-get $YES install \
     testdisk \
     traceroute \
     ttf-mscorefonts-installer \
-    ubiquity ubiquity-slideshow-ubuntu \
+    ubiquity-slideshow-ubuntu \
     ubuntu-restricted-extras \
     ubuntu-wallpapers-karmic \
     ubuntu-wallpapers-utopic \
@@ -447,6 +451,32 @@ apt-get $YES install \
     xul-ext-lightning \
     youtube-dl \
     zim
+
+    LASTERRORLEVEL=$?
+    if [ "$LASTERRORLEVEL" -ne "0" ];
+    then
+        if [ "$AUTO" ];
+        then
+            echo
+            echo "*** ERROR: apt-get command failed. You may want to re-run!"
+            echo
+        else
+            echo
+            echo "     --------------------------------------------------------"
+            echo "     'APT' Error During Update / Installation"
+            echo "     --------------------------------------------------------"
+            echo
+            echo "     An error was encountered with the last 'apt' command."
+            echo "     You should close this script and re-start it, or"
+            echo "     correct the error manually before proceeding."
+            echo
+            read -p "     Press any key to proceed..."
+            echo
+        fi
+    fi
+
+# ubiquity: can't have 'recommends' or else will get lots of kde stuff
+apt-get --yes install --no-install-recommends ubiquity
 
     LASTERRORLEVEL=$?
     if [ "$LASTERRORLEVEL" -ne "0" ];
