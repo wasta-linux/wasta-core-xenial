@@ -1,3 +1,12 @@
+wasta-core-xenial (1.0.24) xenial; urgency=medium
+
+  * postinst: minor syntax cleanup for 'SetStorageDelay' enabling
+  * app-adjustments.sh: setting ubiquity to "NoDisplay=true"
+  * app-installs.sh: adding ubiquity-frontend-gtk (so won't need to be
+    re-downloaded by wasta-remastersys)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 07 Oct 2016 10:24:53 +0300
+
 wasta-core-xenial (1.0.23) xenial; urgency=medium
 
   * app-installs.sh: ubiquity changed to --no-install-recommends so doesn't

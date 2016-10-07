@@ -325,7 +325,8 @@ echo
 # ubiquity: done with --no-install-recommends so don't pull kde stuff
 #   - ubiquity installed here since needed to be customized for Ethiopia
 #   in app-adjustments.sh
-# ubiquity-slideshow-ubuntu: add here so not needed by wasta-remastersys
+# ubiquity-frontend-gtk ubiquity-slideshow-ubuntu:
+#   add here so not needed to be downloaded by wasta-remastersys
 # ubuntu-restricted-extras: mp3, flash, etc.
 # ubuntu-wallpapers-*: wallpaper collections
 # unity-tweak-tool: unity desktop settings tweak tool
@@ -431,7 +432,7 @@ apt-get $YES install \
     testdisk \
     traceroute \
     ttf-mscorefonts-installer \
-    ubiquity-slideshow-ubuntu \
+    ubiquity-frontend-gtk ubiquity-slideshow-ubuntu \
     ubuntu-restricted-extras \
     ubuntu-wallpapers-karmic \
     ubuntu-wallpapers-utopic \
@@ -451,32 +452,6 @@ apt-get $YES install \
     xul-ext-lightning \
     youtube-dl \
     zim
-
-    LASTERRORLEVEL=$?
-    if [ "$LASTERRORLEVEL" -ne "0" ];
-    then
-        if [ "$AUTO" ];
-        then
-            echo
-            echo "*** ERROR: apt-get command failed. You may want to re-run!"
-            echo
-        else
-            echo
-            echo "     --------------------------------------------------------"
-            echo "     'APT' Error During Update / Installation"
-            echo "     --------------------------------------------------------"
-            echo
-            echo "     An error was encountered with the last 'apt' command."
-            echo "     You should close this script and re-start it, or"
-            echo "     correct the error manually before proceeding."
-            echo
-            read -p "     Press any key to proceed..."
-            echo
-        fi
-    fi
-
-# ubiquity: can't have 'recommends' or else will get lots of kde stuff
-apt-get --yes install --no-install-recommends ubiquity
 
     LASTERRORLEVEL=$?
     if [ "$LASTERRORLEVEL" -ne "0" ];

@@ -38,6 +38,7 @@
 # 2016-09-14 rik: adding wesay to "Education" category (removing from "Office")
 # 2016-09-30 rik: removing chromium-app-launcher customization: Google has
 #   deprecated it.
+# 2016-10-07 rik: ubiquity: set to not show if found
 #
 # ==============================================================================
 
@@ -462,6 +463,16 @@ then
     #   remove this override: Amharic is not wanted as hardcoded language
     #   Most Ethiopians will use English
     sed -i -e '\@deflang=am@d' /usr/share/ubiquity/localechooser-apply
+fi
+
+# always hide (this comes from ubiquity-frontend-gtk, which we want installed
+#   so it doesn't have to be downloaded by wasta-remastersys)
+if [ -e /usr/share/applications/ubiquity.desktop ];
+then
+    # sending output to /dev/null because desktop file has errors from
+    #   ubuntu that I am not fixing (invalid use of "'" in Exec line)
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/ubiquity.desktop >/dev/null 2>&1 || true;
 fi
 
 # ------------------------------------------------------------------------------
