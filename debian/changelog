@@ -1,3 +1,9 @@
+wasta-core-xenial (1.0.25) xenial; urgency=medium
+
+  * install-files/xdg: added goldendict.desktop autostart (inactive)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 31 Oct 2016 10:42:35 +0300
+
 wasta-core-xenial (1.0.24) xenial; urgency=medium
 
   * postinst: minor syntax cleanup for 'SetStorageDelay' enabling
