@@ -32,6 +32,7 @@
 #   2016-09-30 rik: adding fonts-noto-cjk (conflicts with font manager)
 #       - adding gnome-sushi, nemo-preview (confusing for some)
 #   2016-10-02 rik: adding gnome-flashback, mpv
+#   2016-11-09 rik: adding 'whoopsie'
 #
 # ==============================================================================
 
@@ -102,6 +103,7 @@ echo
 # ttf-* fonts: non-english font families
 # unity-webapps-common: amazon shopping lens, etc.
 # webbrowser-app: ubuntu web browser brought in by unity-tweak-tool
+# whoopsie: ubuntu crash report system but hangs shutdown
 # xterm:
 #   - removing it will remove scripture-app-builder, etc. so not removing
 
@@ -142,7 +144,8 @@ pkgToRemoveListFull="\
         ttf-unfonts-core \
         ttf-wqy-microhei \
     unity-webapps-common \
-    webbrowser-app"
+    webbrowser-app \
+    whoopsie"
 
 pkgToRemoveList=""
 for pkgToRemove in $(echo $pkgToRemoveListFull); do
