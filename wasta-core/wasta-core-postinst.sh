@@ -21,6 +21,7 @@
 #       64bit Beta ISOs)
 #   2016-09-30 rik: usb_modeswitch.conf: enabling SetStorageDelay
 #       - added LibreOffice 5.1 PPA
+#   2016-12-13 rik: adding sil-2016.gpg key
 #
 # ==============================================================================
 
@@ -145,6 +146,7 @@ echo
 echo "*** Adding Repository GPG Keys"
 echo
 apt-key add $DIR/keys/sil.gpg
+apt-key add $DIR/keys/sil-2016.gpg
 apt-key add $DIR/keys/libreoffice-ppa.gpg
 apt-key add $DIR/keys/wasta-linux-ppa.gpg
 

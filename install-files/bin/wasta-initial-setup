@@ -125,7 +125,7 @@ then
 fi
 
 echo
-echo "*** Calling app-installs.sh script (after app-installs.sh)"
+echo "*** Calling app-installs.sh script"
 echo
 bash $DIR/scripts/app-installs.sh $AUTO
 LASTERRORLEVEL=$?
