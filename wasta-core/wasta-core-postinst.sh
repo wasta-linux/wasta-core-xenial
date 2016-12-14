@@ -22,6 +22,8 @@
 #   2016-09-30 rik: usb_modeswitch.conf: enabling SetStorageDelay
 #       - added LibreOffice 5.1 PPA
 #   2016-12-13 rik: adding sil-2016.gpg key
+#   2016-12-14 rik: fix "legacy cleanup" of pso in sources.list so don't
+#       cause problems for the PNG users with local mirrors.
 #
 # ==============================================================================
 
@@ -104,7 +106,7 @@ sed -i -e 's@.*\(deb .*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
 
 # legacy cleanup: PSO should NOT be in sources.list anymore (ubiquity will
 #   remove when installing)
-sed -i -e '\@packages.sil.org@d' $APT_SOURCES
+sed -i -e '\@http://packages.sil.org/ubuntu@d' $APT_SOURCES
 
 # add SIL repository to sources.list.d
 #   (otherwise ubiquity comments out when installing)
