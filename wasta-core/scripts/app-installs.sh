@@ -69,6 +69,7 @@
 #       - removing gnome-sushi/unoconv since seems confusing for some
 #   2016-10-05 rik: changing 'ubiquity' to install 'no-recommends' or else will
 #       pull in all the kde dependencies.
+#   2017-03-14 rik: adding bloom-desktop, art-of-reading, hfsprogs, gddrescue
 #
 # ==============================================================================
 
@@ -245,8 +246,10 @@ echo
 # aisleriot: solitare game
 # apt-rdepends: reverse dependency lookup
 # apt-xapian-index: for synpatic indexing
+# art-of-reading: for bloom
 # audacity: audio editing
 # asunder: cd ripper
+# bloom-desktop: sil bloom
 # bookletimposer: pdf booklet / imposition tool
 # brasero: CD/DVD burner
 # btrfs-tools: filesystem utilities
@@ -266,6 +269,7 @@ echo
 # fonts-crosextra-carlito: metrically compatible with "Calibri"
 # fonts-sil-*: standard SIL fonts
 # gcolor3: color picker
+# gddrescue: data recovery tool
 # gdebi: graphical .deb installer
 # gimp: advanced graphics editor
 # git: command-line git
@@ -279,6 +283,7 @@ echo
 # gufw: GUI for "uncomplicated firewall"
 # hardinfo: system profiler
 # hddtemp: harddrive temp checker
+# hfsprogs: for apple hfs compatiblity
 # htop: process browser
 # httrack: website download utility
 # imagemagick: terminal utilty for image resizing, etc. (needed for nemo
@@ -352,8 +357,10 @@ apt-get $YES install \
     aisleriot \
     apt-rdepends \
     apt-xapian-index \
+    art-of-reading \
     audacity \
     asunder \
+    bloom-desktop \
     bookletimposer \
     brasero \
     btrfs-tools \
@@ -380,6 +387,7 @@ apt-get $YES install \
         fonts-sil-gentiumplus \
         fonts-sil-gentiumpluscompact \
     gcolor3 \
+    gddrescue \
     gdebi \
     gimp \
     git \
@@ -394,6 +402,7 @@ apt-get $YES install \
     gufw \
     hardinfo \
     hddtemp \
+    hfsprogs \
     htop \
     httrack \
     kmfl-keyboard-ipa \
