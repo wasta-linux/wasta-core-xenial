@@ -39,6 +39,7 @@
 # 2016-09-30 rik: removing chromium-app-launcher customization: Google has
 #   deprecated it.
 # 2016-10-07 rik: ubiquity: set to not show if found
+# 2017-03-15 rik: simple-scan set to launch with XDG_CURRENT_DESKTOP=Unity
 #
 # ==============================================================================
 
@@ -435,6 +436,16 @@ then
 
     desktop-file-edit --add-category=X-XFCE-HardwareSettings \
         /usr/share/applications/pavucontrol.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# simple-scan
+# ------------------------------------------------------------------------------
+# Disable csd
+if [ -e /usr/share/applications/simple-scan.desktop ];
+then
+    desktop-file-edit --set-key=Exec --set-value="env XDG_CURRENT_DESKTOP=Unity simple-scan" \
+        /usr/share/applications/simple-scan.desktop
 fi
 
 # ------------------------------------------------------------------------------
