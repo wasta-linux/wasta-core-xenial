@@ -1,3 +1,10 @@
+wasta-core-xenial (1.1.4) xenial; urgency=medium
+
+  * app-installs: using bloom-desktop-beta instead of bloom-desktop.  Beta
+    is at 3.8 which is a huge performance gain for Linux over 3.7.
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 18 Mar 2017 14:12:59 +0300
+
 wasta-core-xenial (1.1.3) xenial; urgency=medium
 
   * app-installs: adding hfsprogs, gddrescue, bloom-desktop, art-of-reading
