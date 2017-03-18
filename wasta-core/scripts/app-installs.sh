@@ -249,7 +249,7 @@ echo
 # art-of-reading: for bloom
 # audacity: audio editing
 # asunder: cd ripper
-# bloom-desktop: sil bloom
+# bloom-desktop-beta: sil bloom
 # bookletimposer: pdf booklet / imposition tool
 # brasero: CD/DVD burner
 # btrfs-tools: filesystem utilities
@@ -360,7 +360,7 @@ apt-get $YES install \
     art-of-reading \
     audacity \
     asunder \
-    bloom-desktop \
+    bloom-desktop-beta \
     bookletimposer \
     brasero \
     btrfs-tools \
