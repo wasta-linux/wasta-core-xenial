@@ -1,3 +1,10 @@
+wasta-core-xenial (1.1.5) xenial; urgency=medium
+
+  * app-installs: bloom-desktop-beta only at pso experimental, so reverting
+    to include bloom-desktop only :-(
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 18 Mar 2017 14:21:35 +0300
+
 wasta-core-xenial (1.1.4) xenial; urgency=medium
 
   * app-installs: using bloom-desktop-beta instead of bloom-desktop.  Beta
