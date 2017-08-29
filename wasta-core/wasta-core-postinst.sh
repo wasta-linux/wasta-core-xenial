@@ -24,6 +24,9 @@
 #   2016-12-13 rik: adding sil-2016.gpg key
 #   2016-12-14 rik: fix "legacy cleanup" of pso in sources.list so don't
 #       cause problems for the PNG users with local mirrors.
+#   2017-08-28 rik: repository settings not re-activated IF #wasta detected
+#       at end of repository line (indicating that some wasta process has
+#       intentionally deactivated them)
 #
 # ==============================================================================
 
@@ -50,6 +53,8 @@ echo
 
 # Setup Diretory for later reference
 DIR=/usr/share/wasta-core
+
+SERIES=$(lsb_release -sc)
 
 # ------------------------------------------------------------------------------
 # Configure sources and apt settings
@@ -97,12 +102,14 @@ then
 fi
 
 # ensure all ubuntu repositories enabled (will ensure not commented out)
-sed -i -e 's@.*\(deb .*ubuntu.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
-sed -i -e 's@.*\(deb .*ubuntu.com/ubuntu.* xenial-updates \)@\1@' $APT_SOURCES
-sed -i -e 's@.*\(deb .*ubuntu.com/ubuntu.* xenial-security \)@\1@' $APT_SOURCES
+# DO NOT match any lines ending in #wasta
+sed -i -e '/#wasta$/! s@.*\(deb .*ubuntu.com/ubuntu.* '$SERIES' \)@\1@' $APT_SOURCES
+sed -i -e '/#wasta$/! s@.*\(deb .*ubuntu.com/ubuntu.* '$SERIES'-updates \)@\1@' $APT_SOURCES
+sed -i -e '/#wasta$/! s@.*\(deb .*ubuntu.com/ubuntu.* '$SERIES'-security \)@\1@' $APT_SOURCES
 
 # canonical.com lists include "partner" for things like skype, etc.
-sed -i -e 's@.*\(deb .*canonical.com/ubuntu.* xenial \)@\1@' $APT_SOURCES
+# DO NOT match any lines ending in #wasta
+sed -i -e '/#wasta$/! s@.*\(deb .*canonical.com/ubuntu.* '$SERIES' \)@\1@' $APT_SOURCES
 
 # legacy cleanup: PSO should NOT be in sources.list anymore (ubiquity will
 #   remove when installing)
@@ -110,37 +117,35 @@ sed -i -e '\@http://packages.sil.org/ubuntu@d' $APT_SOURCES
 
 # add SIL repository to sources.list.d
 #   (otherwise ubiquity comments out when installing)
-if ! [ -e $APT_SOURCES_D/packages-sil-org-xenial.list ];
+if ! [ -e $APT_SOURCES_D/packages-sil-org-$SERIES.list ];
 then
     echo
     echo "*** Adding SIL Repository"
     echo
 
-    echo "deb http://packages.sil.org/ubuntu xenial main" | \
-        tee $APT_SOURCES_D/packages-sil-org-xenial.list
-    echo "# deb-src http://packages.sil.org/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/packages-sil-org-xenial.list
+    echo "deb http://packages.sil.org/ubuntu '$SERIES' main" | \
+        tee $APT_SOURCES_D/packages-sil-org-$SERIES.list
+    echo "# deb-src http://packages.sil.org/ubuntu '$SERIES' main" | \
+        tee -a $APT_SOURCES_D/packages-sil-org-$SERIES.list
 else
     # found, but ensure PSO main ACTIVE (user could have accidentally disabled)
-    echo
-    echo "*** SIL Repository already exists, ensuring active"
-    echo
-    sed -i -e 's@.*\(deb http://packages.sil.org\)@\1@' \
-        $APT_SOURCES_D/packages-sil-org-xenial.list
+    # DO NOT match any lines ending in #wasta
+    sed -i -e '/#wasta$/! s@.*\(deb http://packages.sil.org\)@\1@' \
+        $APT_SOURCES_D/packages-sil-org-$SERIES.list
 fi
 
 # add SIL Experimental repository to sources.list.d
 #   (otherwise ubiquity comments out when installing)
-if ! [ -e $APT_SOURCES_D/packages-sil-org-xenial-experimental.list ];
+if ! [ -e $APT_SOURCES_D/packages-sil-org-$SERIES-experimental.list ];
 then
     echo
     echo "*** Adding SIL Experimental Repository (inactive)"
     echo
 
-    echo "# deb http://packages.sil.org/ubuntu xenial-experimental main" | \
-        tee $APT_SOURCES_D/packages-sil-org-xenial-experimental.list
-    echo "# deb-src http://packages.sil.org/ubuntu xenial-experimental main" | \
-        tee -a $APT_SOURCES_D/packages-sil-org-xenial-experimental.list
+    echo "# deb http://packages.sil.org/ubuntu '$SERIES'-experimental main" | \
+        tee $APT_SOURCES_D/packages-sil-org-$SERIES-experimental.list
+    echo "# deb-src http://packages.sil.org/ubuntu '$SERIES'-experimental main" | \
+        tee -a $APT_SOURCES_D/packages-sil-org-$SERIES-experimental.list
 fi
 
 # install repository Keys (done locally since wasta-offline could be active)
@@ -153,65 +158,56 @@ apt-key add $DIR/keys/libreoffice-ppa.gpg
 apt-key add $DIR/keys/wasta-linux-ppa.gpg
 
 # add Wasta-Linux PPA
-if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list ];
+if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-$SERIES.list ];
 then
     echo
     echo "*** Adding Wasta-Linux PPA"
     echo
 
-    echo "deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main" | \
-        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list
-    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list
+    echo "deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu $SERIES main" | \
+        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-$SERIES.list
+    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta/ubuntu $SERIES main" | \
+        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-$SERIES.list
 else
     # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
-    echo
-    echo "*** Wasta PPA already exists, ensuring active"
-    echo
-    sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main' \
-        -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta/ubuntu xenial main@d' \
-        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-xenial.list
+    # DO NOT match any lines ending in #wasta
+    sed -i -e '/#wasta$/! s@.*\(deb http://ppa.launchpad.net\)@\1@' \
+        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-$SERIES.list
 fi
 
 # add Wasta-Apps PPA
-if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list ];
+if ! [ -e $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-$SERIES.list ];
 then
     echo
     echo "*** Adding Wasta-Linux Apps PPA"
     echo
 
-    echo "deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main" | \
-        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
-    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
+    echo "deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu $SERIES main" | \
+        tee $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-$SERIES.list
+    echo "# deb-src http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu $SERIES main" | \
+        tee -a $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-$SERIES.list
 else
     # found, but ensure Wasta-Apps PPA ACTIVE (user could have accidentally disabled)
-    echo
-    echo "*** Wasta Apps PPA already exists, ensuring active"
-    echo
-    sed -i -e '$a deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main' \
-        -i -e '\@deb http://ppa.launchpad.net/wasta-linux/wasta-apps/ubuntu xenial main@d' \
-        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-xenial.list
+    # DO NOT match any lines ending in #wasta
+    sed -i -e '/#wasta$/! s@.*\(deb http://ppa.launchpad.net\)@\1@' \
+        $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-$SERIES.list
 fi
 
 # add LibreOffice 5.1 PPA
-if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list ];
+if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list ];
 then
     echo
     echo "*** Adding LibreOffice 5.1 PPA"
     echo
-    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main" | \
-        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list
-    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list
+    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu $SERIES main" | \
+        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list
+    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu $SERIES main" | \
+        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list
 else
     # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
-    echo
-    echo "*** LibreOffice 5.1 PPA already exists, ensuring active"
-    echo
-    sed -i -e '$a deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main' \
-        -i -e '\@deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu xenial main@d' \
-        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-xenial.list
+    # DO NOT match any lines ending in #wasta
+    sed -i -e '/#wasta$/! s@.*\(deb http://ppa.launchpad.net\)@\1@' \
+        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list
 fi
 
 # apt-get adjustments
