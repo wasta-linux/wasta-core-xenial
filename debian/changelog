@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.6) xenial; urgency=medium
+
+  * postinst: do not re-enable repos with lines ending in #wasta
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Tue, 29 Aug 2017 19:53:04 +0300
+
 wasta-core-xenial (1.1.5) xenial; urgency=medium
 
   * app-installs: bloom-desktop-beta only at pso experimental, so reverting
