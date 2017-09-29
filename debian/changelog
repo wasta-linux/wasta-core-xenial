@@ -1,3 +1,10 @@
+wasta-core-xenial (1.1.7) xenial; urgency=medium
+
+  * postinst: not replacing apt.conf.d files if already exist (allows
+    customizers to override default values)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 29 Sep 2017 10:05:33 +0300
+
 wasta-core-xenial (1.1.6) xenial; urgency=medium
 
   * postinst: do not re-enable repos with lines ending in #wasta

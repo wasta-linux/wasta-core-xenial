@@ -27,6 +27,8 @@
 #   2017-08-28 rik: repository settings not re-activated IF #wasta detected
 #       at end of repository line (indicating that some wasta process has
 #       intentionally deactivated them)
+#   2017-09-28 rik: only create apt.conf.d files if don't previously exist: this
+#       way any user adjusted files will not be reset.
 #
 # ==============================================================================
 
@@ -211,16 +213,28 @@ else
 fi
 
 # apt-get adjustments
+# 2017-09-28 rik: updating to NOT replace files if they already exist.
+#   We don't want to reset them IF the user has manually modified these files.
+
 # have apt-get not get language translation files for faster updates.
-echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
+if ! [ -e /etc/apt/apt.conf.d/99translations ];
+then
+    echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
+fi
 
 # have apt-get not use cache: Internet caching by ISPs cache broken packages
 #   causing apt-get to get hash sum mismatches, badsigs, etc.
-echo 'Acquire::http::No-Cache "True";' > /etc/apt/apt.conf.d/99nocache
+if ! [ -e /etc/apt/apt.conf.d/99nocache ];
+then
+    echo 'Acquire::http::No-Cache "True";' > /etc/apt/apt.conf.d/99nocache
+fi
 
 # have apt-get not use proxy: Internet caching by ISPs cache broken packages
 #   causing apt-get to get hash sum mismatches, badsigs, etc.
-echo 'Acquire::BrokenProxy "True";' > /etc/apt/apt.conf.d/99brokenproxy
+if ! [ -e /etc/apt/apt.conf.d/99brokenproxy ];
+then
+    echo 'Acquire::BrokenProxy "True";' > /etc/apt/apt.conf.d/99brokenproxy
+fi
 
 # remove any partial updates: these are often broken if they exist
 if [ -e /var/lib/apt/lists/partial/ ];
