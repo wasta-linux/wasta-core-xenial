@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.8) xenial; urgency=medium
+
+  * postinst: correcting sil repo addition syntax
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Thu, 30 Nov 2017 08:18:00 +0300
+
 wasta-core-xenial (1.1.7) xenial; urgency=medium
 
   * postinst: not replacing apt.conf.d files if already exist (allows

@@ -29,6 +29,8 @@
 #       intentionally deactivated them)
 #   2017-09-28 rik: only create apt.conf.d files if don't previously exist: this
 #       way any user adjusted files will not be reset.
+#   2017-11-30 rik: correcting sil repo insertion syntax (was wrapping series
+#       name in quotes)
 #
 # ==============================================================================
 
@@ -125,9 +127,9 @@ then
     echo "*** Adding SIL Repository"
     echo
 
-    echo "deb http://packages.sil.org/ubuntu '$SERIES' main" | \
+    echo "deb http://packages.sil.org/ubuntu $SERIES main" | \
         tee $APT_SOURCES_D/packages-sil-org-$SERIES.list
-    echo "# deb-src http://packages.sil.org/ubuntu '$SERIES' main" | \
+    echo "# deb-src http://packages.sil.org/ubuntu $SERIES main" | \
         tee -a $APT_SOURCES_D/packages-sil-org-$SERIES.list
 else
     # found, but ensure PSO main ACTIVE (user could have accidentally disabled)
@@ -144,9 +146,9 @@ then
     echo "*** Adding SIL Experimental Repository (inactive)"
     echo
 
-    echo "# deb http://packages.sil.org/ubuntu '$SERIES'-experimental main" | \
+    echo "# deb http://packages.sil.org/ubuntu $SERIES-experimental main" | \
         tee $APT_SOURCES_D/packages-sil-org-$SERIES-experimental.list
-    echo "# deb-src http://packages.sil.org/ubuntu '$SERIES'-experimental main" | \
+    echo "# deb-src http://packages.sil.org/ubuntu $SERIES-experimental main" | \
         tee -a $APT_SOURCES_D/packages-sil-org-$SERIES-experimental.list
 fi
 
