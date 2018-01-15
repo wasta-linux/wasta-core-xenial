@@ -131,6 +131,7 @@ pkgToRemoveListFull="\
     mpv \
     nemo-preview \
     openshot \
+    skype \
     totem \
         totem-common \
         totem-plugins \

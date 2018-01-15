@@ -40,6 +40,7 @@
 #   deprecated it.
 # 2016-10-07 rik: ubiquity: set to not show if found
 # 2017-03-15 rik: simple-scan set to launch with XDG_CURRENT_DESKTOP=Unity
+# 2018-01-15 rik: adding cinnamon applet tweaks here
 #
 # ==============================================================================
 
@@ -132,6 +133,121 @@ then
     #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/checkbox-converged.desktop >/dev/null 2>&1 || true;
+fi
+
+# ------------------------------------------------------------------------------
+# cinnamon
+# ------------------------------------------------------------------------------
+if [ -x /usr/bin/cinnamon ];
+then
+    # --------------------------------------------------------------------------
+    # cinnamon backgrounds cleanup
+    # --------------------------------------------------------------------------
+    # Cinnammon Backgrounds Settings Panel groups by the last element of the
+    #   xml config files, eg. adwaita.xml will show as "Adwaita".  Problem is
+    #   all of the Ubuntu background xml files are named wily-wallpapers.xml,
+    #   xenial-wallpapers.xml, etc.  That means they ALL have the name "wallpapers"
+    #   in the Settings Panel.  Rename adding series name at end to make more clear.
+    rename -v -f -e 's@([a-zA-Z0-9]*)-wallpapers.xml@$1-wallpapers-$1.xml@' \
+        /usr/share/gnome-background-properties/*wallpapers.xml
+    rename -v -f -e 's@([a-zA-Z0-9]*)-backgrounds.xml@$1-backgrounds-$1.xml@' \
+        /usr/share/gnome-background-properties/*backgrounds.xml
+
+    # cinnamon 3.0+ won't look at gnome-background-properties so
+    #   symlinking if not found
+    if ! [ -e /usr/share/cinnamon-background-properties ];
+    then
+        ln -s /usr/share/gnome-background-properties \
+            /usr/share/cinnamon-background-properties
+    fi
+
+    # Cinnamon panel: get rid of "Remove 'applet'" from right click
+    #   Below will remove text "Remove 'applet'" and will replace this._uuid with "wasta"
+    #   and this.instance_id with "wasta" (needed to set something or cinnamon crashes)
+    # remove display text
+
+    # backup applet.js
+    if ! [ -e /usr/share/cinnamon/js/ui/applet.js.save ];
+    then
+        cp /usr/share/cinnamon/js/ui/applet.js \
+            /usr/share/cinnamon/js/ui/applet.js.save
+    fi
+
+    sed -i -e "s@Remove \'\%s\'@@" \
+        /usr/share/cinnamon/js/ui/applet.js
+
+    sed -i -e 's@\(.*removeAppletFromPanel(\).*\()\;\)@\1"wasta", "wasta"\2@' \
+        /usr/share/cinnamon/js/ui/applet.js
+
+    # --------------------------------------------------------------------------
+    # IF iBus then add to Cinnamon Settings
+    # --------------------------------------------------------------------------
+    if [ -e /usr/share/applications/ibus-setup.desktop ];
+    then
+        # ibus-setup: first remove: 
+        sed -i -e '\@ibus-setup@d' \
+            /usr/share/cinnamon/cinnamon-settings/cinnamon-settings.py
+
+        # ibus-setup: add (need first element to be system-config-printer since
+        # want ibus in the "STANDALONE_MODULES" section)
+        sed -i -e \
+    'N;s@\(Keywords for filter.*\)\n\(.*system-config-printer\)@\1\n    [_("Keyboard Input Methods"),        "ibus-setup",                   "ibus-setup",         "hardware",       _("ibus, kmfl, keyman, keyboard, input, language")],\n\2@' \
+            /usr/share/cinnamon/cinnamon-settings/cinnamon-settings.py
+    fi
+
+    # --------------------------------------------------------------------------
+    # Cinnamon Applet Tweaks: core shipping with cinnamon only:
+    #   applets added by wasta-cinnamon-layout are adjusted there
+    # --------------------------------------------------------------------------
+
+    # applet: calendar@cinnamon.org
+    JSON_FILE=/usr/share/cinnamon/applets/calendar@cinnamon.org/settings-schema.json
+    echo
+    echo "*** Updating JSON_FILE: $JSON_FILE"
+    echo
+    # updates:
+    # - use-custom-format: custom panel clock format
+    # - custom-format: set to "%l:%M %p"
+    # - note: jq can't do "sed -i" inplace update, so need to re-create file, then
+    #     update ownership (in case run as root)
+    NEW_FILE=$(jq '.["use-custom-format"].default=true | .["custom-format"].default="%l:%M %p"' \
+        < $JSON_FILE)
+    echo "$NEW_FILE" > $JSON_FILE
+
+    # applet: menu@cinnamon.org
+    JSON_FILE=/usr/share/cinnamon/applets/menu@cinnamon.org/settings-schema.json
+    echo
+    echo "*** Updating JSON_FILE: $JSON_FILE"
+    echo
+    # updates:
+    # - don't show category icons
+    # - note: jq can't do "sed -i" inplace update, so need to re-create file, then
+    # update ownership (in case run as root)
+    NEW_FILE=$(jq '.["show-category-icons"].default=false' \
+        < $JSON_FILE)
+    echo "$NEW_FILE" > $JSON_FILE
+
+    # applet: panel-launchers@cinnamon.org
+    JSON_FILE=/usr/share/cinnamon/applets/panel-launchers@cinnamon.org/settings-schema.json
+    echo
+    echo "*** Updating JSON_FILE: $JSON_FILE"
+    echo
+    # updates:
+    # - set default launchers
+    # - note: jq can't do "sed -i" inplace update, so need to re-create file, then
+    # update ownership (in case run as root)
+    NEW_FILE=$(jq '.["launcherList"].default=["firefox.desktop", "thunderbird.desktop", "nemo.desktop", libreoffice-writer.desktop", "vlc.desktop"]' \
+        < $JSON_FILE)
+    echo "$NEW_FILE" > $JSON_FILE
+
+    # applet: user@cinnamon.org
+    echo
+    echo "*** Setting user@cinnamon.org icon to 'system-devices-panel'"
+    echo
+    # reason for change is because this menu has more than just user info: it
+    # also enables shutdown, etc.
+    sed -i -e "s@this.set_applet_icon_symbolic_name(\"avatar-default\")@this.set_applet_icon_name(\"system-devices-panel\")@" \
+        /usr/share/cinnamon/applets/user@cinnamon.org/applet.js
 fi
 
 # ------------------------------------------------------------------------------

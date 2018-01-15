@@ -70,6 +70,7 @@
 #   2016-10-05 rik: changing 'ubiquity' to install 'no-recommends' or else will
 #       pull in all the kde dependencies.
 #   2017-03-14 rik: adding bloom-desktop, art-of-reading, hfsprogs, gddrescue
+#   2018-01-15 rik: adding skypeforlinux ppa, lo 5.3 ppa for xenial
 #
 # ==============================================================================
 
@@ -156,25 +157,38 @@ then
     cp $APT_SOURCES $APT_SOURCES.save
 fi
 
-# FYI: repository signature keys added in the postinst!
+# FYI: LO repository signature keys added in the postinst!
 
-# Add libreoffice 4.4 ppa
-#if ! [ -e $APT_SOURCES_D/libreoffice-libreoffice-4-4-trusty.list ];
-#then
-#    echo
-#    echo "*** Adding LibreOffice 4.4 PPA"
-#    echo
-#    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-4-4/ubuntu trusty main" | \
-#        tee -a $APT_SOURCES_D/libreoffice-libreoffice-4-4-trusty.list
-#    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-4-4/ubuntu trusty main" | \
-#        tee -a $APT_SOURCES_D/libreoffice-libreoffice-4-4-trusty.list
+# Add libreoffice 5.3 ppa
+if ! [ -e $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list ];
+then
+    echo
+    echo "*** Adding LibreOffice 5.3 PPA"
+    echo
+    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list
+    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu xenial main" | \
+        tee -a $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list
 
-#    echo
-#    echo "*** Removing LibreOffice 4.2 and 4.3 PPAs"
-#    echo
-#    rm -f $APT_SOURCES_D/libreoffice-libreoffice-4-3*
-#    rm -f $APT_SOURCES_D/libreoffice-libreoffice-4-2*
-#fi
+    echo
+    echo "*** Removing LibreOffice 5.1 PPAs"
+    echo
+    rm -f $APT_SOURCES_D/libreoffice-libreoffice-5-1*
+fi
+
+# Add Skype repository
+if ! [ -e $APT_SOURCES_D/skype-stable.list ];
+then
+    echo
+    echo "*** Adding Skype Repository"
+    echo
+
+    echo "deb https://repo.skype.com/deb stable main" | \
+        tee $APT_SOURCES_D/skype-stable.list
+    
+    # manually add Skype repo key (since wasta-offline could be active)
+    apt-key add $DIR/keys/skype.gpg
+fi
 
 apt-get update
 
@@ -315,9 +329,8 @@ echo
 # rhythmbox: music manager
 # scribus: desktop publisher
 # shotwell: photo editor / manager (can edit single files easily)
-# simplescreenrecorder: 
-# skype
-#    libpulse0:i386: needed for skype sound to work, not listed as dependency
+# simplescreenrecorder:
+# skypeforlinux:
 # soundconverter: convert audio formats
 # sound-juicer: rip CDs
 # ssh: remote access
@@ -431,8 +444,6 @@ apt-get $YES install \
     scribus scribus-doc scribus-template \
     shotwell \
     simplescreenrecorder \
-    skype \
-        libpulse0:i386\
     soundconverter \
     sound-juicer \
     ssh \

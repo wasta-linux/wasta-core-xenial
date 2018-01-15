@@ -1,3 +1,15 @@
+wasta-core-xenial (1.1.9) xenial; urgency=medium
+
+  * app-installs.sh: adding skype repo
+    - adding lo 5.3 ppa
+    - adding skypeforlinux
+
+  * app-removals.sh: removing skype
+
+  * app-adjustments.sh: adding cinnamon applet adjustments
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 15 Jan 2018 16:54:01 +0300
+
 wasta-core-xenial (1.1.8) xenial; urgency=medium
 
   * postinst: correcting sil repo addition syntax
