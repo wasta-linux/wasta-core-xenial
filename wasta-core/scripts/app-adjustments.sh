@@ -40,7 +40,9 @@
 #   deprecated it.
 # 2016-10-07 rik: ubiquity: set to not show if found
 # 2017-03-15 rik: simple-scan set to launch with XDG_CURRENT_DESKTOP=Unity
-# 2018-01-15 rik: adding cinnamon applet tweaks here
+# 2018-01-15 rik: adding cinnamon applet tweaks here instead of in
+#   wasta-cinnamon-xenial.  For bionic and newer, app-adjustments.sh will be
+#   called by wasta-login script.
 #
 # ==============================================================================
 
@@ -236,7 +238,7 @@ then
     # - set default launchers
     # - note: jq can't do "sed -i" inplace update, so need to re-create file, then
     # update ownership (in case run as root)
-    NEW_FILE=$(jq '.["launcherList"].default=["firefox.desktop", "thunderbird.desktop", "nemo.desktop", libreoffice-writer.desktop", "vlc.desktop"]' \
+    NEW_FILE=$(jq '.["launcherList"].default=["firefox.desktop", "thunderbird.desktop", "nemo.desktop", "libreoffice-writer.desktop", "vlc.desktop"]' \
         < $JSON_FILE)
     echo "$NEW_FILE" > $JSON_FILE
 
