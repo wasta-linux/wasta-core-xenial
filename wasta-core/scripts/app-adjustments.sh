@@ -43,6 +43,7 @@
 # 2018-01-15 rik: adding cinnamon applet tweaks here instead of in
 #   wasta-cinnamon-xenial.  For bionic and newer, app-adjustments.sh will be
 #   called by wasta-login script.
+# 2018-01-19 rik: shortening wasta-remastersys CUSTOMISO label
 #
 # ==============================================================================
 
@@ -657,8 +658,9 @@ then
     fi
     WASTA_DATE=$(date +%F)
     
+    #shortening CUSTOMISO since if it is too long wasta-remastersys will fail
     sed -i -e "s@LIVECDLABEL=.*@LIVECDLABEL=\"$WASTA_ID $WASTA_VERSION $WASTA_ARCH\"@" \
-           -e "s@CUSTOMISO=.*@CUSTOMISO=\"$WASTA_ID-$WASTA_VERSION-$WASTA_ARCH-$WASTA_DATE.iso\"@" \
+           -e "s@CUSTOMISO=.*@CUSTOMISO=\"WL-$WASTA_VERSION-$WASTA_ARCH.iso\"@" \
         "$WASTA_REMASTERSYS_CONF"
 fi
 

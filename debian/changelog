@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.11) xenial; urgency=medium
+
+  * app-adjustments.sh: shortening wasta-remastersys CUSTOMISO label
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 19 Jan 2018 09:52:56 +0300
+
 wasta-core-xenial (1.1.10) xenial; urgency=medium
 
   * app-adjustments.sh: syntax fix for jq cinnamon applet tweak
