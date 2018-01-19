@@ -31,6 +31,7 @@
 #       way any user adjusted files will not be reset.
 #   2017-11-30 rik: correcting sil repo insertion syntax (was wrapping series
 #       name in quotes)
+#   2018-01-20 rik: removing LO 5.1 PPA (app-installs adds LO 5.3 PPA)
 #
 # ==============================================================================
 
@@ -195,23 +196,6 @@ else
     # DO NOT match any lines ending in #wasta
     sed -i -e '/#wasta$/! s@.*\(deb http://ppa.launchpad.net\)@\1@' \
         $APT_SOURCES_D/wasta-linux-ubuntu-wasta-apps-$SERIES.list
-fi
-
-# add LibreOffice 5.1 PPA
-if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list ];
-then
-    echo
-    echo "*** Adding LibreOffice 5.1 PPA"
-    echo
-    echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu $SERIES main" | \
-        tee $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list
-    echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-1/ubuntu $SERIES main" | \
-        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list
-else
-    # found, but ensure Wasta-Linux PPA ACTIVE (user could have accidentally disabled)
-    # DO NOT match any lines ending in #wasta
-    sed -i -e '/#wasta$/! s@.*\(deb http://ppa.launchpad.net\)@\1@' \
-        $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1-$SERIES.list
 fi
 
 # apt-get adjustments

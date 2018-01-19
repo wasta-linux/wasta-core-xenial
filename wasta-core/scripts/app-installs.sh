@@ -169,12 +169,12 @@ then
         tee -a $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list
     echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu xenial main" | \
         tee -a $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list
-
-    echo
-    echo "*** Removing LibreOffice 5.1 PPAs"
-    echo
-    rm -f $APT_SOURCES_D/libreoffice-libreoffice-5-1*
 fi
+
+echo
+echo "*** Removing LibreOffice 5.1 PPA"
+echo
+rm -f $APT_SOURCES_D/libreoffice-libreoffice-5-1*
 
 # Add Skype repository
 if ! [ -e $APT_SOURCES_D/skype-stable.list ];
