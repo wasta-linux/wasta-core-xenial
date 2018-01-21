@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.14) xenial; urgency=medium
+
+  * app-installs.sh: correcting LO PPA filenames
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sun, 21 Jan 2018 20:20:49 +0300
+
 wasta-core-xenial (1.1.13) xenial; urgency=high
 
   * add missing dependency on jq
