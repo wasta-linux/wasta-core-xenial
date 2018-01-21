@@ -71,6 +71,7 @@
 #       pull in all the kde dependencies.
 #   2017-03-14 rik: adding bloom-desktop, art-of-reading, hfsprogs, gddrescue
 #   2018-01-15 rik: adding skypeforlinux ppa, lo 5.3 ppa for xenial
+#   2018-01-21 rik: correcting LO PPA file names0
 #
 # ==============================================================================
 
@@ -157,24 +158,27 @@ then
     cp $APT_SOURCES $APT_SOURCES.save
 fi
 
-# FYI: LO repository signature keys added in the postinst!
+#LEGACY cleanup: LO PPA added with wrong file names
+rm -rf $APT_SOURCES_D/libreoffice-libreoffice*
+
+# FYI: LO repository signature keys added in the postinst!-
 
 # Add libreoffice 5.3 ppa
-if ! [ -e $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list ];
+if ! [ -e $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-xenial.list ];
 then
     echo
     echo "*** Adding LibreOffice 5.3 PPA"
     echo
     echo "deb http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list
+        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-xenial.list
     echo "# deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-3/ubuntu xenial main" | \
-        tee -a $APT_SOURCES_D/libreoffice-libreoffice-5-3-xenial.list
+        tee -a $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3-xenial.list
 fi
 
 echo
 echo "*** Removing LibreOffice 5.1 PPA"
 echo
-rm -f $APT_SOURCES_D/libreoffice-libreoffice-5-1*
+rm -f $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1*
 
 # Add Skype repository
 if ! [ -e $APT_SOURCES_D/skype-stable.list ];
