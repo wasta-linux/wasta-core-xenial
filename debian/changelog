@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.16) xenial; urgency=medium
+
+  * app-installs.sh: adding ubiquity-slideshow-wasta
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 02 Mar 2018 16:39:51 +0300
+
 wasta-core-xenial (1.1.15) xenial; urgency=medium
 
   * app-installs.sh: adding lo 5.4 ppa

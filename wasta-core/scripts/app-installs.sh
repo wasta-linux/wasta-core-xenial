@@ -73,6 +73,7 @@
 #   2018-01-15 rik: adding skypeforlinux ppa, lo 5.3 ppa for xenial
 #   2018-01-21 rik: correcting LO PPA file names
 #   2018-03-02 rik: adding lo 5.4 ppa
+#   2018-03-02 rik: adding ubiquity-slideshow-wasta
 #
 # ==============================================================================
 
@@ -350,7 +351,7 @@ echo
 # ubiquity: done with --no-install-recommends so don't pull kde stuff
 #   - ubiquity installed here since needed to be customized for Ethiopia
 #   in app-adjustments.sh
-# ubiquity-frontend-gtk ubiquity-slideshow-ubuntu:
+# ubiquity-frontend-gtk ubiquity-slideshow-wasta:
 #   add here so not needed to be downloaded by wasta-remastersys
 # ubuntu-restricted-extras: mp3, flash, etc.
 # ubuntu-wallpapers-*: wallpaper collections
@@ -459,7 +460,7 @@ apt-get $YES install \
     testdisk \
     traceroute \
     ttf-mscorefonts-installer \
-    ubiquity-frontend-gtk ubiquity-slideshow-ubuntu \
+    ubiquity-frontend-gtk ubiquity-slideshow-wasta \
     ubuntu-restricted-extras \
     ubuntu-wallpapers-karmic \
     ubuntu-wallpapers-utopic \
