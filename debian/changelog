@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.15) xenial; urgency=medium
+
+  * app-installs.sh: adding lo 5.4 ppa
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 02 Mar 2018 10:37:35 +0300
+
 wasta-core-xenial (1.1.14) xenial; urgency=medium
 
   * app-installs.sh: correcting LO PPA filenames
