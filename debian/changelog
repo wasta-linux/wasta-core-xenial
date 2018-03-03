@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.17) xenial; urgency=medium
+
+  * app-adjustments.sh: setting wasta-remastersys SLIDESHOW variable
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Sat, 03 Mar 2018 09:14:39 +0300
+
 wasta-core-xenial (1.1.16) xenial; urgency=medium
 
   * app-installs.sh: adding ubiquity-slideshow-wasta

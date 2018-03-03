@@ -44,6 +44,7 @@
 #   wasta-cinnamon-xenial.  For bionic and newer, app-adjustments.sh will be
 #   called by wasta-login script.
 # 2018-01-19 rik: shortening wasta-remastersys CUSTOMISO label
+# 2018-03-02 rik: setting wasta-remastersys SLIDESHOW variable to 'wasta'
 #
 # ==============================================================================
 
@@ -661,6 +662,7 @@ then
     #shortening CUSTOMISO since if it is too long wasta-remastersys will fail
     sed -i -e "s@LIVECDLABEL=.*@LIVECDLABEL=\"$WASTA_ID $WASTA_VERSION $WASTA_ARCH\"@" \
            -e "s@CUSTOMISO=.*@CUSTOMISO=\"WL-$WASTA_VERSION-$WASTA_ARCH.iso\"@" \
+           -e "s@SLIDESHOW=.*@SLIDESHOW=wasta@" \
         "$WASTA_REMASTERSYS_CONF"
 fi
 
