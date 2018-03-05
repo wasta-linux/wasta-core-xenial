@@ -1,3 +1,10 @@
+wasta-core-xenial (1.1.18) xenial; urgency=medium
+
+  * app-adjustment.sh: applying patch to plugininstall.py for
+    UTF-8 compatibility support
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 05 Mar 2018 14:24:58 +0300
+
 wasta-core-xenial (1.1.17) xenial; urgency=medium
 
   * app-adjustments.sh: setting wasta-remastersys SLIDESHOW variable

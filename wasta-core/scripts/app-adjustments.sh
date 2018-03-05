@@ -45,6 +45,8 @@
 #   called by wasta-login script.
 # 2018-01-19 rik: shortening wasta-remastersys CUSTOMISO label
 # 2018-03-02 rik: setting wasta-remastersys SLIDESHOW variable to 'wasta'
+# 2018-03-05 rik: applying patch to plugininstall.py so that ubiquity doesn't
+#   crash when using languages with extended characters.
 #
 # ==============================================================================
 
@@ -604,6 +606,27 @@ then
     #   ubuntu that I am not fixing (invalid use of "'" in Exec line)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/ubiquity.desktop >/dev/null 2>&1 || true;
+fi
+
+# fix plugininstall.py so that won't crash when installing if using a language
+#   with extended characters:
+#   https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1713002
+#   NOTE: without this patch, need to install language-pack-gnome-fr in the
+#   live system (for example)
+FILE=/usr/share/ubiquity/plugininstall.py 
+if [ -e "$FILE" ];
+then
+    # sending output to /dev/null so won't scare user if patch already applied
+    GREP_PATCH=$(grep "read=io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')" $FILE)
+    if [ "$GREP_PATCH" == "" ];
+    then
+        # Apply Patch
+        echo
+        echo "*** Patching ubiquity for UTF-8 compatibility"
+        echo
+        patch -N $FILE $DIR/resources/plugininstall.diff
+        #>/dev/null 2>&1 || true;
+    fi
 fi
 
 # ------------------------------------------------------------------------------
