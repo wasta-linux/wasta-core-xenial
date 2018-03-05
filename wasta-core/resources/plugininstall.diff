@@ -1,0 +1,24 @@
+=== modified file '/usr/share/ubiquity/plugininstall.py'
+--- /usr/share/ubiquity/plugininstall.py	2016-03-21 19:30:58 +0000
++++ /usr/share/ubiquity/plugininstall.py	2018-01-31 07:06:43 +0000
+@@ -23,6 +23,7 @@
+ 
+ import fcntl
+ import gzip
++import io
+ import os
+ import platform
+ import pwd
+@@ -105,7 +106,10 @@
+     def __init__(self):
+         install_misc.InstallBase.__init__(self)
+ 
+-        self.db = debconf.Debconf()
++        self.db = debconf.Debconf(
++            read=io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'),
++            write=io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8'))
++
+         self.kernel_version = platform.release()
+ 
+         # Get langpacks from install
+
