@@ -395,6 +395,7 @@ apt-get $YES install \
         dconf-tools \
     debconf-utils \
     diodon \
+    dkms \
     dos2unix \
     exfat-fuse \
         exfat-utils \
