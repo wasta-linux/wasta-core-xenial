@@ -1,3 +1,9 @@
+wasta-core-xenial (1.1.19) xenial; urgency=medium
+
+  * app-installs.sh: adding dkms (needed by virtualbox, broadcom, etc.)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 05 Mar 2018 15:38:45 +0300
+
 wasta-core-xenial (1.1.18) xenial; urgency=medium
 
   * app-adjustment.sh: applying patch to plugininstall.py for

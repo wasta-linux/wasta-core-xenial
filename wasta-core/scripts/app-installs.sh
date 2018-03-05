@@ -74,6 +74,7 @@
 #   2018-01-21 rik: correcting LO PPA file names
 #   2018-03-02 rik: adding lo 5.4 ppa
 #   2018-03-02 rik: adding ubiquity-slideshow-wasta
+#   2018-03-05 rik: adding dkms
 #
 # ==============================================================================
 
@@ -282,6 +283,7 @@ echo
 # dconf-cli, dconf-tools: gives tools for making settings adjustments
 # debconf-utils: needed for debconf-get-selections, etc. for debconf configure
 # diodon: clipboard manager
+# dkms: "Dynamic Kernel Module Support" (needed by virtualbox, broadcom, etc.)
 # dos2unix: convert line endings of text files to / from windows to unix
 # exfat-fuse, exfat-utils: compatibility for exfat formatted disks
 # extundelete: terminal utility to restore deleted files
