@@ -32,6 +32,9 @@
 #   2017-11-30 rik: correcting sil repo insertion syntax (was wrapping series
 #       name in quotes)
 #   2018-01-20 rik: removing LO 5.1 PPA (app-installs adds LO 5.3 PPA)
+#   2018-03-16 rik: disabling apparmor for LO (LO 5.4.x had a bug that prevented
+#       files outside of $HOME from being able to be opened:
+#       https://askubuntu.com/questions/1008880/libreoffice-5-4-5-1-gets-access-denied-on-nfs-mounted-filesystem
 #
 # ==============================================================================
 
@@ -420,6 +423,15 @@ then
     echo
     atrm 50
 fi
+
+# ------------------------------------------------------------------------------
+#disabling apparmor for LO
+# ------------------------------------------------------------------------------
+# LO 5.4.x had a bug that prevented files outside of $HOME
+# from being able to be opened:
+#       https://askubuntu.com/questions/1008880/libreoffice-5-4-5-1-gets-access-denied-on-nfs-mounted-filesystem
+
+ln -s /etc/apparmor.d/usr.lib.libreoffice.program.* /etc/apparmor.d/disable/
 
 # ------------------------------------------------------------------------------
 # Finished

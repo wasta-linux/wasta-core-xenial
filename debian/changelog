@@ -1,3 +1,10 @@
+wasta-core-xenial (1.1.22) xenial; urgency=medium
+
+  * postinst: disabling apparmor for LO (LO 5.4 enabled apparmor but
+    it is preventing LO from being able to open files outside of $HOME)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 16 Mar 2018 14:11:40 +0300
+
 wasta-core-xenial (1.1.21) xenial; urgency=medium
 
   * git add diff file
