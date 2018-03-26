@@ -548,6 +548,24 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# nemo
+# ------------------------------------------------------------------------------
+if [ -x /usr/bin/nemo ];
+then
+    # --------------------------------------------------------------------------
+    # Allow nemo as a helper for evince
+    # --------------------------------------------------------------------------
+    if [ -x /usr/bin/evince ];
+    then
+        # delete 'wasta' lines (will re-create below)
+        sed -i -e '\@wasta@d' /etc/apparmor.d/usr.bin.evince
+
+        sed -i -e 's@\(/usr/bin/nautilus Cx -> sanitized_helper.*\)@\1\n  /usr/bin/nemo Cx -> sanitized_helper,     # wasta: Cinnamon/Nemo@' \
+            /etc/apparmor.d/usr.bin.evince
+    fi
+fi
+
+# ------------------------------------------------------------------------------
 # onboard (on-screen keyboard)
 # ------------------------------------------------------------------------------
 if [ -e /usr/share/applications/onboard.desktop ];
@@ -608,7 +626,7 @@ fi
 if [ -e /usr/share/applications/simple-scan.desktop ];
 then
     desktop-file-edit --set-key=Exec --set-value="env XDG_CURRENT_DESKTOP=Unity simple-scan" \
-        /usr/share/applications/simple-scan.desktop
+        /usr/share/applications/simple-scan.desktop > /dev/null 2>&1 || true;
 fi
 
 # ------------------------------------------------------------------------------
@@ -671,7 +689,7 @@ then
 fi
 
 # ------------------------------------------------------------------------------
-# ubuntu-amazon-default
+# vim
 # ------------------------------------------------------------------------------
 # always hide
 if [ -e /usr/share/applications/vim.desktop ];
@@ -738,7 +756,7 @@ then
         WASTA_ARCH="32bit"
     fi
     WASTA_DATE=$(date +%F)
-    
+
     #shortening CUSTOMISO since if it is too long wasta-remastersys will fail
     sed -i -e "s@LIVECDLABEL=.*@LIVECDLABEL=\"$WASTA_ID $WASTA_VERSION $WASTA_ARCH\"@" \
            -e "s@CUSTOMISO=.*@CUSTOMISO=\"WL-$WASTA_VERSION-$WASTA_ARCH.iso\"@" \
@@ -848,7 +866,7 @@ echo
 echo "*** Adjusting default applications"
 echo
 
-# preferred way to set defaults is with xdg-mime (but its man says that the
+# preferred way to set defaults is with xdg-mime (but its 'man' says that the
 #   default function shouldn't be used as root?)
 
 # rik: to find "filetype" for file: xdg-mime query filetype <filename>
