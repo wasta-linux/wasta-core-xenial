@@ -1,6 +1,6 @@
 wasta-core-xenial (1.2.0) xenial; urgency=medium
 
-  * app-adjustments: hide flash-player-properties
+  * app-adjustments: hide flash-player-properties, htop, chmsee, xterm
   * app-installs: only add skype repo and skypeforlinux if 64bit
   * postinst: make LO 5.4 symlink -sf so can be re-run
 
