@@ -1,3 +1,11 @@
+wasta-core-xenial (1.2.0) xenial; urgency=medium
+
+  * app-adjustments: hide flash-player-properties
+  * app-installs: only add skype repo and skypeforlinux if 64bit
+  * postinst: make LO 5.4 symlink -sf so can be re-run
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 26 Mar 2018 09:20:29 +0300
+
 wasta-core-xenial (1.1.22) xenial; urgency=medium
 
   * postinst: disabling apparmor for LO (LO 5.4 enabled apparmor but

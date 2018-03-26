@@ -431,7 +431,7 @@ fi
 # from being able to be opened:
 #       https://askubuntu.com/questions/1008880/libreoffice-5-4-5-1-gets-access-denied-on-nfs-mounted-filesystem
 
-ln -s /etc/apparmor.d/usr.lib.libreoffice.program.* /etc/apparmor.d/disable/
+ln -sf /etc/apparmor.d/usr.lib.libreoffice.program.* /etc/apparmor.d/disable/
 
 # ------------------------------------------------------------------------------
 # Finished

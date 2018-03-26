@@ -47,6 +47,7 @@
 # 2018-03-02 rik: setting wasta-remastersys SLIDESHOW variable to 'wasta'
 # 2018-03-05 rik: applying patch to plugininstall.py so that ubiquity doesn't
 #   crash when using languages with extended characters.
+# 2018-03-26 rik: hiding flash-player-properties from main menu
 #
 # ==============================================================================
 
@@ -312,6 +313,16 @@ then
     # hide from menu: only needed on nemo/nautilus right click
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/file-roller.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# flash-player-properties (Adobe Flash)
+# ------------------------------------------------------------------------------
+if [ -e /usr/share/applications/flash-player-properties.desktop ];
+then
+    # hide from menu
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/flash-player-properties.desktop
 fi
 
 # ------------------------------------------------------------------------------

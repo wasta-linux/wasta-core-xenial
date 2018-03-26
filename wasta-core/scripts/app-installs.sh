@@ -75,6 +75,7 @@
 #   2018-03-02 rik: adding lo 5.4 ppa
 #   2018-03-02 rik: adding ubiquity-slideshow-wasta
 #   2018-03-05 rik: adding dkms
+#   2018-03-26 rik: skype repo and skypeforlinux only added if 64bit
 #
 # ==============================================================================
 
@@ -116,6 +117,9 @@ else
     YES=""
     INTERACTIVE=""
 fi
+
+# get machine architecture for 64bit or 32bit processing
+MACHINE_TYPE=$(uname -m)
 
 # ------------------------------------------------------------------------------
 # Configure sources and update settings and do update
@@ -185,21 +189,26 @@ rm -f $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-1*
 rm -f $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-2*
 rm -f $APT_SOURCES_D/libreoffice-ubuntu-libreoffice-5-3*
 
-# Add Skype repository
-if ! [ -e $APT_SOURCES_D/skype-stable.list ];
+
+if [ $MACHINE_TYPE == 'x86_64' ];
 then
     echo
-    echo "*** Adding Skype Repository"
+    echo "*** 64bit dectected"
     echo
+    # Add Skype repository
+    if ! [ -e $APT_SOURCES_D/skype-stable.list ];
+    then
+        echo
+        echo "*** Adding Skype Repository"
+        echo
 
-    echo "deb https://repo.skype.com/deb stable main" | \
-        tee $APT_SOURCES_D/skype-stable.list
+        echo "deb https://repo.skype.com/deb stable main" | \
+            tee $APT_SOURCES_D/skype-stable.list
     
-    # manually add Skype repo key (since wasta-offline could be active)
-    apt-key add $DIR/keys/skype.gpg
+        # manually add Skype repo key (since wasta-offline could be active)
+        apt-key add $DIR/keys/skype.gpg
+    fi
 fi
-
-apt-get update
 
     LASTERRORLEVEL=$?
     if [ "$LASTERRORLEVEL" -ne "0" ];
@@ -522,14 +531,35 @@ apt-get $YES install $INSTALL_APPS
 # ------------------------------------------------------------------------------
 # 32-bit installs if needed for 64 bit machines
 # ------------------------------------------------------------------------------
-# get machine architecture so will either install 64bit or 32bit
-MACHINE_TYPE=$(uname -m)
-
 if [ $MACHINE_TYPE == 'x86_64' ];
 then
     echo
-    echo "*** 64-bit detected. Installing packages for 32-bit apps"
+    echo "*** 64-bit detected"
     echo
+    # skypeforlinux only 64bit (as of 2018-03-26)
+    apt-get $YES install skypeforlinux
+    if [ "$LASTERRORLEVEL" -ne "0" ];
+    then
+        if [ "$AUTO" ];
+        then
+            echo
+            echo "*** ERROR: apt-get command failed. You may want to re-run!"
+            echo
+        else
+            echo
+            echo "     --------------------------------------------------------"
+            echo "     'APT' Error During Update / Installation"
+            echo "     --------------------------------------------------------"
+            echo
+            echo "     An error was encountered with the last 'apt' command."
+            echo "     You should close this script and re-start it, or"
+            echo "     correct the error manually before proceeding."
+            echo
+            read -p "     Press any key to proceed..."
+            echo
+        fi
+    fi
+
     # packages needed for skype, etc. to be able to match gtk theme
     # always assume yes
     apt-get --yes install gtk2-engines-murrine:i386 gtk2-engines-pixbuf:i386
