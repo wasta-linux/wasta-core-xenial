@@ -47,7 +47,11 @@
 # 2018-03-02 rik: setting wasta-remastersys SLIDESHOW variable to 'wasta'
 # 2018-03-05 rik: applying patch to plugininstall.py so that ubiquity doesn't
 #   crash when using languages with extended characters.
-# 2018-03-26 rik: hiding flash-player-properties from main menu
+# 2018-03-26 rik: hiding apps from main menu:
+#   - chmsee, xchm
+#   - flash-player-properties
+#   - htop
+#   - uxterm, xterm
 #
 # ==============================================================================
 
@@ -140,6 +144,22 @@ then
     #   ubuntu that I am not fixing (such as using a non-quoted "$" in exec)
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/checkbox-converged.desktop >/dev/null 2>&1 || true;
+fi
+
+# ------------------------------------------------------------------------------
+# chmsee, xchm
+# ------------------------------------------------------------------------------
+# hide if found: added by bloom (?)
+if [ -e /usr/share/applications/chmsee.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/chmsee.desktop
+fi
+
+if [ -e /usr/share/applications/xchm.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/xchm.desktop
 fi
 
 # ------------------------------------------------------------------------------
@@ -428,6 +448,16 @@ then
 fi
 
 # ------------------------------------------------------------------------------
+# htop
+# ------------------------------------------------------------------------------
+# we want command-line only
+if [ -e /usr/share/applications/htop.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/htop.desktop
+fi
+
+# ------------------------------------------------------------------------------
 # ibus-setup
 # ------------------------------------------------------------------------------
 # add to XFCE Settings Manager
@@ -669,6 +699,22 @@ then
     # hide from main menu
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/ubuntu-amazon-default.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# uxterm, xterm
+# ------------------------------------------------------------------------------
+# pulled in by bloom(??)
+if [ -e /usr/share/applications/debian-uxterm.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/debian-uxterm.desktop
+fi
+
+if [ -e /usr/share/applications/debian-xterm.desktop ];
+then
+    desktop-file-edit --set-key=NoDisplay --set-value=true \
+        /usr/share/applications/debian-xterm.desktop
 fi
 
 # ------------------------------------------------------------------------------
