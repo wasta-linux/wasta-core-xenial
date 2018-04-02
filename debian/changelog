@@ -1,3 +1,10 @@
+wasta-core-xenial (1.2.1) xenial; urgency=medium
+
+  * gschema.override: removing unity-greeter background (background
+    will be set by user defined backgrounds)
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 02 Apr 2018 12:18:03 +0300
+
 wasta-core-xenial (1.2.0) xenial; urgency=medium
 
   * app-adjustments: hide flash-player-properties, htop, chmsee, xterm

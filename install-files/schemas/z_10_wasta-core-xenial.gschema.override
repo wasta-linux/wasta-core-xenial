@@ -16,6 +16,8 @@
 #       default of just display file not even asking to run it)
 #   2015-12-30 rik: nautilus preference tweaks (icon size, use-tree-view)
 #   2016-09-14 rik: setting unity-greeter default background
+#   2018-04-03 rik: removing unity-greeter background: will now just use the
+#       arc-darker gray color until user sets their own background
 #
 # ==============================================================================
 
@@ -29,7 +31,7 @@ preauthorized-domains = []
 # arc-darker '#30343A' ==> background-color = '#30343A'
 # ambiance dark gray color: '#3C3C3C' ==> background-color = '#3C3C3C'
 [com.canonical.unity-greeter]
-background = '/usr/share/backgrounds/Tramonto_a_Scalea_by_Renatvs88.jpg'
+background = ''
 background-color = '#30343A'
 background-logo = '/usr/share/wasta-core/resources/wasta-linux.png'
 draw-grid = true
