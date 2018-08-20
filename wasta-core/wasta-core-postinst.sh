@@ -35,6 +35,7 @@
 #   2018-03-16 rik: disabling apparmor for LO (LO 5.4.x had a bug that prevented
 #       files outside of $HOME from being able to be opened:
 #       https://askubuntu.com/questions/1008880/libreoffice-5-4-5-1-gets-access-denied-on-nfs-mounted-filesystem
+#   2018-08-20 rik: disable release-upgrade prompts
 #
 # ==============================================================================
 
@@ -340,6 +341,21 @@ then
 else
     cat << EOF > /etc/default/apport
 enabled=0
+EOF
+fi
+
+# ------------------------------------------------------------------------------
+# disable release-upgrade prompts
+# ------------------------------------------------------------------------------
+if [ -e /etc/update-manager/release-upgrades ];
+then
+    echo
+    echo "*** Disabling release-upgrade prompts"
+    echo
+    sed -i -e 's@Prompt=.*@Prompt=never@' /etc/update-manager/release-upgrades
+else
+    cat << EOF > /etc/update-manager/release-upgrades
+Prompt=never
 EOF
 fi
 

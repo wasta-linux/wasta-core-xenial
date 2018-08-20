@@ -1,3 +1,9 @@
+wasta-core-xenial (1.2.2) xenial; urgency=medium
+
+  * postinst: disable prompting for major upgrades
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Mon, 20 Aug 2018 11:48:38 +0300
+
 wasta-core-xenial (1.2.1) xenial; urgency=medium
 
   * gschema.override: removing unity-greeter background (background
