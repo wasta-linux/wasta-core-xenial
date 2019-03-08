@@ -1,3 +1,9 @@
+wasta-core-xenial (1.2.3) xenial; urgency=medium
+
+  * app-adjustments.sh: disabling release-upgrade prompts
+
+ -- Rik Shaw <rikshaw76@gmail.com>  Fri, 08 Mar 2019 15:24:25 +0300
+
 wasta-core-xenial (1.2.2) xenial; urgency=medium
 
   * postinst: disable prompting for major upgrades

@@ -52,6 +52,7 @@
 #   - flash-player-properties
 #   - htop
 #   - uxterm, xterm
+# 2019-03-08 rik: disabling release-upgrade prompts
 #
 # ==============================================================================
 
@@ -717,6 +718,22 @@ then
     # hide from main menu
     desktop-file-edit --set-key=NoDisplay --set-value=true \
         /usr/share/applications/ubuntu-amazon-default.desktop
+fi
+
+# ------------------------------------------------------------------------------
+# update-manager
+# ------------------------------------------------------------------------------
+# disable release-upgrade prompts
+
+# can't be put in /etc/update-manager/release-upgrades.d/ since not respected:
+#   https://askubuntu.com/questions/611837/why-does-software-updates-affects-do-release-upgrade-command-in-terminal#612226
+if [ -e /etc/update-manager/release-upgrades ];
+then
+    sed -i -e 's@Prompt=.*@Prompt=never@' /etc/update-manager/release-upgrades
+else
+    cat << EOF > /etc/update-manager/release-upgrades
+Prompt=never
+EOF
 fi
 
 # ------------------------------------------------------------------------------
